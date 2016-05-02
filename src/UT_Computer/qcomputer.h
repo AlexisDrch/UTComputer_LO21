@@ -5,9 +5,12 @@
 #include <QTextEdit>
 #include <QTableWidget>
 #include <QPushButton>
+#include <QButtonGroup>
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QKeyEvent>
 #include <QDebug>
+#include <QObject>
 #include "computer.h"
 
 class QComputer : public QWidget{
@@ -42,13 +45,17 @@ class QComputer : public QWidget{
     QPushButton* buttonmul;
     QPushButton* buttondiv;
     QPushButton* buttonEnter;
-
-
+    QButtonGroup* buttonNum;
+    QButtonGroup* buttonOp;
+public slots:
+    void setCommandeText(int s);
 
 public:
     explicit QComputer();
     public slots: void refresh();
     void getNextCommande();
+
+
 };
 
 #endif // QCOMPUTER_H
