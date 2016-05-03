@@ -3,20 +3,30 @@
 QComputer::QComputer()
 {
     message= new QLineEdit;
+    message->setDisabled(true);
     vuePile = new QTableWidget;
     commande = new QLineEdit;
     mainLayout = new QVBoxLayout;
     coucheHaut =  new QVBoxLayout;
+    coucheCommande = new QHBoxLayout;
     coucheClavier = new QHBoxLayout;
     pile = new Pile;
+    pad = new QFrame;
     ExpressionManager& em = ExpressionManager::getInstance();
     controleur = new Controleur(em, *pile) ;
-
+    //Style
+    pad->setFrameStyle(QFrame::Box);
+    pad->setFrameShadow(QFrame::Sunken);
+    pad->setLineWidth(2);
+    pad->setMidLineWidth(3);
     //Layout
         //Haut
         coucheHaut->addWidget(message);
         coucheHaut->addWidget(vuePile);
-        coucheHaut->addWidget(commande);
+        coucheCommande->addWidget(commande);
+        buttonPad = new QRadioButton("pad"); buttonPad->setMaximumWidth(55);
+        coucheCommande->addWidget(buttonPad);
+        coucheHaut->addLayout(coucheCommande);
         mainLayout->addLayout(coucheHaut);
         //Clavier Cliquable
         clavNum = new QVBoxLayout;
@@ -62,11 +72,11 @@ QComputer::QComputer()
             clavNum->addWidget(button0);
             coucheClavier->addLayout(clavNum);
             //ClavOP
-            buttonplus = new QPushButton("+"); //buttonplus->setShortcut(QKeySequence(Qt::Key_Plus));
-            buttonmoins = new QPushButton("-");//buttonmoins->setShortcut(QKeySequence(Qt::Key_Minus));
-            buttonmul = new QPushButton("*");//buttonmul->setShortcut(QKeySequence(Qt::Key_multiply));
-            buttondiv = new QPushButton("/");//buttondiv->setShortcut(QKeySequence(Qt::Key_division));
-            buttonEnter = new QPushButton("Entrée");//buttonEnter->setShortcut(QKeySequence(Qt::Key_Enter));
+            buttonplus = new QPushButton("+"); buttonplus->setShortcut(QKeySequence(Qt::Key_Plus));
+            buttonmoins = new QPushButton("-");buttonmoins->setShortcut(QKeySequence(Qt::Key_Minus));
+            buttonmul = new QPushButton("*");buttonmul->setShortcut(QKeySequence(Qt::Key_multiply));
+            buttondiv = new QPushButton("/");buttondiv->setShortcut(QKeySequence(Qt::Key_division));
+            buttonEnter = new QPushButton("Entrée");buttonEnter->setShortcut(QKeySequence(Qt::Key_Enter));
             buttonOp = new QButtonGroup;
             buttonOp->addButton(buttonplus);buttonOp->setId(buttonplus,10);
             buttonOp->addButton(buttonmoins);buttonOp->setId(buttonmoins,11);
@@ -80,14 +90,15 @@ QComputer::QComputer()
             clavOp->addWidget(buttonEnter);
             clavOp->setSizeConstraint(QLayout::SetMinimumSize);
             coucheClavier->addLayout(clavOp);
-
-       mainLayout->addLayout(coucheClavier);
+            pad->setLayout(coucheClavier);
+       mainLayout->addWidget(pad);
 
     setLayout(mainLayout);
 
     //Connection SIGNAUX/SLOTS
    QObject::connect(buttonNum, SIGNAL(buttonClicked(int)),this, SLOT(setCommandeText(int)));
    QObject::connect(buttonOp, SIGNAL(buttonClicked(int)),this, SLOT(setCommandeText(int)));
+   QObject::connect(buttonPad, SIGNAL(clicked(bool)), this, SLOT(hidePad()));
 
 
 }
@@ -114,5 +125,15 @@ void QComputer::setCommandeText(int s){
         if(s==14) str="ENTER";
     }
     commande->setText(str);
+
+}
+void QComputer::hidePad(){
+    if(buttonPad->isChecked()){
+    buttonPad->setText("+");
+    pad->hide();
+    }else {
+        buttonPad->setText("-");
+        pad->show();
+    }
 
 }

@@ -6,6 +6,7 @@
 #include <QTableWidget>
 #include <QPushButton>
 #include <QButtonGroup>
+#include <QRadioButton>
 #include <QVBoxLayout>
 #include <QHeaderView>
 #include <QKeyEvent>
@@ -24,12 +25,14 @@ class QComputer : public QWidget{
     Controleur* controleur;
 
     //Clavier cliquable
+    QFrame* pad;
     QHBoxLayout* coucheClavier;
     QVBoxLayout* clavNum;
     QVBoxLayout* clavOp;
     QHBoxLayout* h1clavNum;
     QHBoxLayout* h2clavNum;
     QHBoxLayout* h3clavNum;
+    QHBoxLayout* coucheCommande;
     QPushButton* button1;
     QPushButton* button2;
     QPushButton* button3;
@@ -45,10 +48,12 @@ class QComputer : public QWidget{
     QPushButton* buttonmul;
     QPushButton* buttondiv;
     QPushButton* buttonEnter;
+    QRadioButton* buttonPad;
     QButtonGroup* buttonNum;
     QButtonGroup* buttonOp;
 public slots:
-    void setCommandeText(int s);
+    void setCommandeText(int);
+    void hidePad();
 
 public:
     explicit QComputer();
