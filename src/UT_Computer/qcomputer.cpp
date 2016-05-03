@@ -27,8 +27,8 @@ QComputer::QComputer()
             h3clavNum = new QHBoxLayout;
             button1 = new QPushButton("1"); button1->setShortcut(QKeySequence(Qt::Key_1));
             button2 = new QPushButton("2"); button2->setShortcut(QKeySequence(Qt::Key_2));
-            button4 = new QPushButton("3"); button3->setShortcut(QKeySequence(Qt::Key_3));
-            button3 = new QPushButton("4"); button4->setShortcut(QKeySequence(Qt::Key_4));
+            button3 = new QPushButton("3"); button3->setShortcut(QKeySequence(Qt::Key_3));
+            button4 = new QPushButton("4"); button4->setShortcut(QKeySequence(Qt::Key_4));
             button5 = new QPushButton("5"); button5->setShortcut(QKeySequence(Qt::Key_5));
             button6 = new QPushButton("6"); button6->setShortcut(QKeySequence(Qt::Key_6));
             button7 = new QPushButton("7"); button7->setShortcut(QKeySequence(Qt::Key_7));
@@ -62,11 +62,11 @@ QComputer::QComputer()
             clavNum->addWidget(button0);
             coucheClavier->addLayout(clavNum);
             //ClavOP
-            buttonplus = new QPushButton("+"); buttonplus->setShortcut(QKeySequence(Qt::Key_Plus));
-            buttonmoins = new QPushButton("-");buttonmoins->setShortcut(QKeySequence(Qt::Key_Minus));
-            buttonmul = new QPushButton("*");buttonmul->setShortcut(QKeySequence(Qt::Key_multiply));
-            buttondiv = new QPushButton("/");buttondiv->setShortcut(QKeySequence(Qt::Key_division));
-            buttonEnter = new QPushButton("Entrée");buttonEnter->setShortcut(QKeySequence(Qt::Key_Enter));
+            buttonplus = new QPushButton("+"); //buttonplus->setShortcut(QKeySequence(Qt::Key_Plus));
+            buttonmoins = new QPushButton("-");//buttonmoins->setShortcut(QKeySequence(Qt::Key_Minus));
+            buttonmul = new QPushButton("*");//buttonmul->setShortcut(QKeySequence(Qt::Key_multiply));
+            buttondiv = new QPushButton("/");//buttondiv->setShortcut(QKeySequence(Qt::Key_division));
+            buttonEnter = new QPushButton("Entrée");//buttonEnter->setShortcut(QKeySequence(Qt::Key_Enter));
             buttonOp = new QButtonGroup;
             buttonOp->addButton(buttonplus);buttonOp->setId(buttonplus,10);
             buttonOp->addButton(buttonmoins);buttonOp->setId(buttonmoins,11);
