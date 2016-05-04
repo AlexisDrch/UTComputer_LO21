@@ -2,6 +2,7 @@
 
 QComputer::QComputer()
 {
+    zoneCentrale = new QWidget;
     message= new QLineEdit;
     message->setDisabled(true);
     vuePile = new QTableWidget;
@@ -14,6 +15,22 @@ QComputer::QComputer()
     pad = new QFrame;
     ExpressionManager& em = ExpressionManager::getInstance();
     controleur = new Controleur(em, *pile) ;
+
+    // Création des menus
+    QMenu *menuFichier = menuBar()->addMenu("&Fichier");
+    QAction *actionQuitter = menuFichier->addAction("&Quitter");
+    actionQuitter->setShortcut(QKeySequence("Ctrl+Q"));
+    actionQuitter->setIcon(QIcon("quitter.png"));
+    QMenu *menuAffichage = menuBar()->addMenu("&Affichage");
+    menuAffichage->addAction("Vue principale");
+    menuAffichage->addAction("Vue secondaire");
+
+    // Création de la barre d'outils
+    QToolBar *toolBarFichier = addToolBar("Fichier");
+    toolBarFichier->addAction(actionQuitter);
+
+    connect(actionQuitter, SIGNAL(triggered()), qApp, SLOT(quit()));
+
     //Style
     pad->setFrameStyle(QFrame::Box);
     pad->setFrameShadow(QFrame::Sunken);
@@ -93,7 +110,8 @@ QComputer::QComputer()
             pad->setLayout(coucheClavier);
        mainLayout->addWidget(pad);
 
-    setLayout(mainLayout);
+    zoneCentrale->setLayout(mainLayout);
+    setCentralWidget(zoneCentrale);
 
     //Connection SIGNAUX/SLOTS
    QObject::connect(buttonNum, SIGNAL(buttonClicked(int)),this, SLOT(setCommandeText(int)));

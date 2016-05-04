@@ -3,19 +3,26 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <QTextEdit>
+#include <QApplication>
 #include <QTableWidget>
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QRadioButton>
 #include <QVBoxLayout>
+#include<QMdiArea>
 #include <QHeaderView>
+#include <QMainWindow>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QMenu>
+#include <QMenuBar>
+#include <QToolBar>
 #include <QObject>
 #include "computer.h"
 
-class QComputer : public QWidget{
+class QComputer : public QMainWindow {
     Q_OBJECT
+    QWidget* zoneCentrale;
     QLineEdit* message;
     QTableWidget* vuePile;
     QLineEdit* commande;
@@ -23,6 +30,7 @@ class QComputer : public QWidget{
     QVBoxLayout* coucheHaut;
     Pile* pile;
     Controleur* controleur;
+
 
     //Clavier cliquable
     QFrame* pad;
