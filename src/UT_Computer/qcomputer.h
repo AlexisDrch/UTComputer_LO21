@@ -22,7 +22,10 @@
 
 class QComputer : public QMainWindow {
     Q_OBJECT
-    QWidget* zoneCentrale;
+    QFrame* vuePrincipale;
+    QFrame* vueVar ;
+    QFrame* vueProg;
+    QFrame* vuePara;
     QLineEdit* message;
     QTableWidget* vuePile;
     QLineEdit* commande;
@@ -62,6 +65,10 @@ class QComputer : public QMainWindow {
 public slots:
     void setCommandeText(int);
     void hidePad();
+    void setVuePrinc();
+    void setVueVar();
+    void setVueProg();
+    void setVuePara();
 
 public:
     explicit QComputer();

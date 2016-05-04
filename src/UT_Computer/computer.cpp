@@ -116,7 +116,22 @@ bool estUnNombre(const QString s){
 }
 
 
-void Controleur::commande(const QString& c){
+void Controleur::commande(const Operande& c){
+    //Différence entre operateurs et littéraux
+        //Si operateur
+            //OperateurManager : renvoie l'objet ope crée selon son type
+            //ope.tailleOp : renvoie le nbre n de litteraux à pop
+                //Si taille pile > = n
+                    //pop n nbre et applique l'opération
+                //Sinon
+                    //pile.setMessage("erreur : pas assez de litteraux")
+        //Si littérale
+            //LitteralManager : ajoute un objet lit crée selon son type
+            //Push dans la pile.
+        //Sinon pile.setMessage("erreur : commande inconnue").
+
+
+
     if (estUnNombre(c)){
         expAff.push(expMng.addExpression(c.toInt()));
 	}else{

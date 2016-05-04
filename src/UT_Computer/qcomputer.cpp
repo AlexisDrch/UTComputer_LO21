@@ -2,7 +2,10 @@
 
 QComputer::QComputer()
 {
-    zoneCentrale = new QWidget;
+    vuePrincipale = new QFrame;
+    vueVar = new QFrame;
+    vueProg = new QFrame;
+    vuePara = new QFrame;
     message= new QLineEdit;
     message->setDisabled(true);
     vuePile = new QTableWidget;
@@ -18,12 +21,19 @@ QComputer::QComputer()
 
     // Création des menus
     QMenu *menuFichier = menuBar()->addMenu("&Fichier");
-    QAction *actionQuitter = menuFichier->addAction("&Quitter");
-    actionQuitter->setShortcut(QKeySequence("Ctrl+Q"));
-    actionQuitter->setIcon(QIcon("quitter.png"));
+        QAction *actionQuitter = menuFichier->addAction("&Quitter");
+        actionQuitter->setShortcut(QKeySequence("Ctrl+Q"));
+        actionQuitter->setIcon(QIcon("quitter.png"));
+
     QMenu *menuAffichage = menuBar()->addMenu("&Affichage");
-    menuAffichage->addAction("Vue principale");
-    menuAffichage->addAction("Vue secondaire");
+        QAction* actionVuePrinc = menuAffichage->addAction("Vue principale");
+            connect(actionVuePrinc, SIGNAL(triggered()), this, SLOT(setVuePrinc()));
+        QAction* actionVueVar = menuAffichage->addAction("Stock variables");
+            connect(actionVueVar, SIGNAL(triggered()), this, SLOT(setVueVar()));
+        QAction* actionVueProg = menuAffichage->addAction("Stock programmes");
+            connect(actionVueProg, SIGNAL(triggered()), this, SLOT(setVueProg()));
+        QAction* actionVuePara = menuAffichage->addAction("Paramètres");
+            connect(actionVuePara, SIGNAL(triggered()), this, SLOT(setVuePara()));
 
     // Création de la barre d'outils
     QToolBar *toolBarFichier = addToolBar("Fichier");
@@ -110,8 +120,8 @@ QComputer::QComputer()
             pad->setLayout(coucheClavier);
        mainLayout->addWidget(pad);
 
-    zoneCentrale->setLayout(mainLayout);
-    setCentralWidget(zoneCentrale);
+    vuePrincipale->setLayout(mainLayout);
+    setCentralWidget(vuePrincipale);
 
     //Connection SIGNAUX/SLOTS
    QObject::connect(buttonNum, SIGNAL(buttonClicked(int)),this, SLOT(setCommandeText(int)));
@@ -154,4 +164,17 @@ void QComputer::hidePad(){
         pad->show();
     }
 
+}
+
+void QComputer::setVuePrinc(){
+    vuePrincipale->show();
+}
+void QComputer::setVueVar(){
+    vuePrincipale->hide();
+}
+void QComputer::setVueProg(){
+    vuePrincipale->hide();
+}
+void QComputer::setVuePara(){
+    vuePrincipale->hide();
 }
