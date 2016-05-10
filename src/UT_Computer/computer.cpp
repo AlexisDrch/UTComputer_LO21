@@ -116,7 +116,7 @@ bool estUnNombre(const QString s){
 }
 
 
-void Controleur::commande(const Operande& c){
+void Controleur::commande(const QString& c){
     //Différence entre operateurs et littéraux
         //Si operateur
             //OperateurManager : renvoie l'objet ope crée selon son type
