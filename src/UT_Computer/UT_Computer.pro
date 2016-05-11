@@ -3,8 +3,10 @@
 SOURCES += \
     main.cpp \
     qcomputer.cpp \
-    computer.cpp
+    computer.cpp \
+    operator.cpp
 
 HEADERS += \
     qcomputer.h \
-    computer.h
+    computer.h \
+    operator.h
