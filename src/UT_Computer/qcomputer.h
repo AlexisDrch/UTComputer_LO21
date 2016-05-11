@@ -43,7 +43,7 @@ class QComputer : public QMainWindow {
     QHBoxLayout* h1clavNum;
     QHBoxLayout* h2clavNum;
     QHBoxLayout* h3clavNum;
-    QHBoxLayout* coucheCommande;
+    QHBoxLayout* coucheCommande; 
     QPushButton* button1;
     QPushButton* button2;
     QPushButton* button3;
