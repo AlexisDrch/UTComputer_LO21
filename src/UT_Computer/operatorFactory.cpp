@@ -1,4 +1,4 @@
-#include "opratorfactory.h"
+#include "opratorFactory.h"
 
 map<const QString, const OperatorFactory*> OperatorFactory::getFactoriesMap() {
     map<const QString, const OperatorFactory*> factories;

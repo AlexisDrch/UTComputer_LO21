@@ -5,10 +5,10 @@ SOURCES += \
     main.cpp \
     qcomputer.cpp \
     computer.cpp \
-    operatorfactofy.cpp
+    operatorFactory.cpp
 
 HEADERS += \
     qcomputer.h \
     computer.h \
-    opratorfactory.h \
-    operator.h
+    operator.h \
+    opratorFactory.h
