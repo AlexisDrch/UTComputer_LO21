@@ -1,4 +1,5 @@
 #include "qcomputer.h"
+#include "operator.h"
 
 QComputer::QComputer()
 {
