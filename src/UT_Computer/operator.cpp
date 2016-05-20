@@ -11,9 +11,10 @@ Operande::~Operande(){
 
         //I.1) Litterale programme
         LitProgramme::LitProgramme(const QString& str, const QString na): Litterale(na), stringValue(str) {
-            QString::const_iterator it = str.begin();
-            while (it != str.end()){
-                if ( (*it == ' ') || (*it == '[')) { it ++; }
+            //décomposition + insertion de chaque element du programme
+            QString::const_iterator it = str.begin(); QString::const_iterator it2 = str.end(); it2--;
+            while (it != it2){
+                if ( (*it == ' ') || (*it == '[') || (*it == '\0') ) { it ++; }
                 else {
                     QString sPart;
                     unsigned int i =0;
@@ -58,7 +59,7 @@ Operande::~Operande(){
             }
 
             QString Entier::toString() const {
-                QString val = (QString::number(value));
+                QString val = QString::number(value);
                 if (neg) {
                     QString val2 = "- "; val2.append(val); return val2;
                 }

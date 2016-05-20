@@ -36,11 +36,11 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
        unsigned int val = v.toInt(&ok); if(ok){return (new Entier(val));}
        float val2 = v.toFloat(&ok) ; if(ok){return (new Reelle(3,035));} // A revoir
        // Factorielle : to do
+       QString::const_iterator it = v.end(); it--;
+       if ( ((*v.begin()) == "'") && ((*it) == "'") ) return(new LitExpression(v));
+       if ( ((*v.begin()) == "[") && ((*it) == "]") ) return(new LitProgramme(v));
 
-       if ( ((*v.begin()) == "'") && ((*v.end()) == "'") ) return(new LitExpression(v));
-       if ( ((*v.begin()) == "[") && ((*v.end()) == "]") ) return(new LitProgramme(v));
-
-    return (new LitAtome(v));
+    return (new LitAtome(*v.begin()));
 }
 
 Litterale& LitteraleManager::addLitterale(const QString& v){
@@ -57,7 +57,7 @@ void LitteraleManager::removeLitterale(Litterale& e){
     unsigned int i=0;
     while(i<nb && lits[i]!=&e) i++;
     if (i==nb) throw ComputerException("elimination d'une Litterale inexistante");
-    delete lits[i];
+    lits[i]=0;
 	i++;
     while(i<nb) { lits[i-1]=lits[i]; i++; }
 	nb--;
@@ -165,8 +165,7 @@ try {
 
         for(unsigned int i =0; i <opSize; i++){
             op->addArg(litAff.top()); // ici on récupère l'item de la pile
-            //litMng.removeLitterale(litAff.top()); TO DO TO DO :: fuite mémoire !!!
-
+            litMng.removeLitterale(litAff.top()); //TO DO TO DO :: fuite mémoire !!! A VERIFIER =0?
             litAff.pop();
             }
         Litterale* res = op->executer();
@@ -189,8 +188,6 @@ try {
     Entier* newe3 = dynamic_cast<Entier*>(&litAff.top()); if (newe3 != nullptr){litAff.setMessage("ENTIER");}
     Reelle* newe4 = dynamic_cast<Reelle*>(&litAff.top()); if (newe4 != nullptr){litAff.setMessage("REELLE");}
     Rationelle* newe5 = dynamic_cast<Rationelle*>(&litAff.top()); if (newe5 != nullptr){litAff.setMessage("RATIONELLE");}
-
-
 
     }else if (isVariable(c)){ // recherche dans la bdd (map variable)
         //recup litterale
