@@ -18,6 +18,8 @@
 #include <QMenuBar>
 #include <QToolBar>
 #include <QObject>
+#include <QLCDNumber>
+#include <QSpinBox>
 #include "computer.h"
 
 class QComputer : public QMainWindow {
@@ -27,6 +29,8 @@ class QComputer : public QMainWindow {
     QFrame* vueProg;
     QFrame* vuePara;
     QLineEdit* message;
+    QSpinBox* setterNbAffiche;
+    QHBoxLayout* coucheMessage;
     QTableWidget* vuePile;
     QLineEdit* commande;
     QVBoxLayout* mainLayout;
@@ -74,6 +78,7 @@ public:
     explicit QComputer();
     public slots: void refresh();
     void getNextCommande();
+    void changeNbAffiche(int i);
 
 
 };

@@ -9,16 +9,39 @@ QComputer::QComputer()
     vuePara = new QFrame;
     message= new QLineEdit;
     message->setDisabled(true);
-    vuePile = new QTableWidget;
     commande = new QLineEdit;
     mainLayout = new QVBoxLayout;
     coucheHaut =  new QVBoxLayout;
     coucheCommande = new QHBoxLayout;
     coucheClavier = new QHBoxLayout;
     pile = new Pile;
+    setterNbAffiche = new QSpinBox;
+    setterNbAffiche->setValue(pile->getNbItemsToAffiche());
+    setterNbAffiche->setMaximum(20);
+    setterNbAffiche->setMinimum(4);
+    vuePile = new QTableWidget(pile->getNbItemsToAffiche(),1,this);
     pad = new QFrame;
-    ExpressionManager& em = ExpressionManager::getInstance();
-    controleur = new Controleur(em, *pile) ;
+    LitteraleManager& lm = LitteraleManager::getInstance();
+    controleur = new Controleur(lm, *pile) ;
+
+
+    message->setReadOnly(true);
+    message->setText("Bienvenue");
+    message->setStyleSheet("background: blue; color: white");
+
+    //Pile
+    QStringList nombres;
+    for (unsigned int i=pile->getNbItemsToAffiche();i>0;i--){
+        QString str=QString::number(i);
+        str+=" :";
+        nombres<<str;
+    }
+    vuePile->setVerticalHeaderLabels(nombres);
+
+    vuePile->horizontalHeader()->setVisible(false);
+    vuePile->horizontalHeader()->setStretchLastSection(true);
+    for (unsigned int i=0;i<pile->getNbItemsToAffiche();i++)
+        vuePile->setItem(i,0,new QTableWidgetItem(""));
 
     // Création des menus
     QMenu *menuFichier = menuBar()->addMenu("&Fichier");
@@ -49,7 +72,11 @@ QComputer::QComputer()
     pad->setMidLineWidth(3);
     //Layout
         //Haut
-        coucheHaut->addWidget(message);
+        coucheMessage = new QHBoxLayout;
+        coucheMessage->addWidget(message);
+        coucheMessage->addWidget(setterNbAffiche);
+        coucheHaut->addLayout(coucheMessage);
+
         coucheHaut->addWidget(vuePile);
         coucheCommande->addWidget(commande);
         buttonPad = new QRadioButton("pad"); buttonPad->setMaximumWidth(55);
@@ -104,13 +131,12 @@ QComputer::QComputer()
             buttonmoins = new QPushButton("-");buttonmoins->setShortcut(QKeySequence(Qt::Key_Minus));
             buttonmul = new QPushButton("*");buttonmul->setShortcut(QKeySequence(Qt::Key_multiply));
             buttondiv = new QPushButton("/");buttondiv->setShortcut(QKeySequence(Qt::Key_division));
-            buttonEnter = new QPushButton("Entrée");buttonEnter->setShortcut(QKeySequence(Qt::Key_Enter));
+            buttonEnter = new QPushButton("Entrée");
             buttonOp = new QButtonGroup;
             buttonOp->addButton(buttonplus);buttonOp->setId(buttonplus,10);
             buttonOp->addButton(buttonmoins);buttonOp->setId(buttonmoins,11);
             buttonOp->addButton(buttonmul);buttonOp->setId(buttonmul,12);
             buttonOp->addButton(buttondiv);buttonOp->setId(buttondiv,13);
-            buttonOp->addButton(buttonEnter);buttonOp->setId(buttonEnter,14);
             clavOp->addWidget(buttonplus);
             clavOp->addWidget(buttonmoins);
             clavOp->addWidget(buttonmul);
@@ -128,17 +154,52 @@ QComputer::QComputer()
    QObject::connect(buttonNum, SIGNAL(buttonClicked(int)),this, SLOT(setCommandeText(int)));
    QObject::connect(buttonOp, SIGNAL(buttonClicked(int)),this, SLOT(setCommandeText(int)));
    QObject::connect(buttonPad, SIGNAL(clicked(bool)), this, SLOT(hidePad()));
-
-
+   QObject::connect(setterNbAffiche, SIGNAL(valueChanged(int)),this, SLOT(changeNbAffiche(int)));
+   QObject::connect(commande,SIGNAL(returnPressed()),this,SLOT(getNextCommande()));
+   QObject::connect(buttonEnter,SIGNAL(clicked(bool)), this, SLOT(getNextCommande()));
+   QObject::connect(pile,SIGNAL(modificationEtat()),this,SLOT(refresh()));
 }
 
 void QComputer::refresh(){
+
+    message->setText(pile->getMessage());
+
+    for (unsigned int i=0; i<pile->getNbItemsToAffiche(); i++)
+        vuePile->item(i,0)->setText("");
+
+
+    unsigned int nb=0;
+    for (Pile::iterator it = pile->begin(); it != pile->end() && nb < pile->getNbItemsToAffiche();++it){
+        vuePile->item(pile->getNbItemsToAffiche()-nb-1,0)->setText((*it).toString());
+        nb++;
+    }
 
 }
 
 void QComputer::getNextCommande(){
 
+    pile->setMessage("");
+    controleur->commande(commande->text());
+    commande->clear();
+}
 
+void QComputer::changeNbAffiche(int i){
+
+    pile->setNbItemsToAffiche(i);
+    vuePile->setRowCount(pile->getNbItemsToAffiche());
+    QStringList nombres;
+    for (unsigned int i=pile->getNbItemsToAffiche();i>0;i--){
+        QString str=QString::number(i);
+        str+=" :";
+        nombres<<str;
+    }
+    vuePile->setVerticalHeaderLabels(nombres);
+
+    vuePile->horizontalHeader()->setVisible(false);
+    vuePile->horizontalHeader()->setStretchLastSection(true);
+    for (unsigned int i=0;i<pile->getNbItemsToAffiche();i++)
+        vuePile->setItem(i,0,new QTableWidgetItem(""));
+    refresh();
 }
 
 void QComputer::setCommandeText(int s){
@@ -151,7 +212,6 @@ void QComputer::setCommandeText(int s){
         if(s==11) str="-";
         if(s==12) str="*";
         if(s==13) str="/";
-        if(s==14) str="ENTER";
     }
     commande->setText(str);
 

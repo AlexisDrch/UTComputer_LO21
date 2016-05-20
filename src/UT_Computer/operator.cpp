@@ -1,17 +1,152 @@
 #include "operator.h"
 
+//Operande
+Operande::~Operande(){
 
-unsigned int OpUnaire::addArg(const Litterale& e){
-    if (tab->size() <=2){
-    tab->push_back(e);
+}
+    //I]Litteral
+    Litterale::~Litterale(){
+
+    }
+
+        //I.1) Litterale programme
+        LitProgramme::LitProgramme(const QString& str, const QString na): Litterale(na), stringValue(str) {
+            QString::const_iterator it = str.begin();
+            while (it != str.end()){
+                if ( (*it == ' ') || (*it == '[')) { it ++; }
+                else {
+                    QString sPart;
+                    unsigned int i =0;
+                    while (*it != ' '){
+
+                        sPart.push_back(*it); it++; i++;
+                    }
+                    tab.push_back(sPart); taille++;
+                }
+            }
+        }
+
+        QString LitProgramme::toString() const {
+            return stringValue;
+        }
+        //I.2) Litterale expression
+        QString LitExpression::toString()const{
+                    return stringValue;
+        }
+
+        //I.3) Litterale atome
+        QString LitAtome::toString() const {
+            return value;
+        }
+
+        //I.4) Litterale numerique
+        LitNumerique::~LitNumerique(){
+
+        }
+        Litterale* LitNumerique::operatorNeg() {
+            neg = !neg;
+            return this;
+        }
+        Litterale* LitNumerique::operatorExp(){
+            return this;
+        }
+
+            //I.4.1) Entier
+            Litterale* Entier::operatorExp(){
+                value = exp(value);
+                return this;
+            }
+
+            QString Entier::toString() const {
+                QString val = (QString::number(value));
+                if (neg) {
+                    QString val2 = "- "; val2.append(val); return val2;
+                }
+                return val;
+            }
+
+            //I.4.2) Rationelle
+            Litterale* Rationelle::operatorExp(){
+                //todo
+                return this;
+            }
+
+            QString Rationelle::toString() const {
+                return (numerateur.toString() + "/" + denominateur.toString());
+            }
+
+            //I.4.3) Reelle
+            Litterale* Reelle::operatorExp(){
+                //todo
+                return this;
+            }
+            QString Reelle::toString() const {
+                QString val = QString::number(pEntiere) + "." + QString::number(mantisse);
+                if (neg) {
+                    QString val2 = "- "; val2.append(val); return val2;
+                }
+                return val;
+            }
+
+
+    //II]Operateur
+    Operateur::~Operateur(){
+
+    }
+        //II.1) Operateur Unaire
+        OpUnaire::~OpUnaire(){
+
+        }
+
+        Litterale* OpUnaire::executer(){
+
+            LitNumerique* arg1 = dynamic_cast<LitNumerique*>(tab.front());
+
+            if(arg1 != nullptr){
+                return fonctionNum(*arg1);
+            }
+            else {
+                throw "error dans executer";
+                //LitExpression* arg1 = dynamic_cast<LitExpression*>(tab.front());
+                //autre test
+                /*if(arg1 != nullptr){
+                return fonction2(*arg1);*/
+            }
+        }
+
+            //NEG
+            Litterale* OpNeg::fonctionNum(LitNumerique &arg1) const{
+                return arg1.operatorNeg();
+            }
+
+            //EXP
+            Litterale* OpExp::fonctionNum(LitNumerique &arg1) const{
+                return arg1.operatorExp();
+            }
+
+
+        //II.2) Operateur Binaire
+        OpBinaire::~OpBinaire(){
+
+        }
+
+        Litterale* OpBinaire::executer(){
+            return (new Entier(3));
+
+        }
+
+
+unsigned int OpUnaire::addArg(Litterale& e){
+    if (tab.size() <=2){
+    tab.push_back(&e);
     }
     else throw "Error : Tentative d'ajout de plus de 2 arguments à un opérateur binaire";
 }
 
 
-unsigned int OpBinaire::addArg(const Litterale& e){
-    if (tab->size() <=2){
-    tab->push_back(e);
+unsigned int OpBinaire::addArg(Litterale& e){
+    if (tab.size() <=2){
+    tab.push_back(&e);
     }
     else throw "Error : Tentative d'ajout de plus de 2 arguments à un opérateur binaire";
 }
@@ -21,16 +156,16 @@ unsigned int OpBinaire::addArg(const Litterale& e){
 //Littérale expression
     //Constructeur de la classe
 
-    LitExpression::LitExpression(const QString& str, const QString& na = ""):Litterale(na){
+    LitExpression::LitExpression(const QString& str, const QString& na):Litterale(na){
         //remplir le vector de littérale
         //Analyser les espaces dans l'expression str puis:
-        stringValue(str);
+        stringValue = str;
     }
 
     //Méthode de la classe
         //Op unaire
         QString LitExpression::operatorUnaire(const QString &str){
-            return (str+"("+toString+")");
+            return (str+"("+toString()+")");
         }
 
         Litterale* LitExpression::operatorExp(){
@@ -93,62 +228,62 @@ unsigned int OpBinaire::addArg(const Litterale& e){
            return (new LitExpression(operatorBinaire("POW", lit.toString())));
         }
             //Op symbole
+
             QString LitExpression::operatorSymbole(const QString& symb, const QString &lit){
                 return (toString()+" "+ symb +" "+ lit);
             }
-            Litterale* operator+(const LitExpression& lit){
+            Litterale* LitExpression::operator+(const LitExpression& lit){
                 return (new LitExpression(operatorSymbole("+",lit.toString())));
             }
-
-            Litterale* operator*(const LitExpression& lit){
+            Litterale* LitExpression::operator*(const LitExpression& lit){
                 return (new LitExpression(operatorSymbole("*",lit.toString())));
             }
-            Litterale* operator-(const LitExpression& lit){
-                return(new LitExpression(operatorSymbole('-',lit.toString())));
+            Litterale* LitExpression::operator-(const LitExpression& lit){
+                return (new LitExpression(operatorSymbole("-",lit.toString())));
             }
-            Litterale* operator/(const LitExpression& lit){
-                return(new LitExpression(operatorSymbole('/',lit.toString())));
+            Litterale* LitExpression::operator/(const LitExpression& lit){
+                return (new LitExpression(operatorSymbole("/",lit.toString())));
             }
-            Litterale* operator$(const LitExpression& lit){
-                return(new LitExpression(operatorSymbole('$',lit.toString())));
+            Litterale* LitExpression::operator$(const LitExpression& lit){
+                return (new LitExpression(operatorSymbole("$",lit.toString())));
             }
         //Op Binaire Exp - Lit
-        LitExpression* litToExp(const LitNumerique& lit){
+        LitExpression* LitExpression::litToExp(const LitNumerique& lit){
             QString str = "'" + lit.toString() + "'";
             return (new LitExpression(str));
         }
 
-        Litterale* operatorDiv(const LitNumerique& lit){
+        Litterale* LitExpression::operatorDiv(const LitNumerique& lit){
             LitExpression* litEx = litToExp(lit);
             return (new LitExpression(operatorBinaire("DIV",litEx->toString())));
         }
-        Litterale* operatorMod(const LitNumerique& lit){
+        Litterale* LitExpression::operatorMod(const LitNumerique& lit){
             LitExpression* litEx = litToExp(lit);
             return (new LitExpression(operatorBinaire("MOD",litEx->toString())));
         }
-        Litterale* operatorPow(const LitNumerique& lit){
+        Litterale* LitExpression::operatorPow(const LitNumerique& lit){
             LitExpression* litEx = litToExp(lit);
             return (new LitExpression(operatorBinaire("POW",litEx->toString())));
         }
             //Op symbole
 
-            Litterale* operator+(const LitNumerique& lit){
+            Litterale* LitExpression::operator+(const LitNumerique& lit){
                 LitExpression* litEx = litToExp(lit);
                 return (new LitExpression(operatorSymbole("+",litEx->toString())));
             }
-            Litterale* operator-(const LitNumerique& lit){
+            Litterale* LitExpression::operator-(const LitNumerique& lit){
                 LitExpression* litEx = litToExp(lit);
                 return (new LitExpression(operatorSymbole("-",litEx->toString())));
             }
-            Litterale* operator/(const LitNumerique& lit){
+            Litterale* LitExpression::operator/(const LitNumerique& lit){
                 LitExpression* litEx = litToExp(lit);
                 return (new LitExpression(operatorSymbole("/",litEx->toString())));
             }
-            Litterale* operator*(const LitNumerique& lit){
+            Litterale* LitExpression::operator*(const LitNumerique& lit){
                 LitExpression* litEx = litToExp(lit);
                 return (new LitExpression(operatorSymbole("*",litEx->toString())));
             }
-            Litterale* operator$(const LitNumerique& lit){
+            Litterale* LitExpression::operator$(const LitNumerique& lit){
                 LitExpression* litEx = litToExp(lit);
                 return (new LitExpression(operatorSymbole("$",litEx->toString())));
             }

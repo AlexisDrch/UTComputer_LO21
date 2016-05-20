@@ -1,11 +1,13 @@
-#ifndef COMPUTER_H
-#define COMPUTER_H
-
+#ifndef COMPUTERB_H
+#define COMPUTERB_H
+#ifndef _COMPUTER_H
+#define _COMPUTER_H
 
 #include <QString>
 #include <QTextStream>
 #include <QObject>
 #include <QDebug>
+#include <operande.h>
 #include <operatorFactory.h>
 
 using namespace std;
@@ -16,6 +18,7 @@ public:
     ComputerException(const QString& str):info(str){}
     QString getInfo() const { return info; }
 };
+
 
 
 class LitteraleManager {
@@ -38,7 +41,6 @@ class LitteraleManager {
 public:
     Litterale& addLitterale(const QString& str);
     bool verifLitterale(const QString& c); // to implement
-    Litterale* fabriqLitterale(const QString& v); // to implement
     void removeLitterale(Litterale& e);
     static LitteraleManager& getInstance();
     static void libererInstance();
@@ -89,7 +91,7 @@ class Pile : public QObject {
     void agrandissementCapacite();
     unsigned int nbAffiche;
 public:
-    Pile():items(nullptr),nb(0),nbMax(0),message(""),nbAffiche(5){}
+    Pile():items(nullptr),nb(0),nbMax(0),message(""),nbAffiche(4){}
     ~Pile();
     void push(Litterale& e);
     void pop();
@@ -97,7 +99,7 @@ public:
     unsigned int taille() const { return nb; }
     void affiche(QTextStream& f) const;
     Litterale& top() const;
-    void setNbItemsToAffiche(unsigned int n) { nbAffiche=n; }
+    void setNbItemsToAffiche(unsigned int n) { nb=n; }
     unsigned int getNbItemsToAffiche() const { return nbAffiche; }
     void setMessage(const QString& m) { message=m; modificationEtat(); }
     QString getMessage() const { return message; }
@@ -134,12 +136,9 @@ signals:
 class Controleur {
     LitteraleManager& litMng;
     Pile& litAff;
-    QMap<QString, OperateurFactory*> factories;
+    Operateur* op;
 public:
-    Controleur(LitteraleManager& m, Pile& v):litMng(m), litAff(v){
-        factories = OperateurFactory::getFactoriesMap();
-    }
-    Operateur* getOperateur(const QString& v);
+    Controleur(LitteraleManager& m, Pile& v):litMng(m), litAff(v), op(0){}
     void commande(const QString& c);
 
 };
@@ -147,4 +146,6 @@ public:
 bool estUnOperateur(const QString s);
 bool estUnNombre(const QString s);
 
-#endif // COMPUTER_H
+
+#endif
+#endif // COMPUTERB_H

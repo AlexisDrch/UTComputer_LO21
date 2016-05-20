@@ -1,267 +1,266 @@
 #ifndef OPRATORFACTORY_H
 #define OPRATORFACTORY_H
 
-
 #include "operator.h"
 
-#include <map>
+#include <QMap>
 #include <QString>
 
 using namespace std;
 
-class OperatorFactory {
+class OperateurFactory {
 public:
-    virtual ~OperatorFactory();
-    virtual Operator* getOperator() =0;
-    static map<QString, OperatorFactory*> getFactoriesMap();
+    virtual ~OperateurFactory();
+    virtual Operateur* getOperateur() =0;
+    static QMap<QString, OperateurFactory*> getFactoriesMap();
+};
+/*
+
+class OpExpFactory : public OperateurFactory {
+public:
+    OpExpFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpExp(); }
 };
 
-
-class OpExpFactory : public OperatorFactory {
+class OpLnFactory : public OperateurFactory {
 public:
-    OpExpFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpExp(); }
+    OpLnFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpLn(); }
 };
 
-class OpLnFactory : public OperatorFactory {
+class OpNumFactory : public OperateurFactory {
 public:
-    OpLnFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpLn(); }
+    OpNumFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpNum(); }
 };
 
-class OpNumFactory : public OperatorFactory {
+class OpDenFactory : public OperateurFactory {
 public:
-    OpNumFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpNum(); }
+    OpDenFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpDen(); }
 };
 
-class OpDenFactory : public OperatorFactory {
+class OpReFactory : public OperateurFactory {
 public:
-    OpDenFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpDen(); }
+    OpReFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpRe(); }
 };
 
-class OpReFactory : public OperatorFactory {
+class OpImFactory : public OperateurFactory {
 public:
-    OpReFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpRe(); }
+    OpImFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpIm(); }
 };
 
-class OpImFactory : public OperatorFactory {
+class OpArgFactory : public OperateurFactory {
 public:
-    OpImFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpIm(); }
+    OpArgFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpArg(); }
 };
 
-class OpArgFactory : public OperatorFactory {
+class OpNormFactory : public OperateurFactory {
 public:
-    OpArgFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpArg(); }
+    OpNormFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpNorm(); }
 };
 
-class OpNormFactory : public OperatorFactory {
+class OpNotFactory : public OperateurFactory {
 public:
-    OpNormFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpNorm(); }
+    OpNotFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpNot(); }
 };
 
-class OpNotFactory : public OperatorFactory {
+class OpEvalFactory : public OperateurFactory {
 public:
-    OpNotFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpNot(); }
+    OpEvalFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpEval(); }
+};
+*/
+class OpNegFactory : public OperateurFactory {
+public:
+    OpNegFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpNeg(); }
+};
+/*
+class OpSinFactory : public OperateurFactory {
+public:
+    OpSinFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpSin(); }
 };
 
-class OpEvalFactory : public OperatorFactory {
+class OpCosFactory : public OperateurFactory {
 public:
-    OpEvalFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpEval(); }
+    OpCosFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpCos(); }
 };
 
-class OpNegFactory : public OperatorFactory {
+class OpTanFactory : public OperateurFactory {
 public:
-    OpNegFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpNeg(); }
+    OpTanFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpTan(); }
 };
 
-class OpSinFactory : public OperatorFactory {
+class OpArcsinFactory : public OperateurFactory {
 public:
-    OpSinFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpSin(); }
+    OpArcsinFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpArcsin(); }
 };
 
-class OpCosFactory : public OperatorFactory {
+class OpArccosFactory : public OperateurFactory {
 public:
-    OpCosFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpCos(); }
+    OpArccosFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpArccos(); }
 };
 
-class OpTanFactory : public OperatorFactory {
+class OpArctanFactory : public OperateurFactory {
 public:
-    OpTanFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpTan(); }
+    OpArctanFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpArctan(); }
 };
 
-class OpArcsinFactory : public OperatorFactory {
+class OpSqrtFactory : public OperateurFactory {
 public:
-    OpArcsinFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpArcsin(); }
+    OpSqrtFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpSqrt(); }
 };
 
-class OpArccosFactory : public OperatorFactory {
+class OpDupFactory : public OperateurFactory {
 public:
-    OpArccosFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpArccos(); }
+    OpDupFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpDup(); }
 };
 
-class OpArctanFactory : public OperatorFactory {
+class OpDropFactory : public OperateurFactory {
 public:
-    OpArctanFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpArctan(); }
+    OpDropFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpDrop(); }
 };
 
-class OpSqrtFactory : public OperatorFactory {
+class OpEditFactory : public OperateurFactory {
 public:
-    OpSqrtFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpSqrt(); }
+    OpEditFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpEdit(); }
 };
 
-class OpDupFactory : public OperatorFactory {
+class OpInfegFactory : public OperateurFactory {
 public:
-    OpDupFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpDup(); }
+    OpInfegFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpExp(); }
 };
 
-class OpDropFactory : public OperatorFactory {
+class OpSupegFactory : public OperateurFactory {
 public:
-    OpDropFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpDrop(); }
+    OpSupegFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpSupeg(); }
 };
 
-class OpEditFactory : public OperatorFactory {
+class OpInfFactory : public OperateurFactory {
 public:
-    OpEditFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpEdit(); }
+    OpInfFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpInf(); }
 };
 
-class OpInfegFactory : public OperatorFactory {
+class OpSupFactory : public OperateurFactory {
 public:
-    OpExpFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpExp(); }
+    OpSupFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpSup(); }
 };
 
-class OpSupegFactory : public OperatorFactory {
+class OpAndFactory : public OperateurFactory {
 public:
-    OpSupegFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpSupeg(); }
+    OpAndFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpAnd(); }
 };
 
-class OpInfFactory : public OperatorFactory {
+class OpOrFactory : public OperateurFactory {
 public:
-    OpInfFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpInf(); }
+    OpOrFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpOr(); }
 };
 
-class OpSupFactory : public OperatorFactory {
+class OpPlusFactory : public OperateurFactory {
 public:
-    OpSupFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpSup(); }
+    OpPlusFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpPlus(); }
 };
 
-class OpAndFactory : public OperatorFactory {
+class OpMoinsFactory : public OperateurFactory {
 public:
-    OpEAndFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpAnd(); }
+    OpMoinsFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpMoins(); }
 };
 
-class OpOrFactory : public OperatorFactory {
+class OpMulFactory : public OperateurFactory {
 public:
-    OpOrFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpOr(); }
+    OpMulFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpMul(); }
 };
 
-class OpPlusFactory : public OperatorFactory {
+class OpDivFactory : public OperateurFactory {
 public:
-    OpPlusFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpPlus(); }
+    OpDivFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpDiv(); }
+};
+/*
+class OpDiventFactory : public OperateurFactory {
+public:
+    OpDiventFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpDivent(); }
 };
 
-class OpMoinsFactory : public OperatorFactory {
+class OpPowFactory : public OperateurFactory {
 public:
-    OpMoinsFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpMoins(); }
+    OpPowFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpPow(); }
 };
 
-class OpMulFactory : public OperatorFactory {
+class OpModFactory : public OperateurFactory {
 public:
-    OpMulFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpMul(); }
+    OpModFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpMod(); }
 };
 
-class OpDivFactory : public OperatorFactory {
+class OpDolFactory : public OperateurFactory {
 public:
-    OpDivFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpDiv(); }
+    OpDolFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpDol(); }
 };
 
-class OpDiventFactory : public OperatorFactory {
+class OpEgFactory : public OperateurFactory {
 public:
-    OpDiventFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpDivent(); }
+    OpEgFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpEg(); }
+};
+/*
+class OpDifFactory : public OperateurFactory {
+public:
+    OpDifFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpDif(); }
 };
 
-class OpPowFactory : public OperatorFactory {
+class OpSwapFactory : public OperateurFactory {
 public:
-    OpPowFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpPow(); }
+    OpSwapFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpEg(); }
 };
 
-class OpModFactory : public OperatorFactory {
+class OpIftFactory : public OperateurFactory {
 public:
-    OpModFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpMod(); }
+    OpIftFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpIft(); }
 };
 
-class OpDolFactory : public OperatorFactory {
+class OpIfteFactory : public OperateurFactory {
 public:
-    OpDolFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpDol(); }
+    OpIfteFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpIfte(); }
 };
 
-class OpEgFactory : public OperatorFactory {
+class OpWhileFactory : public OperateurFactory {
 public:
-    OpEgFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpEg(); }
-};
-
-class OpDifFactory : public OperatorFactory {
-public:
-    OpDifFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpDif(); }
-};
-
-class OpSwapFactory : public OperatorFactory {
-public:
-    OpSwapFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpEg(); }
-};
-
-class OpIftFactory : public OperatorFactory {
-public:
-    OpIftFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpIft(); }
-};
-
-class OpIfteFactory : public OperatorFactory {
-public:
-    OpIfteFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpIfte(); }
-};
-
-class OpWhileFactory : public OperatorFactory {
-public:
-    OpWhileFactory() : OperatorFactory() {}
-    Operator* getOperator() { return new OpWhile(); }
-};
+    OpWhileFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpWhile(); }
+};*/
 
 #endif // OPRATORFACTORY_H
 
