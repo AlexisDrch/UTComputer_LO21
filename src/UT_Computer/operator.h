@@ -182,12 +182,12 @@ public:
                 class Reelle: public LitNumerique{
                     unsigned int pEntiere;
                     unsigned int mantisse;
-                    float value;
                 public:
                     //mantisse != 0 OR pEntiere != 0
-                    Reelle(unsigned int ent, unsigned int man, float val, const QString& na=""):LitNumerique(na), pEntiere(ent), mantisse(man), value(val){}
+                    Reelle(float val, const QString& na=""):LitNumerique(na), pEntiere(floor(val)), mantisse((val-pEntiere)*1000000){}
                     LitNumerique* simplification();
                     QString toString() const;
+                    float toFloatPositif() const;
 
                     //Operateur
                     Litterale* operatorExp();

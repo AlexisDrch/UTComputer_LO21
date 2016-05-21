@@ -46,7 +46,9 @@ Operande::~Operande(){
         }
         Litterale* LitNumerique::operatorNeg() {
             neg = !neg;
-            return this;
+            Entier* newe3 = dynamic_cast<Entier*>(this); if (newe3 != nullptr){return (new Entier(*newe3));}
+            Reelle* newe4 = dynamic_cast<Reelle*>(this); if (newe4 != nullptr){return (new Reelle(*newe4));}
+            Rationelle* newe5 = dynamic_cast<Rationelle*>(this);if (newe5 != nullptr){return (new Rationelle(*newe5)) ;}
         }
         Litterale* LitNumerique::operatorExp(){
             return this;
@@ -58,13 +60,13 @@ Operande::~Operande(){
             //I.4.1) Entier
             Litterale* Entier::operatorExp(){
                 if (neg) throw ComputerException("Operation impossible sur litterale negative");;
-                value = exp(value);
-                return this;
+                float f = exp(value);
+                return (new Reelle(f));
             }
             Litterale* Entier::operatorLn(){
                 if (neg) throw ComputerException("Operation impossible sur litterale negative");;
-                value = log(value);
-                return this;
+                float f = log(value);
+                return (new Reelle(f));
             }
 
             QString Entier::toString() const {
@@ -86,17 +88,22 @@ Operande::~Operande(){
             }
 
             //I.4.3) Reelle
+            float Reelle::toFloatPositif() const {
+                QString val = QString::number(pEntiere) + "." + QString::number(mantisse);
+                return val.toFloat();
+            }
+
             Litterale* Reelle::operatorExp(){
                 if (neg) throw ComputerException("Operation impossible sur litterale negative");;
-                value = exp(value);
-                pEntiere = floor(value); mantisse = (value-pEntiere)*1000000 ;
-                return this;
+                float f = toFloatPositif();
+                f = exp(f);
+                return (new Reelle(f));
             }
             Litterale* Reelle::operatorLn(){
                 if (neg) throw ComputerException("Operation impossible sur litterale negative");;
-                value = log(value);
-                pEntiere = floor(value); mantisse = (value-pEntiere)*1000000 ;
-                return this;
+                float f = toFloatPositif();
+                f = log(f);
+                return (new Reelle(f));
             }
             QString Reelle::toString() const {
                 QString val = QString::number(pEntiere) + "." + QString::number(mantisse);
@@ -124,7 +131,9 @@ Operande::~Operande(){
             LitNumerique* arg1 = dynamic_cast<LitNumerique*>(tab.front());
 
             if(arg1 != nullptr){
-                return fonctionNum(*arg1);
+                Litterale* res = fonctionNum(*arg1);
+                delete arg1;
+                return res;
             }
             else {
                 throw "error : operateur non valide sur ce litterale";

@@ -34,9 +34,7 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
     bool ok=false;
 
        unsigned int val = v.toInt(&ok); if(ok){return (new Entier(val));}
-       float val2 = v.toFloat(&ok) ; if(ok){
-           unsigned int o = floor(val2); float o2 = (val2-o)*100000 ;
-           return (new Reelle(o,o2,val2));}
+       double val2 = v.toDouble(&ok) ; if(ok){return (new Reelle(val2));}
        // Factorielle : to do
        QString::const_iterator it = v.end(); it--;
        if ( ((*v.begin()) == "'") && ((*it) == "'") ) return(new LitExpression(v));
@@ -188,7 +186,7 @@ try {
         test = false;
         Litterale& e=litMng.addLitterale(res);
         litAff.push(e);
-        litAff.setMessage(litAff.getMessage() + " /***\ "+ litMng.messageNouvelleCreation(e));
+        litAff.setMessage(litAff.getMessage() + " *** "+ litMng.messageNouvelleCreation(e));
         delete op; //detruit les litterales qui ne sont plus à jour
 
      }else{
