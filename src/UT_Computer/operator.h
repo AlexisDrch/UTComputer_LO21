@@ -130,6 +130,9 @@ public:
             Nombres(const QString& na=""):Litterale(na){}
             virtual ~Nombres(){}
             virtual QString toString() const =0;
+
+            //Opearteur Binaire
+            virtual Litterale* operator+(const Nombres& n) = 0;
         };
             //On choisira ici de rester conforme à l'énoncé en séparant les LitNumerique des complexes.
 
@@ -143,11 +146,15 @@ public:
                 virtual QString toString() const = 0;
                 void setNeg(bool s) { neg = s;}
                 bool getNeg() const {return neg;}
+                Litterale* returnType();
 
-                //Operateur
+                //Operateur unaire
                 Litterale* operatorNeg();
                 virtual Litterale* operatorExp();
                 virtual Litterale* operatorLn();
+                virtual Litterale* operatorSin();
+                //Operateur binaire
+                virtual Litterale* operator+(const Nombres& n) = 0;
             };
 
             //4.1.1) Littérale entière
@@ -162,6 +169,9 @@ public:
                     //Operateur
                     Litterale* operatorExp();
                     Litterale* operatorLn();
+                    Litterale* operatorSin();
+                    //Operateur binaire
+                    Litterale* operator+(const Nombres& n);
                 };
 
             //4.1.2) Littérale rationelle
@@ -175,7 +185,8 @@ public:
                     LitNumerique* simplification();
 
                     //Operateur
-                    Litterale* operatorExp();
+                    Litterale* operator+(const Nombres& n);
+                    // TODO
                };
 
             //4.1.3) Littérale réelle
@@ -184,7 +195,7 @@ public:
                     unsigned int mantisse;
                 public:
                     //mantisse != 0 OR pEntiere != 0
-                    Reelle(float val, const QString& na=""):LitNumerique(na), pEntiere(floor(val)), mantisse((val-pEntiere)*1000000){}
+                    Reelle(float val, const QString& na=""):LitNumerique(na), pEntiere(floor(val)), mantisse((val-pEntiere)*100000){}
                     LitNumerique* simplification();
                     QString toString() const;
                     float toFloatPositif() const;
@@ -192,6 +203,9 @@ public:
                     //Operateur
                     Litterale* operatorExp();
                     Litterale* operatorLn();
+                    Litterale* operatorSin();
+                    //Operateur binaire
+                    Litterale* operator+(const Nombres& n);
                 };
 
         //4.2) Complexe
@@ -304,13 +318,13 @@ public:
             OpNeg(): OpUnaire("NEG"){}
             Litterale* fonctionNum(LitNumerique& arg1) const;
 
-        };/*
+        };
 
         class OpSin : public OpUnaire {
         public:
             OpSin(): OpUnaire("SIN"){}
             Litterale* fonctionNum(LitNumerique& arg1) const;
-        };
+        };/*
 
         class OpCos : public OpUnaire {
         public:
@@ -374,7 +388,7 @@ public:
             virtual ~OpBinaire();
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
-            virtual Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const =0;
+            virtual Litterale* fonctionNum(LitNumerique& arg1, Litterale& arg2) const = 0;
             unsigned int addArg(Litterale& e);
 
         };
@@ -416,12 +430,13 @@ public:
             Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
         };
 
-        class OpPlus : public OpBinaire{
+        */class OpPlus : public OpBinaire{
         public:
             OpPlus() : OpBinaire("+"){}
-            Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
-        };
+            Litterale* fonctionNum(LitNumerique& arg1, Litterale& arg2) const;
 
+        };
+        /*
         class OpMoins : public OpBinaire{
         public:
             OpMoins() : OpBinaire("-"){}

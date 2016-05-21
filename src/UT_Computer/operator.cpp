@@ -44,17 +44,24 @@ Operande::~Operande(){
         LitNumerique::~LitNumerique(){
 
         }
-        Litterale* LitNumerique::operatorNeg() {
-            neg = !neg;
+        Litterale* LitNumerique::returnType(){
             Entier* newe3 = dynamic_cast<Entier*>(this); if (newe3 != nullptr){return (new Entier(*newe3));}
             Reelle* newe4 = dynamic_cast<Reelle*>(this); if (newe4 != nullptr){return (new Reelle(*newe4));}
             Rationelle* newe5 = dynamic_cast<Rationelle*>(this);if (newe5 != nullptr){return (new Rationelle(*newe5)) ;}
         }
+
+        Litterale* LitNumerique::operatorNeg() {
+            neg = !neg;
+            return returnType();
+        }
         Litterale* LitNumerique::operatorExp(){
-            return this;
+            return returnType();
         }
         Litterale* LitNumerique::operatorLn(){
-            return this;
+            return returnType();
+        }
+        Litterale* LitNumerique::operatorSin(){
+            return returnType();
         }
 
             //I.4.1) Entier
@@ -68,6 +75,17 @@ Operande::~Operande(){
                 float f = log(value);
                 return (new Reelle(f));
             }
+            Litterale* Entier::operatorSin(){
+                double x = (double) value;
+                x = sin(x);
+                if (x<0){
+                    x =-x;
+                    neg  = !neg;
+                }
+                Reelle* res = new Reelle(x);
+                if (neg) res->setNeg(!res->getNeg());
+                return(res);
+            }
 
             QString Entier::toString() const {
                 QString val = QString::number(value);
@@ -78,10 +96,10 @@ Operande::~Operande(){
             }
 
             //I.4.2) Rationelle
-            Litterale* Rationelle::operatorExp(){
+            /*Litterale* Rationelle::operatorExp(){
                 //value = exp(value);
                 return this;
-            }
+            }*/
 
             QString Rationelle::toString() const {
                 return (numerateur.toString() + "/" + denominateur.toString());
@@ -105,6 +123,17 @@ Operande::~Operande(){
                 f = log(f);
                 return (new Reelle(f));
             }
+            Litterale* Reelle::operatorSin(){
+                double x = (double) toFloatPositif();
+                x = sin(x);
+                if (x<0){
+                    x =-x;
+                    neg  = !neg;
+                }
+                Reelle* res = new Reelle(x);
+                if (neg) res->setNeg(!res->getNeg());
+                return(res);
+            }
             QString Reelle::toString() const {
                 QString val = QString::number(pEntiere) + "." + QString::number(mantisse);
                 if (neg) {
@@ -125,7 +154,12 @@ Operande::~Operande(){
         OpUnaire::~OpUnaire(){
 
         }
-
+        unsigned int OpUnaire::addArg(Litterale& e){
+            if (tab.size() <=2){
+            tab.push_back(&e);
+            }
+            else throw "Error : Tentative d'ajout de plus de 2 arguments à un opérateur binaire";
+        }
         Litterale* OpUnaire::executer(){
 
             LitNumerique* arg1 = dynamic_cast<LitNumerique*>(tab.front());
@@ -155,6 +189,10 @@ Operande::~Operande(){
             Litterale* OpLn::fonctionNum(LitNumerique &arg1) const{
                 return arg1.operatorLn();
             }
+            //SIN
+            Litterale* OpSin::fonctionNum(LitNumerique &arg1) const{
+                return arg1.operatorSin();
+            }
 
 
         //II.2) Operateur Binaire
@@ -162,27 +200,35 @@ Operande::~Operande(){
 
         }
 
-        Litterale* OpBinaire::executer(){
-            return (new Entier(3));
-
+        unsigned int OpBinaire::addArg(Litterale& e){
+            if (tab.size() <=2){
+            tab.push_back(&e);
+            }
+            else throw "Error : Tentative d'ajout de plus de 2 arguments à un opérateur binaire";
         }
 
+        Litterale* OpBinaire::executer(){
 
-unsigned int OpUnaire::addArg(Litterale& e){
-    if (tab.size() <=2){
-    tab.push_back(&e);
-    }
-    else throw "Error : Tentative d'ajout de plus de 2 arguments à un opérateur binaire";
-}
+            LitNumerique* arg1 = dynamic_cast<LitNumerique*>(tab.front());
+            Litterale* arg2 = tab.operator [](1);
 
+            if(arg1 != nullptr){
+                Litterale* res = fonctionNum(*arg1,*arg2);
+                delete arg1;
+                return res;
+            }
+            else {
+                throw "error : operateur non valide sur ce litterale";
+                //LitExpression* arg1 = dynamic_cast<LitExpression*>(tab.front());
+                //if(arg1 != nullptr){
+                //return fonction2(*arg1);*/
+            }
+        }
 
-unsigned int OpBinaire::addArg(Litterale& e){
-    if (tab.size() <=2){
-    tab.push_back(&e);
-    }
-    else throw "Error : Tentative d'ajout de plus de 2 arguments à un opérateur binaire";
-}
-
+            //OpPlus
+            Litterale* OpPlus::fonctionNum(LitNumerique& arg1, Litterale &arg2) const{
+                return arg1+arg2;
+            }
 
 
 //Littérale expression

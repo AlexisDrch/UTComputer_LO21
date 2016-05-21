@@ -33,8 +33,8 @@ bool LitteraleManager::verifLitterale(const QString& v){
 Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
     bool ok=false;
 
-       unsigned int val = v.toInt(&ok); if(ok){return (new Entier(val));}
-       double val2 = v.toDouble(&ok) ; if(ok){return (new Reelle(val2));}
+       unsigned int val = v.toLongLong(&ok); if(ok){return (new Entier(val));}
+       float val2 = v.toFloat(&ok) ; if(ok){return (new Reelle(val2));}
        // Factorielle : to do
        QString::const_iterator it = v.end(); it--;
        if ( ((*v.begin()) == "'") && ((*it) == "'") ) return(new LitExpression(v));

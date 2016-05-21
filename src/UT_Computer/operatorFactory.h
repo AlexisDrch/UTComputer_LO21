@@ -80,12 +80,12 @@ public:
     OpNegFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpNeg(); }
 };
-/*
+
 class OpSinFactory : public OperateurFactory {
 public:
     OpSinFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpSin(); }
-};
+};/*
 
 class OpCosFactory : public OperateurFactory {
 public:
@@ -176,13 +176,13 @@ public:
     OpOrFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpOr(); }
 };
-
+*/
 class OpPlusFactory : public OperateurFactory {
 public:
     OpPlusFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpPlus(); }
 };
-
+/*
 class OpMoinsFactory : public OperateurFactory {
 public:
     OpMoinsFactory() : OperateurFactory() {}
