@@ -8,6 +8,12 @@
 #include <string>
 
 
+class ComputerException {
+    QString info;
+public:
+    ComputerException(const QString& str):info(str){}
+    QString getInfo() const { return info; }
+};
 
 //I] Operande : classe de base.
     class Operande {
@@ -62,6 +68,7 @@
             LitExpression(const QString& str, const QString& na = "");
             Litterale* getValue() const;
             QString toString()const;
+            void  verifNeg() const;
             //Operateur unaire
             QString operatorUnaire(const QString& str);
             Litterale* operatorExp();
@@ -140,6 +147,7 @@
                 //Operateur
                 Litterale* operatorNeg();
                 virtual Litterale* operatorExp();
+                virtual Litterale* operatorLn();
             };
 
             //4.1.1) Littérale entière
@@ -153,6 +161,7 @@
 
                     //Operateur
                     Litterale* operatorExp();
+                    Litterale* operatorLn();
                 };
 
             //4.1.2) Littérale rationelle
@@ -173,14 +182,16 @@
                 class Reelle: public LitNumerique{
                     unsigned int pEntiere;
                     unsigned int mantisse;
+                    float value;
                 public:
                     //mantisse != 0 OR pEntiere != 0
-                    Reelle(unsigned int ent, unsigned int man, const QString& na=""):LitNumerique(na), pEntiere(ent), mantisse(man){}
+                    Reelle(unsigned int ent, unsigned int man, float val, const QString& na=""):LitNumerique(na), pEntiere(ent), mantisse(man), value(val){}
                     LitNumerique* simplification();
                     QString toString() const;
 
                     //Operateur
                     Litterale* operatorExp();
+                    Litterale* operatorLn();
                 };
 
         //4.2) Complexe
@@ -233,13 +244,13 @@
             OpExp(): OpUnaire("EXP"){}
             Litterale* fonctionNum(LitNumerique& arg1) const;
         };
-    /*
+
         class OpLn : public OpUnaire {
         public:
             OpLn(): OpUnaire("LN"){}
             Litterale* fonctionNum(LitNumerique& arg1) const;
         };
-
+    /*
         class OpNum : public OpUnaire {
         public:
             OpNum(): OpUnaire("NUM"){}

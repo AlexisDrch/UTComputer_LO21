@@ -14,7 +14,6 @@ public:
     virtual Operateur* getOperateur() =0;
     static QMap<QString, OperateurFactory*> getFactoriesMap();
 };
-/*
 
 class OpExpFactory : public OperateurFactory {
 public:
@@ -27,7 +26,7 @@ public:
     OpLnFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpLn(); }
 };
-
+/*
 class OpNumFactory : public OperateurFactory {
 public:
     OpNumFactory() : OperateurFactory() {}

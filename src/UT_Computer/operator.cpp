@@ -51,10 +51,19 @@ Operande::~Operande(){
         Litterale* LitNumerique::operatorExp(){
             return this;
         }
+        Litterale* LitNumerique::operatorLn(){
+            return this;
+        }
 
             //I.4.1) Entier
             Litterale* Entier::operatorExp(){
+                if (neg) throw ComputerException("Operation impossible sur litterale negative");;
                 value = exp(value);
+                return this;
+            }
+            Litterale* Entier::operatorLn(){
+                if (neg) throw ComputerException("Operation impossible sur litterale negative");;
+                value = log(value);
                 return this;
             }
 
@@ -68,7 +77,7 @@ Operande::~Operande(){
 
             //I.4.2) Rationelle
             Litterale* Rationelle::operatorExp(){
-                //todo
+                //value = exp(value);
                 return this;
             }
 
@@ -78,7 +87,15 @@ Operande::~Operande(){
 
             //I.4.3) Reelle
             Litterale* Reelle::operatorExp(){
-                //todo
+                if (neg) throw ComputerException("Operation impossible sur litterale negative");;
+                value = exp(value);
+                pEntiere = floor(value); mantisse = (value-pEntiere)*1000000 ;
+                return this;
+            }
+            Litterale* Reelle::operatorLn(){
+                if (neg) throw ComputerException("Operation impossible sur litterale negative");;
+                value = log(value);
+                pEntiere = floor(value); mantisse = (value-pEntiere)*1000000 ;
                 return this;
             }
             QString Reelle::toString() const {
@@ -92,7 +109,10 @@ Operande::~Operande(){
 
     //II]Operateur
     Operateur::~Operateur(){
-
+     //ici on supprime les litteraux sauf le premier (car c'est devenu le resultat de l'operation et est en pile)
+    for(unsigned int i =1; i <taille; i++){
+        delete tab.operator [](i);
+    }
     }
         //II.1) Operateur Unaire
         OpUnaire::~OpUnaire(){
@@ -107,11 +127,10 @@ Operande::~Operande(){
                 return fonctionNum(*arg1);
             }
             else {
-                throw "error dans executer";
+                throw "error : operateur non valide sur ce litterale";
                 //LitExpression* arg1 = dynamic_cast<LitExpression*>(tab.front());
-                //autre test
-                /*if(arg1 != nullptr){
-                return fonction2(*arg1);*/
+                //if(arg1 != nullptr){
+                //return fonction2(*arg1);*/
             }
         }
 
@@ -119,10 +138,13 @@ Operande::~Operande(){
             Litterale* OpNeg::fonctionNum(LitNumerique &arg1) const{
                 return arg1.operatorNeg();
             }
-
-            //EXP
+             //EXP
             Litterale* OpExp::fonctionNum(LitNumerique &arg1) const{
                 return arg1.operatorExp();
+            }
+            //LN
+            Litterale* OpLn::fonctionNum(LitNumerique &arg1) const{
+                return arg1.operatorLn();
             }
 
 

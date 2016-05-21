@@ -34,17 +34,19 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
     bool ok=false;
 
        unsigned int val = v.toInt(&ok); if(ok){return (new Entier(val));}
-       float val2 = v.toFloat(&ok) ; if(ok){return (new Reelle(3,035));} // A revoir
+       float val2 = v.toFloat(&ok) ; if(ok){
+           unsigned int o = floor(val2); float o2 = (val2-o)*100000 ;
+           return (new Reelle(o,o2,val2));}
        // Factorielle : to do
        QString::const_iterator it = v.end(); it--;
        if ( ((*v.begin()) == "'") && ((*it) == "'") ) return(new LitExpression(v));
        if ( ((*v.begin()) == "[") && ((*it) == "]") ) return(new LitProgramme(v));
 
-    return (new LitAtome(*v.begin()));
+    return (new LitAtome(v+"dead"));
 }
 
 Litterale& LitteraleManager::addLitterale(const QString& v){
-    if(verifLitterale(v)){
+    if(verifLitterale(v)){ // surement pas utile car test déjà effectuer dans commande du controleur
         if (nb==nbMax) agrandissementCapacite();
         Litterale* newLit = fabriqLitterale(v);
         lits[nb++] = newLit;
@@ -53,11 +55,18 @@ Litterale& LitteraleManager::addLitterale(const QString& v){
    else throw ComputerException("Error instance impossible");
 }
 
+Litterale& LitteraleManager::addLitterale(Litterale* res){
+        if (nb==nbMax) agrandissementCapacite();
+        Litterale* newLit = res;
+        lits[nb++] = newLit;
+        return *lits[nb-1];
+}
+
 void LitteraleManager::removeLitterale(Litterale& e){
     unsigned int i=0;
     while(i<nb && lits[i]!=&e) i++;
     if (i==nb) throw ComputerException("elimination d'une Litterale inexistante");
-    lits[i]=0;
+    lits[i]=0; // le litterale sera reellement détruit avec l'operateur dans algo commande du controler
 	i++;
     while(i<nb) { lits[i-1]=lits[i]; i++; }
 	nb--;
@@ -73,6 +82,14 @@ Litterale& Item::getLitterale() const {
         return *lit;
 }
 
+
+QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
+    LitExpression* newe = dynamic_cast<LitExpression*>(&lit); if (newe != nullptr){return "New : EXPRESSION";}
+    LitProgramme* newe2 = dynamic_cast<LitProgramme*>(&lit); if (newe2 != nullptr){return "New : PROGRAMME";}
+    Entier* newe3 = dynamic_cast<Entier*>(&lit); if (newe3 != nullptr){return "New : ENTIER";}
+    Reelle* newe4 = dynamic_cast<Reelle*>(&lit); if (newe4 != nullptr){return "New : REELLE";}
+    Rationelle* newe5 = dynamic_cast<Rationelle*>(&lit);if (newe5 != nullptr){return "New : RATIONNELLE" ;}
+}
 
 void Pile::agrandissementCapacite() {
 	Item* newtab=new Item[(nbMax+1)*2];
@@ -159,35 +176,33 @@ test = true;
 
 try {
     Operateur* op = getOperateur(c);
-    test = false;
     unsigned int opSize = op->getTaille();
     if(litAff.taille() >= opSize){
 
         for(unsigned int i =0; i <opSize; i++){
             op->addArg(litAff.top()); // ici on récupère l'item de la pile
-            litMng.removeLitterale(litAff.top()); //TO DO TO DO :: fuite mémoire !!! A VERIFIER =0?
+            litMng.removeLitterale(litAff.top());
             litAff.pop();
-            }
-        Litterale* res = op->executer();
-        Litterale& e=litMng.addLitterale(res->toString());
+        }
+        Litterale* res = op->executer();        
+        test = false;
+        Litterale& e=litMng.addLitterale(res);
         litAff.push(e);
-        delete op;
+        litAff.setMessage(litAff.getMessage() + " /***\ "+ litMng.messageNouvelleCreation(e));
+        delete op; //detruit les litterales qui ne sont plus à jour
+
      }else{
             litAff.setMessage("Erreur : pas assez d'arguments");
      }
 
-}catch(ComputerException ex) {
+}catch(ComputerException& ex) {
 
     litAff.setMessage(ex.getInfo());
     if (test){
     if (litMng.verifLitterale(c)){ //nombre or expression or Programme
 
-    litAff.push(litMng.addLitterale(c));    
-    LitExpression* newe = dynamic_cast<LitExpression*>(&litAff.top()); if (newe != nullptr){litAff.setMessage("EXPRESSION");}
-    LitProgramme* newe2 = dynamic_cast<LitProgramme*>(&litAff.top()); if (newe2 != nullptr){litAff.setMessage("PROGRAMME");}
-    Entier* newe3 = dynamic_cast<Entier*>(&litAff.top()); if (newe3 != nullptr){litAff.setMessage("ENTIER");}
-    Reelle* newe4 = dynamic_cast<Reelle*>(&litAff.top()); if (newe4 != nullptr){litAff.setMessage("REELLE");}
-    Rationelle* newe5 = dynamic_cast<Rationelle*>(&litAff.top()); if (newe5 != nullptr){litAff.setMessage("RATIONELLE");}
+    litAff.push(litMng.addLitterale(c));
+    litAff.setMessage(litMng.messageNouvelleCreation(litAff.top()));
 
     }else if (isVariable(c)){ // recherche dans la bdd (map variable)
         //recup litterale

@@ -10,12 +10,6 @@
 
 using namespace std;
 
-class ComputerException {
-    QString info;
-public:
-    ComputerException(const QString& str):info(str){}
-    QString getInfo() const { return info; }
-};
 
 
 class LitteraleManager {
@@ -37,11 +31,13 @@ class LitteraleManager {
     static Handler handler;
 public:
     Litterale& addLitterale(const QString& str);
+    Litterale& addLitterale(Litterale* res);
     bool verifLitterale(const QString& c); // to implement
     Litterale* fabriqLitterale(const QString& v); // to implement
     void removeLitterale(Litterale& e);
     static LitteraleManager& getInstance();
     static void libererInstance();
+    QString messageNouvelleCreation(Litterale& lit);
     class iterator {
         Litterale** current;
         iterator(Litterale** u):current(u){}
