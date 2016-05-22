@@ -245,33 +245,74 @@ Operande::~Operande(){
             Litterale* OpPlus::actionNum(Entier& arg1, Entier& arg2){
                 long y; bool neg =false;
                 if(arg1.getNeg() && arg2.getNeg()){ y = arg1.getValue()+arg2.getValue(); neg = true; }
-                else if(arg1.getNeg()) { y = -arg1.getValue() + arg2.getValue(); if(y<0) {y=-y; neg = true;} }
-                else if(arg2.getNeg()) { y = arg1.getValue() - arg2.getValue(); if(y<0) {y=-y; neg = true;} }
+                else if(arg1.getNeg()) { y = -arg1.getValue() + arg2.getValue();}
+                else if(arg2.getNeg()) { y = arg1.getValue() - arg2.getValue();}
                 else y = arg1.getValue() + arg2.getValue();
+                if(y<0) {y=-y; neg = true;}
                 Entier* res = new Entier(y); if (neg) res->setNeg(true); return res;
             }
             Litterale* OpPlus::actionNum(Entier& arg1, Reelle& arg2){
                 float y; bool neg =false;
                 if(arg1.getNeg() && arg2.getNeg()){ y = arg1.getValue()+arg2.toFloatPositif(); neg = true; }
-                else if(arg1.getNeg()) { y = -arg1.getValue() + arg2.toFloatPositif(); if(y<0) {y=-y; neg = true;} }
-                else if(arg2.getNeg()) { y = arg1.getValue() - arg2.toFloatPositif(); if(y<0) {y=-y; neg = true;} }
+                else if(arg1.getNeg()) { y = -arg1.getValue() + arg2.toFloatPositif(); }
+                else if(arg2.getNeg()) { y = arg1.getValue() - arg2.toFloatPositif();}
                 else y = arg1.getValue() + arg2.toFloatPositif();
+                if(y<0) {y=-y; neg = true;}
                 Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
             }
             Litterale* OpPlus::actionNum(Reelle& arg1, Reelle &arg2){
                 float y; bool neg =false;
                 if(arg1.getNeg() && arg2.getNeg()){ y = arg1.toFloatPositif()+arg2.toFloatPositif(); neg = true; }
-                else if(arg1.getNeg()) { y = -arg1.toFloatPositif() + arg2.toFloatPositif(); if(y<0) {y=-y; neg = true;} }
-                else if(arg2.getNeg()) { y = arg1.toFloatPositif() - arg2.toFloatPositif(); if(y<0) {y=-y; neg = true;} }
+                else if(arg1.getNeg()) { y = -arg1.toFloatPositif() + arg2.toFloatPositif(); }
+                else if(arg2.getNeg()) { y = arg1.toFloatPositif() - arg2.toFloatPositif(); }
                 else y = arg1.toFloatPositif() + arg2.toFloatPositif();
+                if(y<0) {y=-y; neg = true;}
                 Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
             }
             Litterale* OpPlus::actionNum(Reelle& arg1, Entier& arg2){
                 float y; bool neg =false;
                 if(arg1.getNeg() && arg2.getNeg()){ y = arg1.toFloatPositif()+arg2.getValue(); neg = true; }
-                else if(arg1.getNeg()) { y = -arg1.toFloatPositif() + arg2.getValue(); if(y<0) {y=-y; neg = true;} }
-                else if(arg2.getNeg()) { y = arg1.toFloatPositif() - arg2.getValue(); if(y<0) {y=-y; neg = true;} }
+                else if(arg1.getNeg()) { y = -arg1.toFloatPositif() + arg2.getValue();  }
+                else if(arg2.getNeg()) { y = arg1.toFloatPositif() - arg2.getValue(); }
                 else y = arg1.toFloatPositif() + arg2.getValue();
+                if(y<0) {y=-y; neg = true;}
+                Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
+            }
+            //OpMoins
+            Litterale* OpMoins::actionNum(Entier& arg1, Entier& arg2){
+                long y; bool neg =false;
+                if(arg1.getNeg() && arg2.getNeg()){ y = -arg1.getValue() + arg2.getValue();}
+                else if(arg1.getNeg()) { y = -arg1.getValue() - arg2.getValue(); }
+                else if(arg2.getNeg()) { y = arg1.getValue() + arg2.getValue(); }
+                else y = arg1.getValue() - arg2.getValue();
+                if(y<0) {y=-y; neg = true;}
+                Entier* res = new Entier(y); if (neg) res->setNeg(true); return res;
+            }
+            Litterale* OpMoins::actionNum(Entier& arg1, Reelle& arg2){
+                float y; bool neg =false;
+                if(arg1.getNeg() && arg2.getNeg()){ y = -arg1.getValue() + arg2.toFloatPositif(); }
+                else if(arg1.getNeg()) { y = -arg1.getValue() - arg2.toFloatPositif(); }
+                else if(arg2.getNeg()) { y = arg1.getValue() + arg2.toFloatPositif(); }
+                else y = arg1.getValue() - arg2.toFloatPositif();
+                if(y<0) {y=-y; neg = true;}
+                Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
+            }
+            Litterale* OpMoins::actionNum(Reelle& arg1, Reelle &arg2){
+                float y; bool neg =false;
+                if(arg1.getNeg() && arg2.getNeg()){ y = -arg1.toFloatPositif() + arg2.toFloatPositif(); neg = true; }
+                else if(arg1.getNeg()) { y = -arg1.toFloatPositif() + arg2.toFloatPositif(); }
+                else if(arg2.getNeg()) { y = arg1.toFloatPositif() - arg2.toFloatPositif(); }
+                else y = arg1.toFloatPositif() - arg2.toFloatPositif();
+                if(y<0) {y=-y; neg = true;}
+                Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
+            }
+            Litterale* OpMoins::actionNum(Reelle& arg1, Entier& arg2){
+                float y; bool neg =false;
+                if(arg1.getNeg() && arg2.getNeg()){ y = arg1.toFloatPositif()+arg2.getValue(); neg = true; }
+                else if(arg1.getNeg()) { y = -arg1.toFloatPositif() + arg2.getValue(); }
+                else if(arg2.getNeg()) { y = arg1.toFloatPositif() - arg2.getValue(); }
+                else y = arg1.toFloatPositif() - arg2.getValue();
+                if(y<0) {y=-y; neg = true;}
                 Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
             }
 

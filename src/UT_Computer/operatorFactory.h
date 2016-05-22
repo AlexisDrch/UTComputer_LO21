@@ -182,12 +182,13 @@ public:
     OpPlusFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpPlus(); }
 };
-/*
+
 class OpMoinsFactory : public OperateurFactory {
 public:
     OpMoinsFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpMoins(); }
 };
+/*
 
 class OpMulFactory : public OperateurFactory {
 public:

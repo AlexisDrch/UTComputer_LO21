@@ -452,13 +452,17 @@ public:
             Litterale* actionNum(Reelle& arg1, Entier& arg2);
 
         };
-        /*
+
         class OpMoins : public OpBinaire{
         public:
             OpMoins() : OpBinaire("-"){}
-            Litterale*fonction(const Litterale& arg1, const Litterale& arg2) const;
+            Litterale*fonction(const Litterale& arg1, const Litterale& arg2);
+            Litterale* actionNum(Entier& arg1, Entier& arg2);
+            Litterale* actionNum(Entier& arg1, Reelle& arg2);
+            Litterale* actionNum(Reelle& arg1, Reelle& arg2);
+            Litterale* actionNum(Reelle& arg1, Entier& arg2);
         };
-
+        /*
         class OpDiv : public OpBinaire{
         public:
             OpDiv() : OpBinaire("/"){}

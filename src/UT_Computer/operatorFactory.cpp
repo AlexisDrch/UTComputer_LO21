@@ -9,8 +9,8 @@ QMap<QString,OperateurFactory*> OperateurFactory::getFactoriesMap() {
     QMap<QString, OperateurFactory*> factories;
 
 
-    factories["+"] = new OpPlusFactory();/*
-    factories["-"] = new OpMoinsFactory();
+    factories["+"] = new OpPlusFactory();
+    factories["-"] = new OpMoinsFactory();/*
     factories["*"] = new OpMulFactory();
     factories["/"] = new OpDivFactory();
    /* factories["DIV"] = new OpDiventFactory();
