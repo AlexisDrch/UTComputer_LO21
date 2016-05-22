@@ -227,12 +227,12 @@ Operande::~Operande(){
 
         Litterale* OpBinaire::executer(){
 
-            LitNumerique* arg1 = dynamic_cast<LitNumerique*>(tab.front());
-            Litterale* arg2 = tab.operator [](1);
+            LitNumerique* arg1 = dynamic_cast<LitNumerique*>(tab.operator [](1));
+            Litterale* arg2 = tab.operator [](0);
 
             if(arg1 != nullptr){
                 Litterale* res = fonctionNum(arg1,arg2);
-                delete arg1;
+                delete arg2;
                 return res;
             }
             else {
