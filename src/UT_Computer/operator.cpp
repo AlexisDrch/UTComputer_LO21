@@ -73,6 +73,20 @@ Operande::~Operande(){
             }
 
             //I.4.2) Rationelle
+			
+			int pgcd(int a, int b) { return b ?  pgcd(b,a%b) : a; }
+
+            Litterale* Rationelle::simplification(){
+                int n = numerateur.getValue(), d = denominateur.getValue();
+                int r = pgcd(n, d);
+                numerateur.setValue(n/r);
+                denominateur.setValue(d/r);
+                if (denominateur.getValue() != 1) {
+                    return new Rationelle(numerateur.getValue(),denominateur.getValue(),numerateur.getValue() + "/" + denominateur.getValue());
+                } else {
+                    return new Entier(numerateur.getValue());
+                }
+            }
             /*Litterale* Rationelle::operatorExp(){
                 //value = exp(value);
                 return this;
