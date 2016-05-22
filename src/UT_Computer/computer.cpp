@@ -1,6 +1,6 @@
 #include "computer.h"
 #include <algorithm>
-
+class ComputerException;
 LitteraleManager::Handler LitteraleManager::handler=LitteraleManager::Handler();
 
 

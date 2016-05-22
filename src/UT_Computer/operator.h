@@ -132,7 +132,7 @@ public:
             virtual QString toString() const =0;
 
             //Opearteur Binaire
-            virtual Litterale* operator+(const Nombres& n) = 0;
+            //virtual Litterale* operator+(const Nombres& n) = 0;
         };
             //On choisira ici de rester conforme à l'énoncé en séparant les LitNumerique des complexes.
 
@@ -149,12 +149,11 @@ public:
                 Litterale* returnType();
 
                 //Operateur unaire
-                Litterale* operatorNeg();
+                /*Litterale* operatorNeg();
                 virtual Litterale* operatorExp();
-                virtual Litterale* operatorLn();
+               /* virtual Litterale* operatorLn();
                 virtual Litterale* operatorSin();
-                //Operateur binaire
-                virtual Litterale* operator+(const Nombres& n) = 0;
+                //Operateur binaire*/
             };
 
             //4.1.1) Littérale entière
@@ -249,20 +248,24 @@ public:
             virtual ~OpUnaire();
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
-            virtual Litterale* fonctionNum(LitNumerique& arg1) const =0;
+            virtual Litterale* fonctionNum(LitNumerique* arg1) ; // definie action commune a tout LitNumerique puis appelle la bonne surcharge
+            virtual Litterale* actionNum(Entier& arg1)  =0;
+            virtual Litterale* actionNum(Reelle& arg1)  =0;
             unsigned int addArg(Litterale& e);
         };
 
        class OpExp : public OpUnaire {
         public:
             OpExp(): OpUnaire("EXP"){}
-            Litterale* fonctionNum(LitNumerique& arg1) const;
-        };
+            Litterale* actionNum(Entier &arg1) ;
+            Litterale* actionNum(Reelle &arg1) ;
 
+        };
         class OpLn : public OpUnaire {
         public:
             OpLn(): OpUnaire("LN"){}
-            Litterale* fonctionNum(LitNumerique& arg1) const;
+            Litterale* actionNum(Entier &arg1) ;
+            Litterale* actionNum(Reelle &arg1) ;
         };
     /*
         class OpNum : public OpUnaire {
@@ -316,14 +319,18 @@ public:
         class OpNeg : public OpUnaire {
         public:
             OpNeg(): OpUnaire("NEG"){}
-            Litterale* fonctionNum(LitNumerique& arg1) const;
+            Litterale* fonctionNum(LitNumerique *arg1) ;
+            Litterale* actionNum(Entier &arg1) ;
+            Litterale* actionNum(Reelle &arg1) ;
 
         };
 
         class OpSin : public OpUnaire {
         public:
             OpSin(): OpUnaire("SIN"){}
-            Litterale* fonctionNum(LitNumerique& arg1) const;
+            Litterale* actionNum(Entier &arg1) ;
+            Litterale* actionNum(Reelle &arg1) ;
+
         };/*
 
         class OpCos : public OpUnaire {
@@ -388,7 +395,13 @@ public:
             virtual ~OpBinaire();
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
-            virtual Litterale* fonctionNum(LitNumerique& arg1, Litterale& arg2) const = 0;
+            virtual Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
+            virtual Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
+            virtual Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
+            virtual Litterale* actionNum(Entier& arg1, Entier& arg2) =0;
+            virtual Litterale* actionNum(Entier& arg1, Reelle& arg2) =0;
+            virtual Litterale* actionNum(Reelle& arg1, Reelle& arg2) =0;
+            virtual Litterale* actionNum(Reelle& arg1, Entier& arg2) =0;
             unsigned int addArg(Litterale& e);
 
         };
@@ -430,10 +443,13 @@ public:
             Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
         };
 
-        */class OpPlus : public OpBinaire{
+     */ class OpPlus : public OpBinaire{
         public:
             OpPlus() : OpBinaire("+"){}
-            Litterale* fonctionNum(LitNumerique& arg1, Litterale& arg2) const;
+            Litterale* actionNum(Entier& arg1, Entier& arg2);
+            Litterale* actionNum(Entier& arg1, Reelle& arg2);
+            Litterale* actionNum(Reelle& arg1, Reelle& arg2);
+            Litterale* actionNum(Reelle& arg1, Entier& arg2);
 
         };
         /*

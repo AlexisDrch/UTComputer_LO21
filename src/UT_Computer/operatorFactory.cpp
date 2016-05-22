@@ -9,7 +9,7 @@ QMap<QString,OperateurFactory*> OperateurFactory::getFactoriesMap() {
     QMap<QString, OperateurFactory*> factories;
 
 
-   /* factories["+"] = new OpPlusFactory();
+    factories["+"] = new OpPlusFactory();/*
     factories["-"] = new OpMoinsFactory();
     factories["*"] = new OpMulFactory();
     factories["/"] = new OpDivFactory();
@@ -23,7 +23,7 @@ QMap<QString,OperateurFactory*> OperateurFactory::getFactoriesMap() {
     factories["ARCCOS"] = new OpArccosFactory();
     factories["ARCTAN"] = new OpArctanFactory();
     factories["SQRT"] = new OpSqrtFactory();
-    */factories["EXP"] = new OpExpFactory();
+  */factories["EXP"] = new OpExpFactory();
     factories["LN"] = new OpLnFactory();/*
     factories["NUM"] = new OpNumFactory();
     factories["DEN"] = new OpDenFactory();

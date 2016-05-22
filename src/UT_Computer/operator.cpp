@@ -50,31 +50,8 @@ Operande::~Operande(){
             Rationelle* newe5 = dynamic_cast<Rationelle*>(this);if (newe5 != nullptr){return (new Rationelle(*newe5)) ;}
         }
 
-        Litterale* LitNumerique::operatorNeg() {
-            neg = !neg;
-            return returnType();
-        }
-        Litterale* LitNumerique::operatorExp(){
-            return returnType();
-        }
-        Litterale* LitNumerique::operatorLn(){
-            return returnType();
-        }
-        Litterale* LitNumerique::operatorSin(){
-            return returnType();
-        }
-
             //I.4.1) Entier
-            Litterale* Entier::operatorExp(){
-                if (neg) throw ComputerException("Operation impossible sur litterale negative");;
-                float f = exp(value);
-                return (new Reelle(f));
-            }
-            Litterale* Entier::operatorLn(){
-                if (neg) throw ComputerException("Operation impossible sur litterale negative");;
-                float f = log(value);
-                return (new Reelle(f));
-            }
+
             Litterale* Entier::operatorSin(){
                 double x = (double) value;
                 x = sin(x);
@@ -110,30 +87,6 @@ Operande::~Operande(){
                 QString val = QString::number(pEntiere) + "." + QString::number(mantisse);
                 return val.toFloat();
             }
-
-            Litterale* Reelle::operatorExp(){
-                if (neg) throw ComputerException("Operation impossible sur litterale negative");;
-                float f = toFloatPositif();
-                f = exp(f);
-                return (new Reelle(f));
-            }
-            Litterale* Reelle::operatorLn(){
-                if (neg) throw ComputerException("Operation impossible sur litterale negative");;
-                float f = toFloatPositif();
-                f = log(f);
-                return (new Reelle(f));
-            }
-            Litterale* Reelle::operatorSin(){
-                double x = (double) toFloatPositif();
-                x = sin(x);
-                if (x<0){
-                    x =-x;
-                    neg  = !neg;
-                }
-                Reelle* res = new Reelle(x);
-                if (neg) res->setNeg(!res->getNeg());
-                return(res);
-            }
             QString Reelle::toString() const {
                 QString val = QString::number(pEntiere) + "." + QString::number(mantisse);
                 if (neg) {
@@ -165,7 +118,7 @@ Operande::~Operande(){
             LitNumerique* arg1 = dynamic_cast<LitNumerique*>(tab.front());
 
             if(arg1 != nullptr){
-                Litterale* res = fonctionNum(*arg1);
+                Litterale* res = fonctionNum(arg1);
                 delete arg1;
                 return res;
             }
@@ -176,22 +129,73 @@ Operande::~Operande(){
                 //return fonction2(*arg1);*/
             }
         }
+        Litterale* OpUnaire::fonctionNum(LitNumerique *arg1) {
+            Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return actionNum(*conv);
+            Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return actionNum(*conv1);
+        }
 
             //NEG
-            Litterale* OpNeg::fonctionNum(LitNumerique &arg1) const{
-                return arg1.operatorNeg();
+            Litterale* OpNeg::fonctionNum(LitNumerique* arg1){
+                arg1->setNeg(!arg1->getNeg());
+                return arg1->returnType();
             }
+            Litterale* OpNeg::actionNum(Entier& arg1){
+                arg1.setNeg(!arg1.getNeg());
+                return arg1.returnType();
+            }
+            Litterale* OpNeg::actionNum(Reelle& arg1){
+                arg1.setNeg(!arg1.getNeg());
+                return arg1.returnType();
+            }
+
              //EXP
-            Litterale* OpExp::fonctionNum(LitNumerique &arg1) const{
-                return arg1.operatorExp();
+            Litterale* OpExp::actionNum(Entier& arg1){
+                if (arg1.getNeg()) throw ComputerException("Operation impossible sur litterale negative");
+                float f = exp(arg1.getValue());
+                return (new Reelle(f));
+            }
+            Litterale* OpExp::actionNum(Reelle& arg1){
+                if (arg1.getNeg()) throw ComputerException("Operation impossible sur litterale negative");;
+                float f = arg1.toFloatPositif();
+                f = exp(f);
+                return (new Reelle(f));
             }
             //LN
-            Litterale* OpLn::fonctionNum(LitNumerique &arg1) const{
-                return arg1.operatorLn();
+            Litterale* OpLn::actionNum(Entier &arg1) {
+                if (arg1.getNeg()) throw ComputerException("Operation impossible sur litterale negative");;
+                float f = log(arg1.getValue());
+                return (new Reelle(f));
+
+            }
+            Litterale* OpLn::actionNum(Reelle &arg1) {
+                if (arg1.getNeg()) throw ComputerException("Operation impossible sur litterale negative");;
+                float f = arg1.toFloatPositif();
+                f = log(f);
+                return (new Reelle(f));
+
             }
             //SIN
-            Litterale* OpSin::fonctionNum(LitNumerique &arg1) const{
-                return arg1.operatorSin();
+            Litterale* OpSin::actionNum(Entier &arg1){
+                double x = (double) arg1.getValue();
+                x = sin(x);
+                if (x<0){
+                    x =-x;
+                    arg1.setNeg(!arg1.getNeg());
+                }
+                Reelle* res = new Reelle(x);
+                if (arg1.getNeg()) res->setNeg(!res->getNeg());
+                return(res);
+            }
+            Litterale* OpSin::actionNum(Reelle &arg1){
+                double x = (double) arg1.toFloatPositif();
+                x = sin(x);
+                if (x<0){
+                    x =-x;
+                    arg1.setNeg(!arg1.getNeg());
+                }
+                Reelle* res = new Reelle(x);
+                if (arg1.getNeg()) res->setNeg(!res->getNeg());
+                return(res);
             }
 
 
@@ -213,7 +217,7 @@ Operande::~Operande(){
             Litterale* arg2 = tab.operator [](1);
 
             if(arg1 != nullptr){
-                Litterale* res = fonctionNum(*arg1,*arg2);
+                Litterale* res = fonctionNum(arg1,arg2);
                 delete arg1;
                 return res;
             }
@@ -224,11 +228,54 @@ Operande::~Operande(){
                 //return fonction2(*arg1);*/
             }
         }
+        Litterale* OpBinaire::fonctionNum(Nombres* arg1, Litterale *arg2) {
+            Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return fonctionNum2(conv, arg2);
+            Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return fonctionNum2(conv1, arg2);
+        }
+        Litterale* OpBinaire::fonctionNum2(Entier* arg1, Litterale *arg2) {
+            Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
+            Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+        }
+        Litterale* OpBinaire::fonctionNum2(Reelle* arg1, Litterale *arg2) {
+            Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
+            Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+        }
 
             //OpPlus
-            Litterale* OpPlus::fonctionNum(LitNumerique& arg1, Litterale &arg2) const{
-                return arg1+arg2;
+            Litterale* OpPlus::actionNum(Entier& arg1, Entier& arg2){
+                long y; bool neg =false;
+                if(arg1.getNeg() && arg2.getNeg()){ y = arg1.getValue()+arg2.getValue(); neg = true; }
+                else if(arg1.getNeg()) { y = -arg1.getValue() + arg2.getValue(); if(y<0) {y=-y; neg = true;} }
+                else if(arg2.getNeg()) { y = arg1.getValue() - arg2.getValue(); if(y<0) {y=-y; neg = true;} }
+                else y = arg1.getValue() + arg2.getValue();
+                Entier* res = new Entier(y); if (neg) res->setNeg(true); return res;
             }
+            Litterale* OpPlus::actionNum(Entier& arg1, Reelle& arg2){
+                float y; bool neg =false;
+                if(arg1.getNeg() && arg2.getNeg()){ y = arg1.getValue()+arg2.toFloatPositif(); neg = true; }
+                else if(arg1.getNeg()) { y = -arg1.getValue() + arg2.toFloatPositif(); if(y<0) {y=-y; neg = true;} }
+                else if(arg2.getNeg()) { y = arg1.getValue() - arg2.toFloatPositif(); if(y<0) {y=-y; neg = true;} }
+                else y = arg1.getValue() + arg2.toFloatPositif();
+                Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
+            }
+            Litterale* OpPlus::actionNum(Reelle& arg1, Reelle &arg2){
+                float y; bool neg =false;
+                if(arg1.getNeg() && arg2.getNeg()){ y = arg1.toFloatPositif()+arg2.toFloatPositif(); neg = true; }
+                else if(arg1.getNeg()) { y = -arg1.toFloatPositif() + arg2.toFloatPositif(); if(y<0) {y=-y; neg = true;} }
+                else if(arg2.getNeg()) { y = arg1.toFloatPositif() - arg2.toFloatPositif(); if(y<0) {y=-y; neg = true;} }
+                else y = arg1.toFloatPositif() + arg2.toFloatPositif();
+                Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
+            }
+            Litterale* OpPlus::actionNum(Reelle& arg1, Entier& arg2){
+                float y; bool neg =false;
+                if(arg1.getNeg() && arg2.getNeg()){ y = arg1.toFloatPositif()+arg2.getValue(); neg = true; }
+                else if(arg1.getNeg()) { y = -arg1.toFloatPositif() + arg2.getValue(); if(y<0) {y=-y; neg = true;} }
+                else if(arg2.getNeg()) { y = arg1.toFloatPositif() - arg2.getValue(); if(y<0) {y=-y; neg = true;} }
+                else y = arg1.toFloatPositif() + arg2.getValue();
+                Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
+            }
+
+
 
 
 //Littérale expression
