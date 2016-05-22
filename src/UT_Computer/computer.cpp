@@ -24,6 +24,36 @@ void LitteraleManager::agrandissementCapacite() {
 	delete old;
 }
 
+Litterale* LitteraleManager::isRationelle(const QString& v){
+
+    bool rationnel = true, premiere_partie = true, seconde_partie = true;
+    int i=0, temp, num, den;
+    while (premiere_partie && i<v.size()-1) {
+        if (!v.at(i).isNumber())
+            premiere_partie = false;
+        i++;
+    }
+    if (i==1 || v.at(i-1) != '/')
+        rationnel = false;
+    temp = i;
+    num = v.left(i-1).toInt();
+    while (rationnel && seconde_partie && i<v.size()) {
+        if (!v.at(i).isNumber())
+            seconde_partie = false;
+        i++;
+    }
+    if (i+1 == v.size())
+        rationnel = false;
+    den = v.right(v.size()-(temp)).toInt();
+
+    if (rationnel) {
+        Litterale *l = (new Rationelle(num,den,num + "/" + den))->simplification();
+        return l;
+    }
+    else return (nullptr);
+
+}
+
 bool LitteraleManager::verifLitterale(const QString& v){
     //Todo
     return true;
@@ -35,35 +65,12 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
 
        unsigned int val = v.toLongLong(&ok); if(ok){return (new Entier(val));}
        float val2 = v.toFloat(&ok) ; if(ok){return (new Reelle(val2));}
+
        // Factorielle : to do
        QString::const_iterator it = v.end(); it--;
        if ( ((*v.begin()) == "'") && ((*it) == "'") ) return(new LitExpression(v));
        if ( ((*v.begin()) == "[") && ((*it) == "]") ) return(new LitProgramme(v));
-	   
-	   bool rationnel = true, premiere_partie = true, seconde_partie = true;
-       int i=0, temp, num, den;
-       while (premiere_partie && i<v.size()-1) {
-           if (!v.at(i).isNumber())
-               premiere_partie = false;
-           i++;
-       }
-       if (i==1 || v.at(i-1) != '/')
-           rationnel = false;
-       temp = i;
-       num = v.left(i-1).toInt();
-       while (rationnel && seconde_partie && i<v.size()) {
-           if (!v.at(i).isNumber())
-               seconde_partie = false;
-           i++;
-       }
-       if (i+1 == v.size())
-           rationnel = false;
-       den = v.right(v.size()-(temp)).toInt();
-
-       if (rationnel) {
-           Litterale *l = (new Rationelle(num,den,num + "/" + den))->simplification();
-           return l;
-       }
+       Litterale* l = isRationelle(v); if ( l != nullptr) return l; else delete l;
 
     return (new LitAtome(v+"dead"));
 }

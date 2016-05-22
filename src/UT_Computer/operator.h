@@ -164,6 +164,7 @@ public:
                     Entier(unsigned int va, const QString& na =""): LitNumerique(na), value(va){}
                     QString toString() const ;
                     unsigned int getValue() const {return value;}
+                    void setValue(unsigned int v) {value = v; }
 
                     //Operateur
                     Litterale* operatorExp();
@@ -181,7 +182,7 @@ public:
                     //Denominateur diff de 0 sinon throw et diff de 1 sinon appelle simplification ?
                     Rationelle(Entier num, Entier den, const QString& na =""): LitNumerique(na), numerateur(num),denominateur(den){}
                     QString toString() const;
-                    LitNumerique* simplification();
+                    Litterale* simplification();
 
                     //Operateur
                     Litterale* operator+(const Nombres& n);
