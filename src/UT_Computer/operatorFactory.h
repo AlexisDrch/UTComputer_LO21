@@ -195,7 +195,7 @@ public:
     OpMulFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpMul(); }
 };
-
+*/
 class OpDivFactory : public OperateurFactory {
 public:
     OpDivFactory() : OperateurFactory() {}

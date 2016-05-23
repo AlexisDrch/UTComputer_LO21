@@ -246,7 +246,7 @@ try {
                 bip->setPosition(0);
             }
             else if(bip->state() == QMediaPlayer::StoppedState){
-                bip->play();
+                bip->play(); // play error sound
             }
             litAff.setMessage("Erreur : pas assez d'arguments");
             return v;

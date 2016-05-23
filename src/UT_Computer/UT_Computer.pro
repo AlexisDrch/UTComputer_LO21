@@ -7,7 +7,8 @@ SOURCES += \
     qcomputer.cpp \
     computer.cpp \
     operatorFactory.cpp \
-    operator.cpp
+    operator.cpp \
+    litterale.cpp
 
 
 
@@ -15,7 +16,8 @@ HEADERS += \
     qcomputer.h \
     computer.h \
     operator.h \
-    operatorFactory.h
+    operatorFactory.h \
+    litterale.h
 
 RESOURCES += \
     res.qrc
