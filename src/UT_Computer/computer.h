@@ -6,6 +6,7 @@
 #include <QTextStream>
 #include <QObject>
 #include <QDebug>
+#include <QMediaPlayer>
 #include <operatorFactory.h>
 
 using namespace std;
@@ -129,15 +130,19 @@ signals:
 };
 
 class Controleur {
+    QMediaPlayer* bip;
     LitteraleManager& litMng;
     Pile& litAff;
     QMap<QString, OperateurFactory*> factories;
 public:
     Controleur(LitteraleManager& m, Pile& v):litMng(m), litAff(v){
         factories = OperateurFactory::getFactoriesMap();
+        bip = new QMediaPlayer();
+        bip->setMedia(QUrl("qrc:/sounds/beep-07.wav"));
     }
     Operateur* getOperateur(const QString& v);
-    void commande(const QString& c);
+    QString getFirst(QString& v);
+    QString commande(QString& c);
 
 };
 

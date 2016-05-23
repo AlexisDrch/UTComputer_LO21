@@ -1,4 +1,5 @@
- QT += widgets
+ QT += widgets \
+         multimedia
 CONFIG += c++11
 
 SOURCES += \
@@ -15,4 +16,7 @@ HEADERS += \
     computer.h \
     operator.h \
     operatorFactory.h
+
+RESOURCES += \
+    res.qrc
 

@@ -179,8 +179,8 @@ void QComputer::refresh(){
 void QComputer::getNextCommande(){
 
     pile->setMessage("");
-    controleur->commande(commande->text());
-    commande->clear();
+    commande->setText(controleur->commande(commande->text()));
+    //commande->clear();
 }
 
 void QComputer::changeNbAffiche(int i){
