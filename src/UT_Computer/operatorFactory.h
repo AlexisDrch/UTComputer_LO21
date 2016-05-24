@@ -152,12 +152,12 @@ public:
     OpSupegFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpSupeg(); }
 };
-
+*/
 class OpInfFactory : public OperateurFactory {
 public:
     OpInfFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpInf(); }
-};
+};/*
 
 class OpSupFactory : public OperateurFactory {
 public:

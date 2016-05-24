@@ -36,7 +36,7 @@ QMap<QString,OperateurFactory*> OperateurFactory::getFactoriesMap() {
    // factories["!="] = new OpDifFactory();
     factories["=<"] = new OpInfegFactory();
     factories[">="] = new OpSupegFactory();
-    factories["<"] = new OpInfFactory();
+   */ factories["<"] = new OpInfFactory();/*
     factories[">"] = new OpSupFactory();
     factories["AND"] = new OpAndFactory();
     factories["OR"] = new OpOrFactory();

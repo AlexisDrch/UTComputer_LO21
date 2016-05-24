@@ -118,7 +118,7 @@
 
         Litterale* OpBinaire::executer(){
 
-            LitNumerique* arg1 = dynamic_cast<LitNumerique*>(tab.operator [](1));
+            Nombres* arg1 = dynamic_cast<Nombres*>(tab.operator [](1));
             Litterale* arg2 = tab.operator [](0);
 
             if(arg1 != nullptr){
@@ -285,6 +285,27 @@
             }
             Litterale* OpMul::actionNum(Reelle& arg1, Entier& arg2){
                 return (new Reelle(arg1.toFloatPositif()*arg2.getValue()));
+            }
+            //OpLogique
+            OpLogique::~OpLogique(){
+
+            }
+            Litterale* OpLogique::fonctionNum(Nombres* arg1, Litterale* arg2){
+            LitNumerique* conv1 = dynamic_cast<LitNumerique*>(arg1);
+            LitNumerique* conv2 = dynamic_cast<LitNumerique*>(arg2);
+            if (conv1 != nullptr  && conv2 != nullptr) return actionLogiNumerique(conv1, conv2);
+            else throw ComputerException("Operation < impossible sur ces littéraux");
+            }
+
+            Litterale* OpLogique::actionNum(Entier& arg1, Entier& arg2){ throw ("Error d'architecture");}
+            Litterale* OpLogique::actionNum(Entier& arg1, Reelle& arg2){ throw ("Error d'architecture");}
+            Litterale* OpLogique::actionNum(Reelle& arg1, Reelle& arg2){ throw ("Error d'architecture");}
+            Litterale* OpLogique::actionNum(Reelle& arg1, Entier& arg2){ throw ("Error d'architecture");}
+
+
+            //OpInf
+            Litterale* OpInf::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2){ // faire avec LitNumerique
+                 return ((arg1->getValue()< arg2->getValue())? (new Entier(1)) :new Entier(0));
             }
 
 
