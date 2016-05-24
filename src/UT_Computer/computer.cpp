@@ -225,13 +225,19 @@ bool test;
 test = true;
 
 try {
+    QVector<Litterale*> temp; // stockage temporaire des littérales passées en argument de l'opérateur
     Operateur* op = getOperateur(c);
     test = false;
     unsigned int opSize = op->getTaille();
     if(litAff.taille() >= opSize){
 
         for(unsigned int i =0; i <opSize; i++){
-            op->addArg(litAff.top()); // ici on récupère l'item de la pile      
+            temp.push_back(&litAff.top());
+            op->addArg(litAff.top()); // ici on récupère l'item de la pile
+            litAff.pop();
+        }
+        for(unsigned int i =0; i <opSize; i++){
+            litAff.push(*temp.at(temp.size()-(i+1)));
         }
         Litterale* res = op->executer();
         for(unsigned int i =0; i <opSize; i++){

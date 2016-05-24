@@ -140,7 +140,7 @@ public:
     OpEditFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpEdit(); }
 };
-
+*/
 class OpInfegFactory : public OperateurFactory {
 public:
     OpInfegFactory() : OperateurFactory() {}
@@ -152,12 +152,12 @@ public:
     OpSupegFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpSupeg(); }
 };
-*/
+
 class OpInfFactory : public OperateurFactory {
 public:
     OpInfFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpInf(); }
-};/*
+};
 
 class OpSupFactory : public OperateurFactory {
 public:
@@ -176,7 +176,7 @@ public:
     OpOrFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpOr(); }
 };
-*/
+
 class OpPlusFactory : public OperateurFactory {
 public:
     OpPlusFactory() : OperateurFactory() {}
@@ -188,7 +188,6 @@ public:
     OpMoinsFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpMoins(); }
 };
-
 
 class OpMulFactory : public OperateurFactory {
 public:
@@ -225,18 +224,18 @@ public:
     OpDolFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpDol(); }
 };
-
+*/
 class OpEgFactory : public OperateurFactory {
 public:
     OpEgFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpEg(); }
 };
-/*
+
 class OpDifFactory : public OperateurFactory {
 public:
     OpDifFactory() : OperateurFactory() {}
-    Operateur* getOperateur() { return new OpDif(); }
-};
+    Operateur* getOperateur() { return new OpDiff(); }
+};/*
 
 class OpSwapFactory : public OperateurFactory {
 public:

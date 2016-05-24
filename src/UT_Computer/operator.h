@@ -25,7 +25,7 @@
         class OpUnaire : public Operateur {
 
         public :
-            OpUnaire(const QString& na =""): Operateur(na,1) {}
+            OpUnaire(const QString& na): Operateur(na,1) {}
             virtual ~OpUnaire();
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
@@ -172,7 +172,7 @@
         class OpBinaire : public Operateur {
 
         public :
-            OpBinaire(const QString& na =""): Operateur(na,2) {}
+            OpBinaire(const QString& na): Operateur(na,2) {}
             virtual ~OpBinaire();
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
@@ -190,10 +190,11 @@
         //ATTENTION : APPLIQUABLE SEULEMENT SUR LTTERALE NUMERIQUE ET EXPRESSION : FAUT IL LE PRECISER EN RESTREIGNANT LE TYPE DE PARAMETRE
         class OpLogique : public OpBinaire{
         public :
-            OpLogique(const QString &na =""):OpBinaire(na){}
+            OpLogique(const QString &na):OpBinaire(na){}
             virtual ~OpLogique();
             Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
-            virtual Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) =0;
+            virtual Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const =0;
+            //virtual //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const =0;
             //actionLogiqueComplexe ? Expression ?
             Litterale* actionNum(Entier& arg1, Entier& arg2);
             Litterale* actionNum(Entier& arg1, Reelle& arg2);
@@ -202,44 +203,63 @@
 
         };
 
-
         class OpInf : public OpLogique{
         public:
             OpInf() : OpLogique("<"){}
-            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2);
-        };
-        /*
-        class OpSup : public OpBinaire{
-        public:
-            OpSup() : OpBinaire(">"){}
-            Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2)const;
+            ////Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
         };
 
-        class OpSupeg : public OpBinaire{
+        class OpSup : public OpLogique{
         public:
-            OpSupeg() : OpBinaire(">="){}
-            Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
+            OpSup() : OpLogique(">"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2)const;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
         };
 
-        class OpInfeg : public OpBinaire{
+        class OpSupeg : public OpLogique{
         public:
-            OpInfeg() : OpBinaire("=<"){}
-            Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
+            OpSupeg() : OpLogique(">="){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2)const;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
         };
 
-        class OpEg: public OpBinaire{
+        class OpInfeg : public OpLogique{
         public:
-            OpEg() : OpBinaire("="){}
-            Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
+            OpInfeg() : OpLogique("=<"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
         };
 
-        class OpDiff : public OpBinaire{
+        class OpEg: public OpLogique{
         public:
-            OpDiff() : OpBinaire("!="){}
-            Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
+            OpEg() : OpLogique("="){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
         };
 
-     */ class OpPlus : public OpBinaire{
+        class OpDiff : public OpLogique{
+        public:
+            OpDiff() : OpLogique("!="){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+        };
+
+        class OpAnd : public OpLogique{
+        public:
+            OpAnd() : OpLogique("AND"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+        };
+
+        class OpOr : public OpLogique{
+        public:
+            OpOr() : OpLogique("OR"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+        };
+
+        class OpPlus : public OpBinaire{
         public:
             OpPlus() : OpBinaire("+"){}
             Litterale* actionNum(Entier& arg1, Entier& arg2);
@@ -292,20 +312,8 @@
             OpDol() : OpBinaire("$"){}
             Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
         };
+        */
 
-        class OpAnd : public OpBinaire{
-        public:
-            OpAnd() : OpBinaire("AND"){}
-            Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
-        };
-
-        class OpOr : public OpBinaire{
-        public:
-            OpOr() : OpBinaire("OR"){}
-            Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
-        };
-
-*/
 
 
 

@@ -32,14 +32,14 @@ QMap<QString,OperateurFactory*> OperateurFactory::getFactoriesMap() {
     factories["IM"] = new OpImFactory();
     factories["ARG"] = new OpArgFactory();
     factories["NORM"] = new OpNormFactory();
-    factories["="] = new OpEgFactory();
-   // factories["!="] = new OpDifFactory();
+  */factories["="] = new OpEgFactory();
+    factories["!="] = new OpDifFactory();
     factories["=<"] = new OpInfegFactory();
     factories[">="] = new OpSupegFactory();
-   */ factories["<"] = new OpInfFactory();/*
+    factories["<"] = new OpInfFactory();
     factories[">"] = new OpSupFactory();
     factories["AND"] = new OpAndFactory();
-    factories["OR"] = new OpOrFactory();
+    factories["OR"] = new OpOrFactory();/*
     factories["NOT"] = new OpNotFactory();
     factories["EVAL"] = new OpEvalFactory();
     factories["DUP"] = new OpDupFactory();

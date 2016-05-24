@@ -287,9 +287,7 @@
                 return (new Reelle(arg1.toFloatPositif()*arg2.getValue()));
             }
             //OpLogique
-            OpLogique::~OpLogique(){
-
-            }
+            OpLogique::~OpLogique(){}
             Litterale* OpLogique::fonctionNum(Nombres* arg1, Litterale* arg2){
             LitNumerique* conv1 = dynamic_cast<LitNumerique*>(arg1);
             LitNumerique* conv2 = dynamic_cast<LitNumerique*>(arg2);
@@ -297,16 +295,53 @@
             else throw ComputerException("Operation < impossible sur ces littéraux");
             }
 
-            Litterale* OpLogique::actionNum(Entier& arg1, Entier& arg2){ throw ("Error d'architecture");}
-            Litterale* OpLogique::actionNum(Entier& arg1, Reelle& arg2){ throw ("Error d'architecture");}
-            Litterale* OpLogique::actionNum(Reelle& arg1, Reelle& arg2){ throw ("Error d'architecture");}
-            Litterale* OpLogique::actionNum(Reelle& arg1, Entier& arg2){ throw ("Error d'architecture");}
+            Litterale* OpLogique::actionNum(Entier& arg1, Entier& arg2){ throw ("Error ");}
+            Litterale* OpLogique::actionNum(Entier& arg1, Reelle& arg2){ throw ("Error ");}
+            Litterale* OpLogique::actionNum(Reelle& arg1, Reelle& arg2){ throw ("Error ");}
+            Litterale* OpLogique::actionNum(Reelle& arg1, Entier& arg2){ throw ("Error ");}
 
 
             //OpInf
-            Litterale* OpInf::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2){ // faire avec LitNumerique
+            Litterale* OpInf::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2) const { // faire avec Litterale génerale (complexe ? )
                  return ((arg1->getValue()< arg2->getValue())? (new Entier(1)) :new Entier(0));
             }
+            //OpSup
+            Litterale* OpSup::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2)const { // faire avec Litterale génerale (complexe ? )
+                 return ((arg1->getValue()> arg2->getValue())? (new Entier(1)) :new Entier(0));
+            }
+            //OpEg
+            Litterale* OpEg::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2)const { // faire avec Litterale génerale (complexe ? )
+                 return ((arg1->getValue() == arg2->getValue())? (new Entier(1)) :new Entier(0));
+            }
+            //OpDif
+            Litterale* OpDiff::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2)const { // faire avec Litterale génerale (complexe ? )
+                 return ((arg1->getValue() != arg2->getValue())? (new Entier(1)) :new Entier(0));
+            }
+            //OpInfeg
+            Litterale* OpInfeg::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2)const { // faire avec Litterale génerale (complexe ? )
+                 return ((arg1->getValue()<= arg2->getValue())? (new Entier(1)) :new Entier(0));
+            }
+            //OpSupeg
+            Litterale* OpSupeg::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2)const { // faire avec Litterale génerale (complexe ? )
+                 return ((arg1->getValue()>= arg2->getValue())? (new Entier(1)) :new Entier(0));
+            }
+            //OpAnd
+            Litterale* OpAnd::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2)const { // faire avec Litterale génerale (complexe ? )
+                 return ((arg1->getValue() && arg2->getValue())? (new Entier(1)) :new Entier(0));
+            }
+            //OpOr
+            Litterale* OpOr::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2)const { // faire avec Litterale génerale (complexe ? )
+                 return ((arg1->getValue() || arg2->getValue())? (new Entier(1)) :new Entier(0));
+            }
+
+
+
+
+
+
+
+
+
 
 
 
