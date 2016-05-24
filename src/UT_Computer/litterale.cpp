@@ -195,6 +195,10 @@ Operande::~Operande(){
                 return val;
             }
 
+            float Entier::getValue()const {
+                return getValueEnt();
+            }
+
             //I.4.2) Rationelle
             int pgcd(int a, int b) { return b ?  pgcd(b,a%b) : a; }
 
@@ -204,15 +208,14 @@ Operande::~Operande(){
                 numerateur.setValue(n/r);
                 denominateur.setValue(d/r);
                 if (denominateur.getValue() != 1) {
-                    return new Rationelle(numerateur.getValue(),denominateur.getValue(),numerateur.getValue() + "/" + denominateur.getValue());
+                    return new Rationelle(numerateur.getValueEnt(),denominateur.getValueEnt(),numerateur.getValueEnt() + "/" + denominateur.getValueEnt());
                 } else {
                     return new Entier(numerateur.getValue());
                 }
             }
-            /*Litterale* Rationelle::operatorExp(){
-                //value = exp(value);
-                return this;
-            }*/
+            float Rationelle::getValue()const {
+                return getValueRat();
+            }
 
             QString Rationelle::toString() const {
                 return (numerateur.toString() + "/" + denominateur.toString());
@@ -239,5 +242,8 @@ Operande::~Operande(){
                     QString val2 = "- "; val2.append(val); return val2;
                 }
                 return val;
+            }
+            float Reelle::getValue()const {
+                return toFloatPositif();
             }
 

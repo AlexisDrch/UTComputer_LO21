@@ -55,7 +55,7 @@ public:
                unsigned int getTaille(){return taille;}
                QString getelem(){return tab.front();}
                QString toString() const;
-               const QString& getValue() const {return stringValue;}
+               const QString& getValueProg() const {return stringValue;}
         };
 
         class LitNumerique;
@@ -132,9 +132,6 @@ public:
             Nombres(const QString& na=""):Litterale(na){}
             virtual ~Nombres(){}
             virtual QString toString() const =0;
-
-            //Opearteur Binaire
-            //virtual Litterale* operator+(const Nombres& n) = 0;
         };
             //On choisira ici de rester conforme à l'énoncé en séparant les LitNumerique des complexes.
 
@@ -147,13 +144,7 @@ public:
                 virtual ~LitNumerique();
                 virtual QString toString() const = 0;
                 Litterale* returnType();
-
-                //Operateur unaire
-                /*Litterale* operatorNeg();
-                virtual Litterale* operatorExp();
-               /* virtual Litterale* operatorLn();
-                virtual Litterale* operatorSin();
-                //Operateur binaire*/
+                virtual float getValue()const = 0;
             };
 
             //4.1.1) Littérale entière
@@ -163,7 +154,8 @@ public:
                     //Remarque n'accepte pas les negatif : unsigned : operator NEG se charge de ça
                     Entier(unsigned int va, const QString& na =""): LitNumerique(na), value(va){}
                     QString toString() const ;
-                    unsigned int getValue() const {return value;}
+                    float getValue()const ;
+                    unsigned int getValueEnt() const {return value;}
                     void setValue(unsigned int v) {value = v; }
                 };
 
@@ -176,6 +168,8 @@ public:
                     Rationelle(Entier num, Entier den, const QString& na =""): LitNumerique(na), numerateur(num),denominateur(den){}
                     QString toString() const;
                     Litterale* simplification();
+                    float getValue()const;
+                    unsigned int getValueRat() const {return numerateur.getValue();} //todo
 
                };
 
@@ -188,6 +182,7 @@ public:
                     Reelle(float val, const QString& na=""):LitNumerique(na), pEntiere(floor(val)), mantisse((val-pEntiere)*100000){}
                     LitNumerique* simplification();
                     QString toString() const;
+                    float getValue()const;
                     float toFloatPositif() const;
 
                 };

@@ -246,6 +246,18 @@
         class OpDiv : public OpBinaire{
         public:
             OpDiv() : OpBinaire("/"){}
+            Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
+            Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
+            Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
+            Litterale* actionNum(Entier& arg1, Entier& arg2);
+            Litterale* actionNum(Entier& arg1, Reelle& arg2);
+            Litterale* actionNum(Reelle& arg1, Reelle& arg2);
+            Litterale* actionNum(Reelle& arg1, Entier& arg2);
+        };
+
+        class OpMul : public OpBinaire{
+        public:
+            OpMul() : OpBinaire("*"){}
             Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
             Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
             Litterale* actionNum(Entier& arg1, Entier& arg2);
@@ -254,12 +266,6 @@
             Litterale* actionNum(Reelle& arg1, Entier& arg2);
         };
         /*
-        class OpMul : public OpBinaire{
-        public:
-            OpMul() : OpBinaire("*"){}
-            Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
-        };
-
         class OpMod : public OpBinaire{
         public:
             OpMod() : OpBinaire("%"){}

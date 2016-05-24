@@ -226,16 +226,18 @@ test = true;
 
 try {
     Operateur* op = getOperateur(c);
+    test = false;
     unsigned int opSize = op->getTaille();
     if(litAff.taille() >= opSize){
 
         for(unsigned int i =0; i <opSize; i++){
-            op->addArg(litAff.top()); // ici on récupère l'item de la pile
-            litMng.removeLitterale(litAff.top());
+            op->addArg(litAff.top()); // ici on récupère l'item de la pile      
+        }
+        Litterale* res = op->executer();
+        for(unsigned int i =0; i <opSize; i++){
+            litMng.removeLitterale(litAff.top()); //si tout s'est bien passé on pop la pile deux fois + littmanager
             litAff.pop();
         }
-        Litterale* res = op->executer();        
-        test = false;
         Litterale& e=litMng.addLitterale(res);
         litAff.push(e);
         litAff.setMessage(litAff.getMessage() + " *** "+ litMng.messageNouvelleCreation(e));
@@ -256,6 +258,8 @@ try {
 
     litAff.setMessage(ex.getInfo());
     if (test){
+
+        litAff.setMessage(ex.getInfo() + " passage test");
     if (litMng.verifLitterale(c)){ //nombre or expression or Programme
 
     litAff.push(litMng.addLitterale(c));
@@ -272,7 +276,7 @@ try {
     }
     else {
         return v;
-        litAff.setMessage("Erreur : commande inconnue");
+        //litAff.setMessage("Erreur : commande inconnue");
 
     }
 }
