@@ -9,7 +9,10 @@ SOURCES += \
     operatorFactory.cpp \
     operator.cpp \
     litterale.cpp \
-    pile.cpp
+    pile.cpp \
+    operatorLogique.cpp \
+    operatorAutre.cpp \
+    operatorClassique.cpp
 
 
 
@@ -19,7 +22,10 @@ HEADERS += \
     operator.h \
     operatorFactory.h \
     litterale.h \
-    pile.h
+    pile.h \
+    operatorAutre.h \
+    operatorClassique.h \
+    operatorLogique.h
 
 RESOURCES += \
     res.qrc

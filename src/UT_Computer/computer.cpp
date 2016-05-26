@@ -47,7 +47,9 @@ Litterale* LitteraleManager::isRationnelle(const QString& v){
     den = v.right(v.size()-(temp)).toInt();
 
     if (rationnel) {
-        Litterale *l = (new Rationnelle(num,den,num + "/" + den))->simplification();
+        Rationnelle* r = new Rationnelle(num,den,num + "/" + den);
+        Litterale *l = r->simplification();
+        delete r;
         return l;
     }
     else return (nullptr);

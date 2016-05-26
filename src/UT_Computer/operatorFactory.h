@@ -1,7 +1,10 @@
 #ifndef OPRATORFACTORY_H
 #define OPRATORFACTORY_H
 
-#include "operator.h"
+#include "operatorAutre.h"
+#include "operatorClassique.h"
+#include "operatorLogique.h"
+
 
 #include <QMap>
 #include <QString>
@@ -209,13 +212,13 @@ public:
     OpDivFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpDiv(); }
 };
-/*
+
 class OpDiventFactory : public OperateurFactory {
 public:
     OpDiventFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpDivent(); }
 };
-
+/*
 class OpPowFactory : public OperateurFactory {
 public:
     OpPowFactory() : OperateurFactory() {}
