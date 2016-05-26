@@ -63,12 +63,6 @@ public:
     Operateur* getOperateur() { return new OpNorm(); }
 };
 
-class OpNotFactory : public OperateurFactory {
-public:
-    OpNotFactory() : OperateurFactory() {}
-    Operateur* getOperateur() { return new OpNot(); }
-};
-
 class OpEvalFactory : public OperateurFactory {
 public:
     OpEvalFactory() : OperateurFactory() {}
@@ -122,7 +116,7 @@ public:
     OpSqrtFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpSqrt(); }
 };
-
+*/
 class OpDupFactory : public OperateurFactory {
 public:
     OpDupFactory() : OperateurFactory() {}
@@ -135,12 +129,20 @@ public:
     Operateur* getOperateur() { return new OpDrop(); }
 };
 
+class OpClearFactory : public OperateurFactory {
+public:
+    OpClearFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpClear(); }
+};/*
+
 class OpEditFactory : public OperateurFactory {
 public:
     OpEditFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpEdit(); }
 };
 */
+
+//OP LOGIQUE
 class OpInfegFactory : public OperateurFactory {
 public:
     OpInfegFactory() : OperateurFactory() {}
@@ -177,6 +179,13 @@ public:
     Operateur* getOperateur() { return new OpOr(); }
 };
 
+class OpNotFactory : public OperateurFactory {
+public:
+    OpNotFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpNot(); }
+};
+
+//OP BINAIRE
 class OpPlusFactory : public OperateurFactory {
 public:
     OpPlusFactory() : OperateurFactory() {}
@@ -235,13 +244,13 @@ class OpDifFactory : public OperateurFactory {
 public:
     OpDifFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpDiff(); }
-};/*
+};
 
 class OpSwapFactory : public OperateurFactory {
 public:
     OpSwapFactory() : OperateurFactory() {}
-    Operateur* getOperateur() { return new OpEg(); }
-};
+    Operateur* getOperateur() { return new OpSwap(); }
+};/*
 
 class OpIftFactory : public OperateurFactory {
 public:

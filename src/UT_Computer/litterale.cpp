@@ -176,17 +176,20 @@ Operande::~Operande(){
             return value;
         }
 
-        //I.4) Litterale numerique
-        LitNumerique::~LitNumerique(){
+        //II.4) Litterale Nombres
 
-        }
-        Litterale* LitNumerique::returnType(){
+        Litterale* Nombres::returnType(){
             Entier* newe3 = dynamic_cast<Entier*>(this); if (newe3 != nullptr){return (new Entier(*newe3));}
             Reelle* newe4 = dynamic_cast<Reelle*>(this); if (newe4 != nullptr){return (new Reelle(*newe4));}
             Rationelle* newe5 = dynamic_cast<Rationelle*>(this);if (newe5 != nullptr){return (new Rationelle(*newe5)) ;}
         }
 
-            //I.4.1) Entier
+        //I.5) Litterale numerique
+        LitNumerique::~LitNumerique(){
+
+        }
+
+            //I.5.1) Entier
             QString Entier::toString() const {
                 QString val = QString::number(value);
                 if (neg) {
@@ -199,7 +202,7 @@ Operande::~Operande(){
                 return getValueEnt();
             }
 
-            //I.4.2) Rationelle
+            //I.5.2) Rationelle
             int pgcd(int a, int b) { return b ?  pgcd(b,a%b) : a; }
 
             Litterale* Rationelle::simplification(){
@@ -221,7 +224,7 @@ Operande::~Operande(){
                 return (numerateur.toString() + "/" + denominateur.toString());
             }
 
-            //I.4.3) Reelle
+            //I.5.3) Reelle
             float Reelle::toFloatPositif() const {
                 QString val = QString::number(pEntiere) + ".";
                 if(mantisse<10000 && mantisse>=1000) val.append("0"+QString::number(mantisse)); //Un 0 après la virgule

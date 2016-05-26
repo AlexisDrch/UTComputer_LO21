@@ -1,7 +1,7 @@
 #ifndef OPERATOR_H
 #define OPERATOR_H
 
-#include "litterale.h"
+#include "pile.h"
 
 //III] Opérateur /////FAIRE OPERATEUR DE PILE + DE BOUCLE////
     class Operateur : public Operande {
@@ -15,7 +15,7 @@
         Operateur(const QString& na, unsigned int t): Operande(na), taille(t) {}
         virtual ~Operateur();
         virtual Litterale* executer() = 0;
-        virtual unsigned int addArg(Litterale& e) = 0;
+        virtual void addArg(Pile* pile);
         unsigned int getTaille() const {return taille;}
         QString toString() const { return name;}
 
@@ -29,11 +29,32 @@
             virtual ~OpUnaire();
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
-            virtual Litterale* fonctionNum(LitNumerique* arg1) ; // definie action commune a tout LitNumerique puis appelle la bonne surcharge
+            virtual Litterale* fonctionNum(Nombres* arg1) ; // definie action commune a tout LitNumerique puis appelle la bonne surcharge
             virtual Litterale* actionNum(Entier& arg1)  =0;
             virtual Litterale* actionNum(Reelle& arg1)  =0;
-            unsigned int addArg(Litterale& e);
+            void addArg(Pile* pile);
         };
+
+        //1.1 logique unaire
+        class OpLogiqueUnaire : public OpUnaire{
+        public :
+            OpLogiqueUnaire(const QString &na):OpUnaire(na){}
+            virtual ~OpLogiqueUnaire();
+            Litterale* fonctionNum(Nombres* arg1);
+            virtual Litterale* actionLogiNumerique(LitNumerique* arg1)  =0;
+            //virtual //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const =0;
+            //actionLogiqueComplexe ? Expression ?
+            Litterale* actionNum(Reelle& arg1);
+            Litterale* actionNum(Entier& arg1);
+
+        };
+
+        class OpNot : public OpLogiqueUnaire {
+        public:
+            OpNot(): OpLogiqueUnaire("NOT"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1) ;
+        };
+
 
        class OpExp : public OpUnaire {
         public:
@@ -85,12 +106,6 @@
             Litterale* fonctionNum(LitNumerique& arg1) const;
         };
 
-        class OpNot : public OpUnaire {
-        public:
-            OpNot(): OpUnaire("NOT"){}
-            Litterale* fonctionNum(LitNumerique& arg1) const;
-        };
-
         class OpEval : public OpUnaire {
         public:
             OpEval(): OpUnaire("EVAL"){}
@@ -100,7 +115,7 @@
         class OpNeg : public OpUnaire {
         public:
             OpNeg(): OpUnaire("NEG"){}
-            Litterale* fonctionNum(LitNumerique *arg1) ;
+            Litterale* fonctionNum(Nombres *arg1) ;
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
 
@@ -149,26 +164,10 @@
             OpSqrt(): OpUnaire("SQRT"){}
             Litterale* fonctionNum(LitNumerique& arg1) const;
         };
+        */
 
-        class OpDup : public OpUnaire {
-        public:
-            OpDup(): OpUnaire("DUP"){}
-            Litterale* fonctionNum(LitNumerique& arg1) const;
-        };
 
-        class OpDrop : public OpUnaire {
-        public:
-            OpDrop(): OpUnaire("DROP"){}
-            Litterale* fonctionNum(LitNumerique& arg1) const;
-        };
-
-        class OpEdit : public OpUnaire {
-        public:
-            OpEdit(): OpUnaire("EDIT"){}
-            Litterale* fonctionNum(LitNumerique& arg1) const;
-        };
-
-    *///2) Operateur Binaire
+    //2) Operateur Binaire
         class OpBinaire : public Operateur {
 
         public :
@@ -183,17 +182,17 @@
             virtual Litterale* actionNum(Entier& arg1, Reelle& arg2) =0;
             virtual Litterale* actionNum(Reelle& arg1, Reelle& arg2) =0;
             virtual Litterale* actionNum(Reelle& arg1, Entier& arg2) =0;
-            unsigned int addArg(Litterale& e);
+            void addArg(Pile* pile);
 
         };
 
         //ATTENTION : APPLIQUABLE SEULEMENT SUR LTTERALE NUMERIQUE ET EXPRESSION : FAUT IL LE PRECISER EN RESTREIGNANT LE TYPE DE PARAMETRE
-        class OpLogique : public OpBinaire{
+        class OpLogiqueBinaire : public OpBinaire{
         public :
-            OpLogique(const QString &na):OpBinaire(na){}
-            virtual ~OpLogique();
+            OpLogiqueBinaire(const QString &na):OpBinaire(na){}
+            virtual ~OpLogiqueBinaire();
             Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
-            virtual Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const =0;
+            virtual Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) =0;
             //virtual //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const =0;
             //actionLogiqueComplexe ? Expression ?
             Litterale* actionNum(Entier& arg1, Entier& arg2);
@@ -203,60 +202,60 @@
 
         };
 
-        class OpInf : public OpLogique{
+        class OpInf : public OpLogiqueBinaire{
         public:
-            OpInf() : OpLogique("<"){}
-            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2)const;
-            ////Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+            OpInf() : OpLogiqueBinaire("<"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2);
+            ////Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2)  ;
         };
 
-        class OpSup : public OpLogique{
+        class OpSup : public OpLogiqueBinaire{
         public:
-            OpSup() : OpLogique(">"){}
-            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2)const;
-            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+            OpSup() : OpLogiqueBinaire(">"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2);
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2)  ;
         };
 
-        class OpSupeg : public OpLogique{
+        class OpSupeg : public OpLogiqueBinaire{
         public:
-            OpSupeg() : OpLogique(">="){}
-            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2)const;
-            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+            OpSupeg() : OpLogiqueBinaire(">="){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2);
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) ;
         };
 
-        class OpInfeg : public OpLogique{
+        class OpInfeg : public OpLogiqueBinaire{
         public:
-            OpInfeg() : OpLogique("=<"){}
-            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
-            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+            OpInfeg() : OpLogiqueBinaire("=<"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2);
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) ;
         };
 
-        class OpEg: public OpLogique{
+        class OpEg: public OpLogiqueBinaire{
         public:
-            OpEg() : OpLogique("="){}
-            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
-            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+            OpEg() : OpLogiqueBinaire("="){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) ;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2)  ;
         };
 
-        class OpDiff : public OpLogique{
+        class OpDiff : public OpLogiqueBinaire{
         public:
-            OpDiff() : OpLogique("!="){}
-            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
-            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+            OpDiff() : OpLogiqueBinaire("!="){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) ;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) ;
         };
 
-        class OpAnd : public OpLogique{
+        class OpAnd : public OpLogiqueBinaire{
         public:
-            OpAnd() : OpLogique("AND"){}
-            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
-            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+            OpAnd() : OpLogiqueBinaire("AND"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) ;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2)  ;
         };
 
-        class OpOr : public OpLogique{
+        class OpOr : public OpLogiqueBinaire{
         public:
-            OpOr() : OpLogique("OR"){}
-            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) const;
-            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const ;
+            OpOr() : OpLogiqueBinaire("OR"){}
+            Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) ;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2)  ;
         };
 
         class OpPlus : public OpBinaire{
@@ -314,6 +313,65 @@
         };
         */
 
+        //II] 3 Operateur de pile
+        class OpPile: public Operateur{
+        protected:
+            Pile* litAff;
+        public:
+            OpPile(const QString& na,  unsigned int size):Operateur(na,size){}
+            virtual ~OpPile();
+            void  addArg(Pile *pile);
+            //Executer :squelette pour classe fille : template methode
+            Litterale* executer();
+            virtual void executerPile() =0 ;
+            void setPile(Pile* p1) {litAff = p1;}
+
+        };
+
+        class OpPileUnaire: public OpPile {
+        public:
+            OpPileUnaire(const QString& na): OpPile(na,1) {}
+            virtual ~OpPileUnaire();
+            //Executer :squelette pour classe fille : template methode
+            virtual void executerPile();
+           /* void fonctionNum(LitNumerique* arg1);
+            virtual void actionNum(Entier &arg1) = 0;
+            virtual void actionNum(Reelle &arg1) = 0;*/
+        };
+
+        class OpDup : public OpPileUnaire {
+        public:
+            OpDup(): OpPileUnaire("DUP"){}
+            void executerPile();
+            void fonctionNum(Litterale* arg1); //TODO: a definir en virtuelle pure dans la classe OPUNAIRE/OPBINAIRE
+           /* void actionNum(Entier &arg1) ;
+            void actionNum(Reelle &arg1) ;*/
+        };
+
+        class OpDrop : public OpPileUnaire {
+        public:
+            OpDrop(): OpPileUnaire("DROP"){}
+            void executerPile();
+        };
+
+        class OpClear : public OpPileUnaire {
+        public:
+            OpClear(): OpPileUnaire("CLEAR"){}
+            void executerPile();
+        };
+
+        class OpSwap : public OpPileUnaire {
+        public:
+            OpSwap(): OpPileUnaire("SWAP"){}
+            void executerPile();
+        };
+        /*
+        class OpEdit : public OpPileUnaire {
+        public:
+            OpEdit(): OpPileUnaire("EDIT"){}
+            Litterale* fonctionNum(LitNumerique& arg1) const;
+        };
+        */
 
 
 

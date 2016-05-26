@@ -131,6 +131,7 @@ public:
         public :
             Nombres(const QString& na=""):Litterale(na){}
             virtual ~Nombres(){}
+            Litterale* returnType();
             virtual QString toString() const =0;
         };
             //On choisira ici de rester conforme à l'énoncé en séparant les LitNumerique des complexes.
@@ -143,7 +144,6 @@ public:
                 LitNumerique(const QString& na=""):Nombres(na){}
                 virtual ~LitNumerique();
                 virtual QString toString() const = 0;
-                Litterale* returnType();
                 virtual float getValue()const = 0;
             };
 

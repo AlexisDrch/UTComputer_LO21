@@ -121,50 +121,6 @@ QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
     Rationelle* newe5 = dynamic_cast<Rationelle*>(&lit);if (newe5 != nullptr){return "New : RATIONNELLE" ;}
 }
 
-void Pile::agrandissementCapacite() {
-	Item* newtab=new Item[(nbMax+1)*2];
-	for(unsigned int i=0; i<nb; i++) newtab[i]=items[i];
-	Item*  old=items;
-	items=newtab;
-	nbMax=(nbMax+1)*2;
-	delete[] old;
-}
-
-void Pile::push(Litterale& e){
-	if (nb==nbMax) agrandissementCapacite();
-    items[nb].setLitterale(e);
-	nb++;
-    modificationEtat();
-}
-
-void Pile::pop(){
-	nb--;
-	items[nb].raz();
-    modificationEtat();
-}
-/*
-void Pile::affiche(QTextStream& f) const{
-    f<<"********************************************* \n";
-    f<<"M : "<<message<<"\n";
-    f<<"---------------------------------------------\n";
-	for(int i=nbAffiche; i>0; i--) {
-        if (i<=nb) f<<i<<": "<<items[nb-i].getLitterale().toString()<<"\n";
-        else f<<i<<": \n";
-	}
-    f<<"---------------------------------------------\n";
-}*/
-
-
-Pile::~Pile(){
-	delete[] items;
-}
-
-Litterale& Pile::top() const {
-	
-    if (nb==0) throw ComputerException("aucune Litterale sur la pile");
-    return items[nb-1].getLitterale();
-}
-	
 
 bool isVariable(const QString s){
     //check in map var
@@ -176,118 +132,109 @@ bool isVarProgramme(const QString s){
     return false;
 }
 
-bool estUnOperateur(const QString s){
-	if (s=="+") return true;
-	if (s=="-") return true;
-	if (s=="*") return true;
-	if (s=="/") return true;
-	return false;
-}
-
-bool estUnNombre(const QString s){
-   bool ok=false;
-   s.toInt(&ok);
-   return ok;
-}
-
-Operateur* Controleur::getOperateur(const QString &v) {
-    if(factories.contains(v)){
-        litAff.setMessage(v+" execution");
-        OperateurFactory* fact= factories.operator [](v);
-        return fact->getOperateur();
+//III] Controleur
+    Operateur* Controleur::getOperateur(const QString &v) {
+        if(factories.contains(v)){
+            litAff.setMessage(v+" execution");
+            OperateurFactory* fact= factories.operator [](v);
+            return fact->getOperateur();
+        }
+        else throw(ComputerException("Not an operator"));
     }
-    else throw(ComputerException("Not an operator"));
-}
 
-QString Controleur::getFirst(QString& c){
+    QString Controleur::getFirst(QString& c){
 
-    QString::const_iterator it = c.begin(); QString::const_iterator it2 = c.end();
-    if (it == it2){ return "";}
-    it2--;
-    if ( ( (*it == "'") && (*it2 == "'")) || ((*it == '[') && (*it2 == ']')) ) return c;
-    it2++;
-    QString sPart;
-    while (it != it2 && *it !=' '){
-        sPart.push_back(*it); it++;
+        QString::const_iterator it = c.begin(); QString::const_iterator it2 = c.end();
+        if (it == it2){ return "";}
+        it2--;
+        if ( ( (*it == "'") && (*it2 == "'")) || ((*it == '[') && (*it2 == ']')) ) return c;
+        it2++;
+        QString sPart;
+        while (it != it2 && *it !=' '){
+            sPart.push_back(*it); it++;
+        }
+        return sPart;
+
     }
-    return sPart;
 
-}
+    QString Controleur::commande(QString& v){
 
-QString Controleur::commande(QString& v){
-
-QString newe = v;
-QString c= getFirst(v);
-newe.replace(0, c.size()+1, "");
+    QString newe = v;
+    QString c= getFirst(v);
+    newe.replace(0, c.size()+1, "");
 
 
-bool test;
-test = true;
+    bool test;
+    test = true;
 
-try {
-    QVector<Litterale*> temp; // stockage temporaire des littérales passées en argument de l'opérateur
-    Operateur* op = getOperateur(c);
-    test = false;
-    unsigned int opSize = op->getTaille();
-    if(litAff.taille() >= opSize){
+    try {
+        QVector<Litterale*> temp; // stockage temporaire des littérales passées en argument de l'opérateur
+        Operateur* op = getOperateur(c);
+        OpPile* conv1 = dynamic_cast<OpPile*>(op);//Va changer le comportement de l'algorithme sur la pile
 
-        for(unsigned int i =0; i <opSize; i++){
-            temp.push_back(&litAff.top());
-            op->addArg(litAff.top()); // ici on récupère l'item de la pile
-            litAff.pop();
-        }
-        for(unsigned int i =0; i <opSize; i++){
-            litAff.push(*temp.at(temp.size()-(i+1)));
-        }
-        Litterale* res = op->executer();
-        for(unsigned int i =0; i <opSize; i++){
-            litMng.removeLitterale(litAff.top()); //si tout s'est bien passé on pop la pile deux fois + littmanager
-            litAff.pop();
-        }
-        Litterale& e=litMng.addLitterale(res);
-        litAff.push(e);
-        litAff.setMessage(litAff.getMessage() + " *** "+ litMng.messageNouvelleCreation(e));
-        delete op; //detruit les litterales qui ne sont plus à jour
+        test = false;
+        unsigned int opSize = op->getTaille();
+        if(litAff.taille() >= opSize){
 
-     }else{
-            if(bip->state() == QMediaPlayer::PlayingState){
-                bip->setPosition(0);
+            for(unsigned int i =0; i <opSize; i++){
+                temp.push_back(&litAff.top()); //POURQUOI PAS LITERALE MANAGER ?
+                op->addArg(&litAff); // ici on récupère l'item de la pile ou la pile pour l'operateur pile -- ON AJOUTE PLUS DANS LITTERALEMANAGER?
+                litAff.pop();
             }
-            else if(bip->state() == QMediaPlayer::StoppedState){
-                bip->play(); // play error sound
+            for(unsigned int i =0; i <opSize; i++){
+                litAff.push(*temp.at(temp.size()-(i+1)));//On les remet temporairement  // ICI ON REMOVERAIT LE LIT MANA
             }
-            litAff.setMessage("Erreur : pas assez d'arguments");
+            Litterale* res = op->executer();
+                if(conv1 == nullptr){ //POURQUOI NE PAS GERER DANS L'OPERATEUR DIRECTEMENT ??
+                //Seulement si execution sans déclenchement d'exception :
+                for(unsigned int i =0; i <opSize; i++){
+                    litMng.removeLitterale(litAff.top()); //si tout s'est bien passé on pop la pile deux fois + littmanager
+                    litAff.pop();
+                }
+                Litterale& e=litMng.addLitterale(res);
+                litAff.push(e);
+                litAff.setMessage(litAff.getMessage() + " *** "+ litMng.messageNouvelleCreation(e));
+               }
+            delete op; //detruit les litterales qui ne sont plus à jour
+
+         }else{
+                if(bip->state() == QMediaPlayer::PlayingState){
+                    bip->setPosition(0);
+                }
+                else if(bip->state() == QMediaPlayer::StoppedState){
+                    bip->play(); // play error sound
+                }
+                litAff.setMessage("Erreur : pas assez d'arguments");
+                return v;
+         }
+
+    }catch(ComputerException& ex) {
+
+        litAff.setMessage(ex.getInfo());
+        if (test){
+
+            litAff.setMessage(ex.getInfo() + " passage test");
+        if (litMng.verifLitterale(c)){ //nombre or expression or Programme
+
+        litAff.push(litMng.addLitterale(c));
+        litAff.setMessage(litMng.messageNouvelleCreation(litAff.top()));
+
+        }else if (isVariable(c)){ // recherche dans la bdd (map variable)
+            //recup litterale
+            //empiler res dans la pile
+        }else if (isVarProgramme(c)){ // recherche dans la bdd (map programme)
+            // recup litterale programme
+            // evaluation
+            // empiler res dans la pile
+        } // sinon creation d'une nouvelle litterale Expression
+        }
+        else {
             return v;
-     }
-
-}catch(ComputerException& ex) {
-
-    litAff.setMessage(ex.getInfo());
-    if (test){
-
-        litAff.setMessage(ex.getInfo() + " passage test");
-    if (litMng.verifLitterale(c)){ //nombre or expression or Programme
-
-    litAff.push(litMng.addLitterale(c));
-    litAff.setMessage(litMng.messageNouvelleCreation(litAff.top()));
-
-    }else if (isVariable(c)){ // recherche dans la bdd (map variable)
-        //recup litterale
-        //empiler res dans la pile
-    }else if (isVarProgramme(c)){ // recherche dans la bdd (map programme)
-        // recup litterale programme
-        // evaluation
-        // empiler res dans la pile
-    } // sinon creation d'une nouvelle litterale Expression
+            //litAff.setMessage("Erreur : commande inconnue");
+        }
     }
-    else {
-        return v;
-        //litAff.setMessage("Erreur : commande inconnue");
 
-    }
-}
-
-return newe;
+    return newe;
 }
 
 
