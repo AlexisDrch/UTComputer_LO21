@@ -11,11 +11,12 @@ using namespace std;
 
 
 class LitteraleManager {
+    bool verif;
     Litterale** lits;
     unsigned int nb;
     unsigned int nbMax;
     void agrandissementCapacite();
-    LitteraleManager():lits(nullptr),nb(0),nbMax(0){}
+    LitteraleManager():lits(nullptr),nb(0),nbMax(0),verif(true){}
     ~LitteraleManager();
     LitteraleManager(const LitteraleManager& m);
     LitteraleManager& operator=(const LitteraleManager& m);
@@ -28,11 +29,14 @@ class LitteraleManager {
     };
     static Handler handler;
 public:
-    Litterale& addLitterale(const QString& str);
+    bool getVerif(){return verif;}
+    void setVerif(bool v) {verif =v;}
+    Litterale* addLitterale(const QString& str);
     Litterale& addLitterale(Litterale* res);
     Litterale* isRationelle(const QString& c);
-    bool verifLitterale(const QString& c); // to implement
-    Litterale* fabriqLitterale(const QString& v); // to implement
+    bool verifOperande(QString& op, QString& nouvelle);
+    QString verifExpressionValide(const QString& c); // to implement
+    Litterale* fabriqLitterale(const QString& v);
     void removeLitterale(Litterale& e);
     static LitteraleManager& getInstance();
     static void libererInstance();

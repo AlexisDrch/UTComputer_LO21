@@ -54,35 +54,91 @@ Litterale* LitteraleManager::isRationelle(const QString& v){
 
 }
 
-bool LitteraleManager::verifLitterale(const QString& v){
-    //Todo
+bool LitteraleManager::verifOperande(QString& operande,QString& nouvelle){
+    Litterale*res = fabriqLitterale(operande);
+    if (res == nullptr) return false;
+    nouvelle.push_back(operande);
+    operande ="";
+    delete res;
     return true;
+}
+
+
+QString LitteraleManager::verifExpressionValide(const QString& v){
+
+    QString nouvelle;
+    QMap<QString, OperateurFactory*> factories = OperateurFactory::getFactoriesMap();
+    QString::const_iterator fin = v.end(); fin--; //on retire le ' finale
+    QString::const_iterator deb = v.begin(); deb++;    //on retire le ' debut
+
+        while (deb != fin){
+            if(*deb != ' '){
+                QString operande;
+                while (deb !=fin && !factories.contains(*deb) && !factories.contains(operande) && *deb != ' ' && *deb !='(' && *deb != ')' ) {
+                    operande.push_back(*deb);
+                    ++deb;
+                }
+                if(deb==fin){
+                    if(operande!=""){
+                        if(!verifOperande(operande,nouvelle)) return "false";
+                    }
+                    return nouvelle;
+                }
+                if(factories.contains(operande)){
+                    nouvelle.push_back(operande);
+                    operande ="";
+                }
+                else {
+                    if(operande!=""){
+                        if(!verifOperande(operande,nouvelle)) return "false";
+                    }
+                     if(*deb=='(' || *deb==')') { nouvelle.push_back(*deb); deb++;}
+                     else if (factories.contains(*deb)){ nouvelle.push_back(*deb); deb++;}
+                }
+            }else deb ++;
+        }
+    return nouvelle;
 }
 
 // Fabrique des litterales selon l'étude de la string input en commande
 Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
     bool ok=false;
+    verif=true;
 
+    if(v.at(0).isNumber()){
        unsigned int val = v.toLongLong(&ok); if(ok){return (new Entier(val));}
        float val2 = v.toFloat(&ok) ; if(ok){return (new Reelle(val2));}
-
-       // Factorielle : to do
-       QString::const_iterator it = v.end(); it--;
-       if ( ((*v.begin()) == "'") && ((*it) == "'") ) return(new LitExpression(v));
-       if ( ((*v.begin()) == '[') && ((*it) == ']') ) return(new LitProgramme(v));
        Litterale* l = isRationelle(v); if ( l != nullptr) return l; else delete l;
+    }
+       //Expression ou Programme
+       QString::const_iterator it = v.end(); it--;
 
-    return (new LitAtome(v+"dead"));
+       //Expression
+       if ( ((*v.begin()) == "'") && ((*it) == "'")){
+           QString str = verifExpressionValide(v);
+           if (str != "false"){                         //Si faux : on renvoie en ligne de commande
+            return(new LitExpression(str));
+           }
+           else return nullptr;
+       }
+       //Programme
+       if ( ((*v.begin()) == '[') && ((*it) == ']') ){
+
+           return(new LitProgramme(v));
+       }
+
+    //setVerif(false);
+    return nullptr;//(new LitExpression(v+"dead")); //car atome beug pour l'instant
 }
 
-Litterale& LitteraleManager::addLitterale(const QString& v){
-    if(verifLitterale(v)){ // surement pas utile car test déjà effectuer dans commande du controleur
+Litterale* LitteraleManager::addLitterale(const QString& v){
+    //if(verifLitterale(v)){ // surement pas utile car test déjà effectuer dans commande du controleur
         if (nb==nbMax) agrandissementCapacite();
         Litterale* newLit = fabriqLitterale(v);
         lits[nb++] = newLit;
-        return *lits[nb-1];
-    }
-   else throw ComputerException("Error instance impossible");
+        return lits[nb-1];
+    //}
+   //else throw ComputerException("Error instance impossible");
 }
 
 Litterale& LitteraleManager::addLitterale(Litterale* res){
@@ -158,6 +214,7 @@ bool isVarProgramme(const QString s){
     }
 
     QString Controleur::commande(QString& v){
+    if(v!=""){
 
     QString newe = v;
     QString c= getFirst(v);
@@ -208,26 +265,30 @@ bool isVarProgramme(const QString s){
                 return v;
          }
 
-    }catch(ComputerException& ex) {
+    }catch(ComputerException& ex) { //PB sur le ln avec reel !!
 
         litAff.setMessage(ex.getInfo());
         if (test){
 
-            litAff.setMessage(ex.getInfo() + " passage test");
-        if (litMng.verifLitterale(c)){ //nombre or expression or Programme
+        litAff.setMessage(ex.getInfo() + " passage test");
 
-        litAff.push(litMng.addLitterale(c));
-        litAff.setMessage(litMng.messageNouvelleCreation(litAff.top()));
-
-        }else if (isVariable(c)){ // recherche dans la bdd (map variable)
+        Litterale* res = litMng.addLitterale(c);
+        if(res != nullptr){
+            litAff.push(*res);
+            litAff.setMessage(litMng.messageNouvelleCreation(litAff.top()));
+        }else if (isVariable(c)){
+            // recherche dans la bdd (map variable)
             //recup litterale
             //empiler res dans la pile
-        }else if (isVarProgramme(c)){ // recherche dans la bdd (map programme)
+        }else if (isVarProgramme(c)){
+            // recherche dans la bdd (map programme)
             // recup litterale programme
             // evaluation
             // empiler res dans la pile
-        } // sinon creation d'une nouvelle litterale Expression
-        }
+        }else {
+            litAff.setMessage("Erreur : vérifier la validité de votre syntaxe");
+            return v; // sinon creation d'une nouvelle litterale Expression
+        }}
         else {
             return v;
             //litAff.setMessage("Erreur : commande inconnue");
@@ -235,6 +296,8 @@ bool isVarProgramme(const QString s){
     }
 
     return newe;
+    }
+    return "";
 }
 
 

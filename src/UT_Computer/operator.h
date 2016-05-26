@@ -30,6 +30,7 @@
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
             virtual Litterale* fonctionNum(Nombres* arg1) ; // definie action commune a tout LitNumerique puis appelle la bonne surcharge
+            Litterale* fonctionExpression(LitExpression* arg1);
             virtual Litterale* actionNum(Entier& arg1)  =0;
             virtual Litterale* actionNum(Reelle& arg1)  =0;
             void addArg(Pile* pile);
@@ -59,6 +60,7 @@
        class OpExp : public OpUnaire {
         public:
             OpExp(): OpUnaire("EXP"){}
+            Litterale* fonctionExpression(LitExpression* arg1);
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
 
@@ -178,6 +180,7 @@
             virtual Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
             virtual Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
             virtual Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
+            Litterale* fonctionExpression(LitExpression* arg1, Litterale* arg2);
             virtual Litterale* actionNum(Entier& arg1, Entier& arg2) =0;
             virtual Litterale* actionNum(Entier& arg1, Reelle& arg2) =0;
             virtual Litterale* actionNum(Reelle& arg1, Reelle& arg2) =0;

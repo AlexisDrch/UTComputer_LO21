@@ -22,6 +22,7 @@ public:
         Operande(const QString& na): name(na){}
         virtual ~Operande();
         virtual QString toString() const = 0;
+        QString& getName() {return name;} // ne peux pas etre const car si litterale peut changer son nom (variable)
     };
 
 //II] Littérale
@@ -40,8 +41,6 @@ public:
         void setNeg(bool s) { neg = s;}
         bool getNeg() const {return neg;}
         //void getType() const {return type;}
-
-            //Opunaire
 
     };
 
@@ -71,23 +70,7 @@ public:
             Litterale* getValue() const;
             QString toString()const;
             void  verifNeg() const;
-            //Operateur unaire
-            QString operatorUnaire(const QString& str);
-            Litterale* operatorExp();
-            Litterale* operatorNeg();
-            Litterale* operatorSin();
-            Litterale* operatorCos();
-            Litterale* operatorTan();
-            Litterale* operatorArcsin();
-            Litterale* operatorArccos();
-            Litterale* operatorArctan();
-            Litterale* operatorSqrt();
-            Litterale* operatorLn();
-            Litterale* operatorNum();
-            Litterale* operatorDen();
-            Litterale* operatorRe();
-            Litterale* operatorArg();
-            Litterale* operatorNorm();
+
             //Operateur binaire Exp - Exp
                 //Que sur des littérales entière ? (cf enoncé 1.4.1)
             QString operatorBinaire(const QString& str, const QString& str2);

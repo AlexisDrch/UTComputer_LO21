@@ -30,16 +30,27 @@
                 return res;
             }
             else {
-                throw "error : operateur non valide sur ce litterale";
-                //LitExpression* arg1 = dynamic_cast<LitExpression*>(tab.front());
-                //if(arg1 != nullptr){
-                //return fonction2(*arg1);*/
+                LitExpression* arg1 = dynamic_cast<LitExpression*>(tab.front());
+                if(arg1 != nullptr){
+                    Litterale* res = fonctionExpression(arg1);
+                    delete arg1;
+                    return res;
+                }
+                else throw "error : operateur non valide sur ce litterale";
             }
         }
         Litterale* OpUnaire::fonctionNum(Nombres *arg1) {
             Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return actionNum(*conv);
             Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return actionNum(*conv1);
         }
+        Litterale* OpUnaire::fonctionExpression(LitExpression* arg1) {
+            OpNeg* neg= dynamic_cast<OpNeg*>(this);
+            if(neg != nullptr) {
+                throw ComputerException("NEG n'est pas applicable sur une litterale expression");
+            }
+        return (new LitExpression(this->getName()+"("+arg1->toString()+")"));
+        }
+
 
             //NEG
             Litterale* OpNeg::fonctionNum(Nombres* arg1){
@@ -54,8 +65,7 @@
                 arg1.setNeg(!arg1.getNeg());
                 return arg1.returnType();
             }
-
-             //EXP
+            //EXP
             Litterale* OpExp::actionNum(Entier& arg1){
                 if (arg1.getNeg()) throw ComputerException("Operation impossible sur litterale negative");
                 float f = exp(arg1.getValue());
@@ -139,7 +149,6 @@
         }
 
         Litterale* OpBinaire::executer(){
-
             Nombres* arg1 = dynamic_cast<Nombres*>(tab.operator [](1));
             Litterale* arg2 = tab.operator [](0);
 
@@ -149,10 +158,12 @@
                 return res;
             }
             else {
+                LitExpression* arg1 = dynamic_cast<LitExpression*>(tab.operator [](1));
+                if(arg1 != nullptr){
+                    Litterale* res = fonctionExpression(arg1,arg2);
+                    return res;
+                }
                 throw "error : operateur non valide sur ce litterale";
-                //LitExpression* arg1 = dynamic_cast<LitExpression*>(tab.front());
-                //if(arg1 != nullptr){
-                //return fonction2(*arg1);*/
             }
         }
         Litterale* OpBinaire::fonctionNum(Nombres* arg1, Litterale *arg2) {
@@ -166,6 +177,24 @@
         Litterale* OpBinaire::fonctionNum2(Reelle* arg1, Litterale *arg2) {
             Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
             Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+        }
+
+        Litterale* OpBinaire::fonctionExpression(LitExpression* arg1, Litterale* arg2){
+            QString str = this->getName();
+            LitExpression* conv2 = dynamic_cast<LitExpression*>(arg2);
+            if (conv2 != nullptr){
+                QString valArg2 = arg2->toString();
+                delete arg2;
+                return (new LitExpression(str+"("+arg1->toString()+" , "+valArg2+")"));
+            }
+            else{
+                //Ici le second argument doit être transformer en litterale expression avant.
+                LitExpression* conv2 = new LitExpression(arg2->toString());
+                Litterale* old = arg2;
+                arg2 = conv2;
+                delete old;
+                return (new LitExpression(str+"("+arg1->toString()+","+arg2->toString()+")"));
+            }
         }
 
             //OpPlus
@@ -418,6 +447,7 @@
                 //CLEAR
                 void OpClear::executerPile(){
                     while(!(litAff->estVide())){
+                        delete &litAff->top();
                         litAff->pop();
                     }
                 }

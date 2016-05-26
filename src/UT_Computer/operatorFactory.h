@@ -12,7 +12,7 @@ class OperateurFactory {
 public:
     virtual ~OperateurFactory();
     virtual Operateur* getOperateur() =0;
-    static QMap<QString, OperateurFactory*> getFactoriesMap();
+    static QMap<QString, OperateurFactory*> getFactoriesMap(); // Pointeur plutot ?
 };
 
 class OpExpFactory : public OperateurFactory {
