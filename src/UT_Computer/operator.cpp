@@ -39,6 +39,7 @@
         Litterale* OpUnaire::fonctionNum(Nombres *arg1) {
             Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return actionNum(*conv);
             Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return actionNum(*conv1);
+            Rationelle* conv2 = dynamic_cast<Rationelle*>(arg1); if(conv2 != nullptr) return actionNum(*conv2);
         }
 
             //NEG
@@ -54,17 +55,23 @@
                 arg1.setNeg(!arg1.getNeg());
                 return arg1.returnType();
             }
+            Litterale* OpNeg::actionNum(Rationelle& arg1){
+                arg1.setNeg(!arg1.getNeg());
+                return arg1.returnType();
+            }
 
              //EXP
             Litterale* OpExp::actionNum(Entier& arg1){
-                if (arg1.getNeg()) throw ComputerException("Operation impossible sur litterale negative");
                 float f = exp(arg1.getValue());
                 return (new Reelle(f));
             }
             Litterale* OpExp::actionNum(Reelle& arg1){
-                if (arg1.getNeg()) throw ComputerException("Operation impossible sur litterale negative");;
                 float f = arg1.toFloatPositif();
                 f = exp(f);
+                return (new Reelle(f));
+            }
+            Litterale* OpExp::actionNum(Rationelle& arg1){
+                float f = exp(arg1.getValue());
                 return (new Reelle(f));
             }
             //LN
@@ -79,7 +86,12 @@
                 float f = arg1.toFloatPositif();
                 f = log(f);
                 return (new Reelle(f));
-
+            }
+            Litterale* OpLn::actionNum(Rationelle &arg1) {
+                if (arg1.getNeg()) throw ComputerException("Operation impossible sur litterale negative");;
+                float f = arg1.getValue();
+                f = log(f);
+                return (new Reelle(f));
             }
             //SIN
             Litterale* OpSin::actionNum(Entier &arg1){
@@ -104,6 +116,17 @@
                 if (arg1.getNeg()) res->setNeg(!res->getNeg());
                 return(res);
             }
+            Litterale* OpSin::actionNum(Rationelle &arg1){
+                double x = (double) arg1.getValue();
+                x = sin(x);
+                if (x<0){
+                    x =-x;
+                    arg1.setNeg(!arg1.getNeg());
+                }
+                Reelle* res = new Reelle(x);
+                if (arg1.getNeg()) res->setNeg(!res->getNeg());
+                return(res);
+            }
 
             //1.2 OpLogique unaire
             OpLogiqueUnaire::~OpLogiqueUnaire(){}
@@ -111,11 +134,12 @@
             Litterale* OpLogiqueUnaire::fonctionNum(Nombres *arg1){
                 LitNumerique* conv1 = dynamic_cast<LitNumerique*>(arg1);
                 if (conv1 != nullptr) return actionLogiNumerique(conv1);
-                else throw ComputerException("Operation < impossible sur ces littéraux");
+                else throw ComputerException("Operation impossible sur ces littéraux");
             }
 
             Litterale* OpLogiqueUnaire::actionNum(Entier& arg1){ throw ("Error ");} //A ameliorer ?? Creation d'une sous classe pour distinguer NON logique de Logique plutot que d'avoir tout en classe OpBinaire...Unaire
             Litterale* OpLogiqueUnaire::actionNum(Reelle& arg1){ throw ("Error ");}
+            Litterale* OpLogiqueUnaire::actionNum(Rationelle& arg1){ throw ("Error ");}
 
             //OpNot
             Litterale* OpNot::actionLogiNumerique(LitNumerique* arg1)  {
@@ -158,14 +182,22 @@
         Litterale* OpBinaire::fonctionNum(Nombres* arg1, Litterale *arg2) {
             Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return fonctionNum2(conv, arg2);
             Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return fonctionNum2(conv1, arg2);
+            Rationelle* conv2 = dynamic_cast<Rationelle*>(arg1); if(conv1 != nullptr) return fonctionNum2(conv2, arg2);
         }
         Litterale* OpBinaire::fonctionNum2(Entier* arg1, Litterale *arg2) {
             Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
             Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+            Rationelle* conv2 = dynamic_cast<Rationelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv2);
         }
         Litterale* OpBinaire::fonctionNum2(Reelle* arg1, Litterale *arg2) {
             Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
             Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+            Rationelle* conv2 = dynamic_cast<Rationelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv2);
+        }
+        Litterale* OpBinaire::fonctionNum2(Rationelle* arg1, Litterale *arg2) {
+            Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
+            Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+            Rationelle* conv2 = dynamic_cast<Rationelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv2);
         }
 
             //OpPlus
@@ -187,6 +219,11 @@
                 if(y<0) {y=-y; neg = true;}
                 Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
             }
+            Litterale* OpPlus::actionNum(Entier& arg1, Rationelle& arg2){
+                int num,den;
+                                return nullptr;
+            }
+
             Litterale* OpPlus::actionNum(Reelle& arg1, Reelle &arg2){
                 float y; bool neg =false;
                 if(arg1.getNeg() && arg2.getNeg()){ y = arg1.toFloatPositif()+arg2.toFloatPositif(); neg = true; }
@@ -204,6 +241,23 @@
                 else y = arg1.toFloatPositif() + arg2.getValue();
                 if(y<0) {y=-y; neg = true;}
                 Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
+            }
+            Litterale* OpPlus::actionNum(Reelle& arg1, Rationelle& arg2){
+                int num,den;
+                                return nullptr;
+            }
+
+            Litterale* OpPlus::actionNum(Rationelle& arg1, Rationelle& arg2){
+                int num,den;
+                                return nullptr;
+            }
+            Litterale* OpPlus::actionNum(Rationelle& arg1, Entier& arg2){
+                int num,den;
+                                return nullptr;
+            }
+            Litterale* OpPlus::actionNum(Rationelle& arg1, Reelle& arg2){
+                int num,den;
+                                return nullptr;
             }
             //OpMoins
             Litterale* OpMoins::actionNum(Entier& arg1, Entier& arg2){
@@ -224,6 +278,9 @@
                 if(y<0) {y=-y; neg = true;}
                 Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
             }
+            Litterale* OpMoins::actionNum(Entier& arg1, Rationelle& arg2){
+
+            }
             Litterale* OpMoins::actionNum(Reelle& arg1, Reelle &arg2){
                 float y; bool neg =false;
                 if(arg1.getNeg() && arg2.getNeg()){ y = -arg1.toFloatPositif() + arg2.toFloatPositif(); neg = true; }
@@ -242,6 +299,19 @@
                 if(y<0) {y=-y; neg = true;}
                 Reelle* res = new Reelle(y); if (neg) res->setNeg(true); return res;
             }
+            Litterale* OpMoins::actionNum(Reelle& arg1, Rationelle& arg2){
+                return nullptr;
+            }
+
+            Litterale* OpMoins::actionNum(Rationelle& arg1, Rationelle& arg2){
+                return nullptr;
+            }
+            Litterale* OpMoins::actionNum(Rationelle& arg1, Entier& arg2){
+                return nullptr;
+            }
+            Litterale* OpMoins::actionNum(Rationelle& arg1, Reelle& arg2){
+                return nullptr;
+            }
             //OpDiv
             Litterale* OpDiv::fonctionNum(Nombres* arg1, Litterale* arg2){
                 LitNumerique* conv = dynamic_cast<LitNumerique*>(arg2);
@@ -253,6 +323,7 @@
                 Litterale *res;
                 Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr)  res = actionNum(*arg1, *conv);
                 Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) res = actionNum(*arg1, *conv1);
+                Rationelle* conv2 = dynamic_cast<Rationelle*>(arg2); if(conv2 != nullptr) res = actionNum(*arg1, *conv2);
                 if(arg1->getNeg() && arg2->getNeg()){ return res;}
                 else if(arg1->getNeg() || arg1->getNeg()) { res->setNeg(true); }
                 return res;
@@ -261,9 +332,13 @@
                 Litterale* res;
                 Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) res = actionNum(*arg1, *conv);
                 Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) res = actionNum(*arg1, *conv1);
+                Rationelle* conv2 = dynamic_cast<Rationelle*>(arg2); if(conv2 != nullptr) res = actionNum(*arg1, *conv2);
                 if(arg1->getNeg() && arg2->getNeg()){ return res; }
                 else if(arg1->getNeg() || arg1->getNeg()) { res->setNeg(true); }
                 return res;
+            }
+            Litterale* OpDiv::fonctionNum2(Rationelle* arg1, Litterale *arg2) {
+                return nullptr;
             }
 
             Litterale* OpDiv::actionNum(Entier& arg1, Entier& arg2){ // Reelle ou Rationelle return ?
@@ -272,17 +347,35 @@
             Litterale* OpDiv::actionNum(Entier& arg1, Reelle& arg2){
                 return (new Reelle(arg1.getValue()/arg2.toFloatPositif()));
             }
+            Litterale* OpDiv::actionNum(Entier& arg1, Rationelle& arg2){
+                return nullptr;
+            }
             Litterale* OpDiv::actionNum(Reelle& arg1, Reelle &arg2){
                 return (new Reelle(arg1.toFloatPositif()/arg2.toFloatPositif()));
             }
             Litterale* OpDiv::actionNum(Reelle& arg1, Entier& arg2){
                 return (new Reelle(arg1.toFloatPositif()/arg2.getValue()));
             }
+            Litterale* OpDiv::actionNum(Reelle& arg1, Rationelle& arg2){
+                return nullptr;
+            }
+
+            Litterale* OpDiv::actionNum(Rationelle& arg1, Rationelle& arg2){
+                return nullptr;
+            }
+            Litterale* OpDiv::actionNum(Rationelle& arg1, Entier& arg2){
+                return nullptr;
+            }
+            Litterale* OpDiv::actionNum(Rationelle& arg1, Reelle& arg2){
+                return nullptr;
+            }
+
             //OpMul
             Litterale* OpMul::fonctionNum2(Entier* arg1, Litterale *arg2) {
                 Litterale *res;
                 Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr)  res = actionNum(*arg1, *conv);
                 Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) res = actionNum(*arg1, *conv1);
+                Rationelle* conv2 = dynamic_cast<Rationelle*>(arg2); if(conv2 != nullptr) res = actionNum(*arg1, *conv2);
                 if(arg1->getNeg() && arg2->getNeg()){ return res;}
                 else if(arg1->getNeg() || arg1->getNeg()) { res->setNeg(true); }
                 return res;
@@ -291,9 +384,13 @@
                 Litterale* res;
                 Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) res = actionNum(*arg1, *conv);
                 Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) res = actionNum(*arg1, *conv1);
+                Rationelle* conv2 = dynamic_cast<Rationelle*>(arg2); if(conv2 != nullptr) res = actionNum(*arg1, *conv2);
                 if(arg1->getNeg() && arg2->getNeg()){ return res; }
                 else if(arg1->getNeg() || arg1->getNeg()) { res->setNeg(true); }
                 return res;
+            }
+            Litterale* OpMul::fonctionNum2(Rationelle* arg1, Litterale *arg2) {
+                return nullptr;
             }
 
             Litterale* OpMul::actionNum(Entier& arg1, Entier& arg2){ // Reelle ou Rationelle return ?
@@ -302,11 +399,27 @@
             Litterale* OpMul::actionNum(Entier& arg1, Reelle& arg2){
                 return (new Reelle(arg1.getValue()*arg2.toFloatPositif()));
             }
+            Litterale* OpMul::actionNum(Entier& arg1, Rationelle& arg2){ // Reelle ou Rationelle return ?
+                return nullptr;
+            }
             Litterale* OpMul::actionNum(Reelle& arg1, Reelle &arg2){
                 return (new Reelle(arg1.toFloatPositif()*arg2.toFloatPositif()));
             }
             Litterale* OpMul::actionNum(Reelle& arg1, Entier& arg2){
                 return (new Reelle(arg1.toFloatPositif()*arg2.getValue()));
+            }
+            Litterale* OpMul::actionNum(Reelle& arg1, Rationelle& arg2){ // Reelle ou Rationelle return ?
+                return nullptr;
+            }
+
+            Litterale* OpMul::actionNum(Rationelle& arg1, Rationelle& arg2){ // Reelle ou Rationelle return ?
+                return nullptr;
+            }
+            Litterale* OpMul::actionNum(Rationelle& arg1, Entier& arg2){ // Reelle ou Rationelle return ?
+                return nullptr;
+            }
+            Litterale* OpMul::actionNum(Rationelle& arg1, Reelle& arg2){ // Reelle ou Rationelle return ?
+                return nullptr;
             }
             //OpLogiqueBinaire
             OpLogiqueBinaire::~OpLogiqueBinaire(){}
@@ -320,8 +433,13 @@
 
             Litterale* OpLogiqueBinaire::actionNum(Entier& arg1, Entier& arg2){ throw ("Error ");}
             Litterale* OpLogiqueBinaire::actionNum(Entier& arg1, Reelle& arg2){ throw ("Error ");}
+            Litterale* OpLogiqueBinaire::actionNum(Entier& arg1, Rationelle& arg2){ throw ("Error ");}
             Litterale* OpLogiqueBinaire::actionNum(Reelle& arg1, Reelle& arg2){ throw ("Error ");}
             Litterale* OpLogiqueBinaire::actionNum(Reelle& arg1, Entier& arg2){ throw ("Error ");}
+            Litterale* OpLogiqueBinaire::actionNum(Reelle& arg1, Rationelle& arg2){ throw ("Error ");}
+            Litterale* OpLogiqueBinaire::actionNum(Rationelle& arg1, Rationelle& arg2){ throw ("Error ");}
+            Litterale* OpLogiqueBinaire::actionNum(Rationelle& arg1, Entier& arg2){ throw ("Error ");}
+            Litterale* OpLogiqueBinaire::actionNum(Rationelle& arg1, Reelle& arg2){ throw ("Error ");}
 
 
             //OpInf

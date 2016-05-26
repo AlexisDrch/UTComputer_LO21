@@ -179,7 +179,8 @@ void QComputer::refresh(){
 void QComputer::getNextCommande(){
 
     pile->setMessage("");
-    commande->setText(controleur->commande(commande->text()));
+    QString s = commande->text();
+    commande->setText(controleur->commande(s));
     //commande->clear();
 }
 

@@ -169,8 +169,9 @@ public:
                     QString toString() const;
                     Litterale* simplification();
                     float getValue()const;
-                    unsigned int getValueRat() const {return numerateur.getValue();} //todo
-
+                    float getValueRat() const {return numerateur.getValue()/denominateur.getValue();} //todo
+                    unsigned int getNum(){return numerateur.getValue();}
+                    unsigned int getDen(){return denominateur.getValue();}
                };
 
             //4.1.3) Littérale réelle

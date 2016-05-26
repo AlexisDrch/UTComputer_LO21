@@ -32,6 +32,7 @@
             virtual Litterale* fonctionNum(Nombres* arg1) ; // definie action commune a tout LitNumerique puis appelle la bonne surcharge
             virtual Litterale* actionNum(Entier& arg1)  =0;
             virtual Litterale* actionNum(Reelle& arg1)  =0;
+            virtual Litterale* actionNum(Rationelle& arg1)  =0;
             void addArg(Pile* pile);
         };
 
@@ -46,6 +47,7 @@
             //actionLogiqueComplexe ? Expression ?
             Litterale* actionNum(Reelle& arg1);
             Litterale* actionNum(Entier& arg1);
+            Litterale* actionNum(Rationelle& arg1);
 
         };
 
@@ -61,6 +63,7 @@
             OpExp(): OpUnaire("EXP"){}
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
+            Litterale* actionNum(Rationelle &arg1) ;
 
         };
         class OpLn : public OpUnaire {
@@ -68,6 +71,7 @@
             OpLn(): OpUnaire("LN"){}
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
+            Litterale* actionNum(Rationelle &arg1) ;
         };
     /*
         class OpNum : public OpUnaire {
@@ -118,6 +122,7 @@
             Litterale* fonctionNum(Nombres *arg1) ;
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
+            Litterale* actionNum(Rationelle &arg1) ;
 
         };
 
@@ -126,6 +131,7 @@
             OpSin(): OpUnaire("SIN"){}
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
+            Litterale* actionNum(Rationelle &arg1) ;
 
         };/*
 
@@ -178,10 +184,16 @@
             virtual Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
             virtual Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
             virtual Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
+            virtual Litterale* fonctionNum2(Rationelle* arg1, Litterale* arg2);
             virtual Litterale* actionNum(Entier& arg1, Entier& arg2) =0;
             virtual Litterale* actionNum(Entier& arg1, Reelle& arg2) =0;
+            virtual Litterale* actionNum(Entier& arg1, Rationelle& arg2) =0;
             virtual Litterale* actionNum(Reelle& arg1, Reelle& arg2) =0;
             virtual Litterale* actionNum(Reelle& arg1, Entier& arg2) =0;
+            virtual Litterale* actionNum(Reelle& arg1, Rationelle& arg2) =0;
+            virtual Litterale* actionNum(Rationelle& arg1, Rationelle& arg2) =0;
+            virtual Litterale* actionNum(Rationelle& arg1, Entier& arg2) =0;
+            virtual Litterale* actionNum(Rationelle& arg1, Reelle& arg2) =0;
             void addArg(Pile* pile);
 
         };
@@ -197,8 +209,13 @@
             //actionLogiqueComplexe ? Expression ?
             Litterale* actionNum(Entier& arg1, Entier& arg2);
             Litterale* actionNum(Entier& arg1, Reelle& arg2);
+            Litterale* actionNum(Entier& arg1, Rationelle& arg2);
             Litterale* actionNum(Reelle& arg1, Reelle& arg2);
             Litterale* actionNum(Reelle& arg1, Entier& arg2);
+            Litterale* actionNum(Reelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Entier& arg2);
+            Litterale* actionNum(Rationelle& arg1, Reelle& arg2);
 
         };
 
@@ -206,7 +223,7 @@
         public:
             OpInf() : OpLogiqueBinaire("<"){}
             Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2);
-            ////Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2)  ;
+            //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2)  ;
         };
 
         class OpSup : public OpLogiqueBinaire{
@@ -263,8 +280,13 @@
             OpPlus() : OpBinaire("+"){}
             Litterale* actionNum(Entier& arg1, Entier& arg2);
             Litterale* actionNum(Entier& arg1, Reelle& arg2);
+            Litterale* actionNum(Entier& arg1, Rationelle& arg2);
             Litterale* actionNum(Reelle& arg1, Reelle& arg2);
             Litterale* actionNum(Reelle& arg1, Entier& arg2);
+            Litterale* actionNum(Reelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Entier& arg2);
+            Litterale* actionNum(Rationelle& arg1, Reelle& arg2);
 
         };
 
@@ -273,8 +295,13 @@
             OpMoins() : OpBinaire("-"){}
             Litterale* actionNum(Entier& arg1, Entier& arg2);
             Litterale* actionNum(Entier& arg1, Reelle& arg2);
+            Litterale* actionNum(Entier& arg1, Rationelle& arg2);
             Litterale* actionNum(Reelle& arg1, Reelle& arg2);
             Litterale* actionNum(Reelle& arg1, Entier& arg2);
+            Litterale* actionNum(Reelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Entier& arg2);
+            Litterale* actionNum(Rationelle& arg1, Reelle& arg2);
         };
 
         class OpDiv : public OpBinaire{
@@ -283,10 +310,16 @@
             Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
             Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
             Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
+            Litterale* fonctionNum2(Rationelle* arg1, Litterale* arg2);
             Litterale* actionNum(Entier& arg1, Entier& arg2);
             Litterale* actionNum(Entier& arg1, Reelle& arg2);
+            Litterale* actionNum(Entier& arg1, Rationelle& arg2);
             Litterale* actionNum(Reelle& arg1, Reelle& arg2);
             Litterale* actionNum(Reelle& arg1, Entier& arg2);
+            Litterale* actionNum(Reelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Entier& arg2);
+            Litterale* actionNum(Rationelle& arg1, Reelle& arg2);
         };
 
         class OpMul : public OpBinaire{
@@ -294,10 +327,16 @@
             OpMul() : OpBinaire("*"){}
             Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
             Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
+            Litterale* fonctionNum2(Rationelle* arg1, Litterale* arg2);
             Litterale* actionNum(Entier& arg1, Entier& arg2);
             Litterale* actionNum(Entier& arg1, Reelle& arg2);
+            Litterale* actionNum(Entier& arg1, Rationelle& arg2);
             Litterale* actionNum(Reelle& arg1, Reelle& arg2);
             Litterale* actionNum(Reelle& arg1, Entier& arg2);
+            Litterale* actionNum(Reelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Rationelle& arg2);
+            Litterale* actionNum(Rationelle& arg1, Entier& arg2);
+            Litterale* actionNum(Rationelle& arg1, Reelle& arg2);
         };
         /*
         class OpMod : public OpBinaire{

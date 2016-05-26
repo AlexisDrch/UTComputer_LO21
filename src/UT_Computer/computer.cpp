@@ -68,7 +68,7 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
 
        // Factorielle : to do
        QString::const_iterator it = v.end(); it--;
-       if ( ((*v.begin()) == "'") && ((*it) == "'") ) return(new LitExpression(v));
+       if ( ((*v.begin()) == '\'') && ((*it) == '\'') ) return(new LitExpression(v));
        if ( ((*v.begin()) == '[') && ((*it) == ']') ) return(new LitProgramme(v));
        Litterale* l = isRationelle(v); if ( l != nullptr) return l; else delete l;
 
@@ -147,7 +147,7 @@ bool isVarProgramme(const QString s){
         QString::const_iterator it = c.begin(); QString::const_iterator it2 = c.end();
         if (it == it2){ return "";}
         it2--;
-        if ( ( (*it == "'") && (*it2 == "'")) || ((*it == '[') && (*it2 == ']')) ) return c;
+        if ( ( (*it == '\'') && (*it2 == '\'')) || ((*it == '[') && (*it2 == ']')) ) return c;
         it2++;
         QString sPart;
         while (it != it2 && *it !=' '){
