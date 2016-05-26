@@ -24,7 +24,7 @@ void LitteraleManager::agrandissementCapacite() {
 	delete old;
 }
 
-Litterale* LitteraleManager::isRationelle(const QString& v){
+Litterale* LitteraleManager::isRationnelle(const QString& v){
 
     bool rationnel = true, premiere_partie = true, seconde_partie = true;
     int i=0, temp, num, den;
@@ -47,7 +47,7 @@ Litterale* LitteraleManager::isRationelle(const QString& v){
     den = v.right(v.size()-(temp)).toInt();
 
     if (rationnel) {
-        Litterale *l = (new Rationelle(num,den,num + "/" + den))->simplification();
+        Litterale *l = (new Rationnelle(num,den,num + "/" + den))->simplification();
         return l;
     }
     else return (nullptr);
@@ -70,7 +70,7 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
        QString::const_iterator it = v.end(); it--;
        if ( ((*v.begin()) == '\'') && ((*it) == '\'') ) return(new LitExpression(v));
        if ( ((*v.begin()) == '[') && ((*it) == ']') ) return(new LitProgramme(v));
-       Litterale* l = isRationelle(v); if ( l != nullptr) return l; else delete l;
+       Litterale* l = isRationnelle(v); if ( l != nullptr) return l; else delete l;
 
     return (new LitAtome(v+"dead"));
 }
@@ -118,7 +118,7 @@ QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
     LitProgramme* newe2 = dynamic_cast<LitProgramme*>(&lit); if (newe2 != nullptr){return "New : PROGRAMME";}
     Entier* newe3 = dynamic_cast<Entier*>(&lit); if (newe3 != nullptr){return "New : ENTIER";}
     Reelle* newe4 = dynamic_cast<Reelle*>(&lit); if (newe4 != nullptr){return "New : REELLE";}
-    Rationelle* newe5 = dynamic_cast<Rationelle*>(&lit);if (newe5 != nullptr){return "New : RATIONNELLE" ;}
+    Rationnelle* newe5 = dynamic_cast<Rationnelle*>(&lit);if (newe5 != nullptr){return "New : Rationnelle" ;}
 }
 
 

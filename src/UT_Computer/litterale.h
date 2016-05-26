@@ -159,13 +159,13 @@ public:
                     void setValue(unsigned int v) {value = v; }
                 };
 
-            //4.1.2) Littérale rationelle
-                class Rationelle : public LitNumerique{
+            //4.1.2) Littérale Rationnelle
+                class Rationnelle : public LitNumerique{
                     Entier numerateur;
                     Entier denominateur;
                 public:
                     //Denominateur diff de 0 sinon throw et diff de 1 sinon appelle simplification ?
-                    Rationelle(Entier num, Entier den, const QString& na =""): LitNumerique(na), numerateur(num),denominateur(den){}
+                    Rationnelle(Entier num, Entier den, const QString& na =""): LitNumerique(na), numerateur(num),denominateur(den){}
                     QString toString() const;
                     Litterale* simplification();
                     float getValue()const;

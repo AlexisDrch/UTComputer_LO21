@@ -181,7 +181,7 @@ Operande::~Operande(){
         Litterale* Nombres::returnType(){
             Entier* newe3 = dynamic_cast<Entier*>(this); if (newe3 != nullptr){return (new Entier(*newe3));}
             Reelle* newe4 = dynamic_cast<Reelle*>(this); if (newe4 != nullptr){return (new Reelle(*newe4));}
-            Rationelle* newe5 = dynamic_cast<Rationelle*>(this);if (newe5 != nullptr){return (new Rationelle(*newe5)) ;}
+            Rationnelle* newe5 = dynamic_cast<Rationnelle*>(this);if (newe5 != nullptr){return (new Rationnelle(*newe5)) ;}
         }
 
         //I.5) Litterale numerique
@@ -202,26 +202,30 @@ Operande::~Operande(){
                 return getValueEnt();
             }
 
-            //I.5.2) Rationelle
+            //I.5.2) Rationnelle
             int pgcd(int a, int b) { return b ?  pgcd(b,a%b) : a; }
 
-            Litterale* Rationelle::simplification(){
+            Litterale* Rationnelle::simplification(){
                 int n = numerateur.getValue(), d = denominateur.getValue();
                 int r = pgcd(n, d);
                 numerateur.setValue(n/r);
                 denominateur.setValue(d/r);
                 if (denominateur.getValue() != 1) {
-                    return new Rationelle(numerateur.getValueEnt(),denominateur.getValueEnt(),numerateur.getValueEnt() + "/" + denominateur.getValueEnt());
+                    return new Rationnelle(numerateur.getValueEnt(),denominateur.getValueEnt(),numerateur.getValueEnt() + "/" + denominateur.getValueEnt());
                 } else {
                     return new Entier(numerateur.getValue());
                 }
             }
-            float Rationelle::getValue()const {
+            float Rationnelle::getValue()const {
                 return getValueRat();
             }
 
-            QString Rationelle::toString() const {
-                return (numerateur.toString() + "/" + denominateur.toString());
+            QString Rationnelle::toString() const {
+                QString val = (numerateur.toString() + "/" + denominateur.toString());
+                if (neg){
+                    QString val2 = "- "; val2.append(val); return val2;
+                }
+                return val;
             }
 
             //I.5.3) Reelle

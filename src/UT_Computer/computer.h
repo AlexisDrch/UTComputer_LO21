@@ -30,7 +30,7 @@ class LitteraleManager {
 public:
     Litterale& addLitterale(const QString& str);
     Litterale& addLitterale(Litterale* res);
-    Litterale* isRationelle(const QString& c);
+    Litterale* isRationnelle(const QString& c);
     bool verifLitterale(const QString& c); // to implement
     Litterale* fabriqLitterale(const QString& v); // to implement
     void removeLitterale(Litterale& e);
