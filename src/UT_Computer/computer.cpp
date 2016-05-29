@@ -56,46 +56,80 @@ Litterale* LitteraleManager::isRationnelle(const QString& v){
 
 }
 
-bool LitteraleManager::verifOperande(QString& operande,QString& nouvelle){
+bool LitteraleManager::verifLitterale(QString& operande,QString& nouvelle, QVector<Operande*>& vectorExp){
     Litterale*res = fabriqLitterale(operande);
     if (res == nullptr) return false;
     nouvelle.push_back(operande);
+    vectorExp.push_back(res);
     operande ="";
-    delete res;
     return true;
 }
 
+//EVAL
+/*
+ Algo recursif :
+    fonction EVAL(LitteraleExpression* litExp) :
+    if (op) {
+        op->addArg(Litterale* res1 = EVAL(EXP1));
+        if(Op.size>1){
+            op->addArg(Litterale* res2 = EVAL(EXP2));
+        }
+        return op->exectuer
+    }
+    else return fabriqueLitterale(LitExp->toString());
+ */
 
-QString LitteraleManager::verifExpressionValide(const QString& v){
+QString LitteraleManager::verifExpressionValide(const QString& v, QVector<Operande*>& vectorExp){
 
     QString nouvelle;
+    // vectorExp : Dedans possedera tous les operateurs de l'expression correctement initialisée avec les litteraux en arguments
     QMap<QString, OperateurFactory*> factories = OperateurFactory::getFactoriesMap();
     QString::const_iterator fin = v.end(); fin--; //on retire le ' finale
     QString::const_iterator deb = v.begin(); deb++;    //on retire le ' debut
+    unsigned int sizeNewOp=0;
+    bool binaryToFull = true;
 
         while (deb != fin){
             if(*deb != ' '){
                 QString operande;
+                // On parcourt le string tant que non Fin à la recherche d'operateur (contenu dans la facorie) ou de chaine de caractère
                 while (deb !=fin && !factories.contains(*deb) && !factories.contains(operande) && *deb != ' ' && *deb !='(' && *deb != ')' ) {
                     operande.push_back(*deb);
                     ++deb;
                 }
                 if(deb==fin){
                     if(operande!=""){
-                        if(!verifOperande(operande,nouvelle)) return "false";
+                        if(!verifLitterale(operande,nouvelle,vectorExp)) return "false";
                     }
                     return nouvelle;
-                }
+                }//Cas ou le curseur s'est arrete car on a trouvé un operateur
                 if(factories.contains(operande)){
+                    OperateurFactory* fact= factories.operator [](operande);
+                    Operateur* newOp = (fact->getOperateur());
+                    sizeNewOp = newOp->getTaille();
+                    if(sizeNewOp == 1)
+                        vectorExp.push_back(newOp);
+                    else if(sizeNewOp == 2)
+                        vectorExp.push_front(newOp);
                     nouvelle.push_back(operande);
                     operande ="";
                 }
-                else {
+                else {//Cas ou le curseur s'est arrete car on a trouvé un operande potentiel
                     if(operande!=""){
-                        if(!verifOperande(operande,nouvelle)) return "false";
+                        if(!verifLitterale(operande,nouvelle,vectorExp)) return "false";
                     }
+                    //Cas ou le curseur s'est arrete car on a trouvé un espace ou parenthèse
                      if(*deb=='(' || *deb==')') { nouvelle.push_back(*deb); deb++;}
-                     else if (factories.contains(*deb)){ nouvelle.push_back(*deb); deb++;}
+                     else if (factories.contains(*deb)){
+                         OperateurFactory* fact= factories.operator [](*deb);
+                         Operateur* newOp = (fact->getOperateur());
+                         sizeNewOp = newOp->getTaille();
+                         if(sizeNewOp == 1)
+                             vectorExp.push_back(newOp);
+                         else if(sizeNewOp == 2)
+                             vectorExp.push_front(newOp); // On push le nouvel operateur symbole au début de de la pile +(1,1)
+                         nouvelle.push_back(*deb); deb++;
+                     }
                 }
             }else deb ++;
         }
@@ -122,9 +156,12 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
 
        //Expression
        if ( ((*v.begin()) == '\'') && ((*it) == '\'')){
-           QString str = verifExpressionValide(v);
+           QVector<Operande*> *vectExp = new QVector<Operande*>;
+           QString str = verifExpressionValide(v,*vectExp);
            if (str != "false"){                         //Si faux : on renvoie en ligne de commande
-            return(new LitExpression(str));
+            LitExpression* newLit = new LitExpression(str);
+            newLit->setVector(*vectExp);
+            return newLit;
            }
            else return nullptr;
        }

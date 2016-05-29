@@ -10,6 +10,8 @@
     }
     void Operateur::addArg(Pile *pile){pile->setMessage("Operateur abstrait");}
 
+    void Operateur::addArg(Litterale* arg1){throw ComputerException("Operateur abstrait : ERROR"); }
+
         //II.1) Operateur Unaire
         OpUnaire::~OpUnaire(){
 
@@ -17,6 +19,13 @@
         void OpUnaire::addArg(Pile* pile){
             if (tab.size() <=1){
             tab.push_back(&pile->top());
+            }
+            else throw ComputerException("Error : Tentative d'ajout de plus de 1 argument à un opérateur unaire");
+        }
+
+        void OpUnaire::addArg(Litterale* arg1){
+            if (tab.size() <=1){
+            tab.push_back(arg1);
             }
             else throw ComputerException("Error : Tentative d'ajout de plus de 1 argument à un opérateur unaire");
         }
@@ -72,6 +81,40 @@
                 return arg1.returnType();
             }
 
+            //EVAL
+            Litterale* OpEval::fonctionExpression(LitExpression* arg1){
+                QVector<Operande*>& vector = arg1->getVector();
+                /*QString res;
+                for(unsigned int i = 0 ; i<vector.size();i++){
+                    res = res + vector.at(i)->toString();
+                }
+                    return (new LitExpression(res));*/
+                return Evaluation(vector);
+                }
+
+            Litterale* OpEval::Evaluation(QVector<Operande*>& vec) {
+                Operande* operande = vec.front();
+                vec.pop_front();
+                Litterale* litterale = dynamic_cast<Litterale*>(operande);
+                if(litterale != nullptr) return litterale;
+
+                Operateur* operateur = dynamic_cast<Operateur*>(operande);
+                if (operateur!= nullptr) {
+                    for(unsigned int i =0 ; i< operateur->getTaille(); i++){
+                        operateur->addArg(Evaluation(vec));
+                    }
+                    return operateur->executer();
+                }
+            }
+            Litterale* OpEval::actionNum(Entier &arg1) {
+                return &arg1;
+            }
+            Litterale* OpEval::actionNum(Reelle &arg1) {
+                return &arg1;
+            }
+            Litterale* OpEval::actionNum(Rationnelle &arg1){
+                return &arg1;
+            }
 
             //EXP
             Litterale* OpExp::actionNum(Entier& arg1){
@@ -175,9 +218,16 @@
             else throw ComputerException("Error : Tentative d'ajout de plus de 2 arguments à un opérateur binaire");
         }
 
+        void OpBinaire::addArg(Litterale* arg){
+            if (tab.size() <=2){
+            tab.push_back(arg);
+            }
+            else throw ComputerException("Error : Tentative d'ajout de plus de 2 argument à un opérateur binaire");
+        }
+
         Litterale* OpBinaire::executer(){
             Nombres* arg1 = dynamic_cast<Nombres*>(tab.operator [](1));
-            Litterale* arg2 = tab.operator [](0);
+            Litterale* arg2 = dynamic_cast<Litterale*>(tab.operator [](0));
 
             if(arg1 != nullptr){
                 Litterale* res = fonctionNum(arg1,arg2);
@@ -193,44 +243,7 @@
                 throw "error : operateur non valide sur ce litterale";
             }
         }
-        Litterale* OpBinaire::fonctionNum(Nombres* arg1, Litterale *arg2) {
-            Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return fonctionNum2(conv, arg2);
-            Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return fonctionNum2(conv1, arg2);
-            Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg1); if(conv2 != nullptr) return fonctionNum2(conv2, arg2);
-        }
-        Litterale* OpBinaire::fonctionNum2(Entier* arg1, Litterale *arg2) {
-            Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
-            Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
-            Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg2); if(conv2 != nullptr) return actionNum(*arg1, *conv2);
-        }
-        Litterale* OpBinaire::fonctionNum2(Reelle* arg1, Litterale *arg2) {
-            Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
-            Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
-            Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg2); if(conv2 != nullptr) return actionNum(*arg1, *conv2);
-        }
-        Litterale* OpBinaire::fonctionNum2(Rationnelle* arg1, Litterale *arg2) {
-            Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
-            Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
-            Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg2); if(conv2 != nullptr) return actionNum(*arg1, *conv2);
-        }
 
-        Litterale* OpBinaire::fonctionExpression(LitExpression* arg1, Litterale* arg2){
-            QString str = this->getName();
-            LitExpression* conv2 = dynamic_cast<LitExpression*>(arg2);
-            if (conv2 != nullptr){
-                QString valArg2 = arg2->toString();
-                delete arg2;
-                return (new LitExpression(str+"("+arg1->toString()+" , "+valArg2+")"));
-            }
-            else{
-                //Ici le second argument doit être transformer en litterale expression avant.
-                LitExpression* conv2 = new LitExpression(arg2->toString());
-                Litterale* old = arg2;
-                arg2 = conv2;
-                delete old;
-                return (new LitExpression(str+"("+arg1->toString()+","+arg2->toString()+")"));
-            }
-        }
 
             //II.3) Operateur Pile
             OpPile::~OpPile(){}
@@ -254,37 +267,12 @@
                 OpPileUnaire::~OpPileUnaire(){
 
                 }
-                void OpPileUnaire::executerPile(){
-                    /*INUTILE ?
-                   LitNumerique* arg1 = dynamic_cast<LitNumerique*>(&litAff->top());
-
-                    if(arg1 != nullptr){
-                        fonctionNum(arg1);
-                    }
-                    else {
-                        throw "error : operateur non valide sur ce litterale";
-                        //LitExpression* arg1 = dynamic_cast<LitExpression*>(tab.front());
-                        //if(arg1 != nullptr){
-                        //return fonction2(*arg1);
-                    }*/
-                }
-                /*INUTILE ?
-                void OpPileUnaire::fonctionNum(LitNumerique *arg1) {
-                    Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return actionNum(*conv);
-                    Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return actionNum(*conv1);
-                }*/
+                void OpPileUnaire::executerPile(){}
 
                 //DUP
                 void OpDup::executerPile(){
                     litAff->push(litAff->top());
                 }
-                /*INUTILE ?
-                void OpDup::actionNum(Entier &arg1){
-                    //return (new Entier(arg1));
-                }
-                void OpDup::actionNum(Reelle &arg1){
-                    //return (new Reelle(arg1));
-                }*/
                 //DROP
                 void OpDrop::executerPile(){
                     litAff->pop();

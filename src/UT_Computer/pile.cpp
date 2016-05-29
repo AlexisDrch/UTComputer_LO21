@@ -22,17 +22,6 @@
         items[nb].raz();
         modificationEtat();
     }
-    /*
-    void Pile::affiche(QTextStream& f) const{
-        f<<"********************************************* \n";
-        f<<"M : "<<message<<"\n";
-        f<<"---------------------------------------------\n";
-        for(int i=nbAffiche; i>0; i--) {
-            if (i<=nb) f<<i<<": "<<items[nb-i].getLitterale().toString()<<"\n";
-            else f<<i<<": \n";
-        }
-        f<<"---------------------------------------------\n";
-    }*/
 
 
     Pile::~Pile(){

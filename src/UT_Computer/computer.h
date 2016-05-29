@@ -34,9 +34,8 @@ public:
     Litterale* addLitterale(const QString& str);
     Litterale& addLitterale(Litterale* res);
     Litterale* isRationnelle(const QString& c);
-    bool verifLitterale(const QString& c);
-    bool verifOperande(QString& op, QString& nouvelle);
-    QString verifExpressionValide(const QString& c); // to implement
+    bool verifLitterale(QString& op, QString& nouvelle, QVector<Operande*>& vectorExp);
+    QString verifExpressionValide(const QString& c, QVector<Operande*>& vect); // to implement
     Litterale* fabriqLitterale(const QString& v);
     void removeLitterale(Litterale& e);
     static LitteraleManager& getInstance();

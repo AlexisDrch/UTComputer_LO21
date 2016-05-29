@@ -62,42 +62,16 @@ public:
     //2) Litterale expression // GERER LES PRIORIOTE !!!///
         class LitExpression :public Litterale{
             //on considerera qu'une expression n'est en réalité qu'une liste d'opérande
-            QVector<const Operande*> value;
+            QVector<Operande*> vector;
             QString stringValue;    //RETIRER LES ESPACES DANS LE CONSTRUCTOR
         public :
             //a redefinir dans le .cpp pour push dans le value.
             LitExpression(const QString& str, const QString& na = "");
             Litterale* getValue() const;
+            void setVector(QVector<Operande*>& vec) {vector = vec ;}
+            QVector<Operande*>& getVector() {return vector ;}
             QString toString()const;
             void  verifNeg() const;
-
-            //Operateur binaire Exp - Exp
-                //Que sur des littérales entière ? (cf enoncé 1.4.1)
-            QString operatorBinaire(const QString& str, const QString& str2);
-            Litterale* operatorDiv(const LitExpression& lit);
-            Litterale* operatorMod(const LitExpression& lit);
-            Litterale* operatorPow(const LitExpression& lit);
-                //Op symbole
-                QString operatorSymbole(const QString& str, const QString& str2);
-                Litterale* operator+(const LitExpression& lit);
-                Litterale* operator-(const LitExpression& lit);
-                Litterale* operator*(const LitExpression& lit);
-                Litterale* operator/(const LitExpression& lit);
-                Litterale* operator$(const LitExpression& lit);
-
-                //Litterale* operator$(const LitExpression& lit);
-            //Operateur binaire Exp - Lit(a appeler dans sens inverse si besoin depuis le lit)
-            LitExpression* litToExp(const LitNumerique& lit);
-            Litterale* operatorDiv(const LitNumerique& lit);
-            Litterale* operatorMod(const LitNumerique& lit);
-            Litterale* operatorPow(const LitNumerique& lit);
-                //Op symbole
-                Litterale* operator+(const LitNumerique& lit);
-                Litterale* operator-(const LitNumerique& lit);
-                Litterale* operator*(const LitNumerique& lit);
-                Litterale* operator/(const LitNumerique& lit);
-                Litterale* operator$(const LitNumerique& lit);
-
         };
 
     //3) Litterale atome

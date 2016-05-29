@@ -32,63 +32,26 @@ Operande::~Operande(){
         }
 
         //I.2) Litterale expression
-        LitExpression::LitExpression(const QString& str, const QString& na):Litterale(na){
+        LitExpression::LitExpression(const QString& str,  const QString& na):Litterale(na){
             //remplir le vector de littérale
             //Analyser les espaces dans l'expression str puis:
             stringValue = str;
         }
+        /*
+         Algo recursif :
+            fonction EVAL(LitteraleExpression* litExp) :
+            if (op) {
+                op->addArg(Litterale* res1 = EVAL(EXP1));
+                if(Op.size>1){
+                    op->addArg(Litterale* res2 = EVAL(EXP2));
+                }
+                return op->exectuer
+            }
+            else return fabriqueLitterale(LitExp->toString());
+         */
 
         QString LitExpression::toString()const{
                     return stringValue;
-        }
-
-                //Op symbole
-
-                QString LitExpression::operatorSymbole(const QString& symb, const QString &lit){
-                    return (toString()+" "+ symb +" "+ lit);
-                }
-                Litterale* LitExpression::operator+(const LitExpression& lit){
-                    return (new LitExpression(operatorSymbole("+",lit.toString())));
-                }
-                Litterale* LitExpression::operator*(const LitExpression& lit){
-                    return (new LitExpression(operatorSymbole("*",lit.toString())));
-                }
-                Litterale* LitExpression::operator-(const LitExpression& lit){
-                    return (new LitExpression(operatorSymbole("-",lit.toString())));
-                }
-                Litterale* LitExpression::operator/(const LitExpression& lit){
-                    return (new LitExpression(operatorSymbole("/",lit.toString())));
-                }
-                Litterale* LitExpression::operator$(const LitExpression& lit){
-                    return (new LitExpression(operatorSymbole("$",lit.toString())));
-                }
-            //Op Binaire Exp - Lit
-            LitExpression* LitExpression::litToExp(const LitNumerique& lit){
-                QString str = "'" + lit.toString() + "'";
-                return (new LitExpression(str));
-            }
-
-        //Op symbole
-
-        Litterale* LitExpression::operator+(const LitNumerique& lit){
-            LitExpression* litEx = litToExp(lit);
-            return (new LitExpression(operatorSymbole("+",litEx->toString())));
-        }
-        Litterale* LitExpression::operator-(const LitNumerique& lit){
-            LitExpression* litEx = litToExp(lit);
-            return (new LitExpression(operatorSymbole("-",litEx->toString())));
-        }
-        Litterale* LitExpression::operator/(const LitNumerique& lit){
-            LitExpression* litEx = litToExp(lit);
-            return (new LitExpression(operatorSymbole("/",litEx->toString())));
-        }
-        Litterale* LitExpression::operator*(const LitNumerique& lit){
-            LitExpression* litEx = litToExp(lit);
-            return (new LitExpression(operatorSymbole("*",litEx->toString())));
-        }
-        Litterale* LitExpression::operator$(const LitNumerique& lit){
-            LitExpression* litEx = litToExp(lit);
-            return (new LitExpression(operatorSymbole("$",litEx->toString())));
         }
 
 

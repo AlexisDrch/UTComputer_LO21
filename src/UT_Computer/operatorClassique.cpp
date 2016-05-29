@@ -1,5 +1,85 @@
 #include "operatorClassique.h"
 
+
+Litterale* OpSymbole::fonctionNum(Nombres* arg1, Litterale *arg2) {
+    Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return fonctionNum2(conv, arg2);
+    Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return fonctionNum2(conv1, arg2);
+    Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg1); if(conv2 != nullptr) return fonctionNum2(conv2, arg2);
+}
+Litterale* OpSymbole::fonctionNum2(Entier* arg1, Litterale *arg2) {
+    Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
+    Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+    Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg2); if(conv2 != nullptr) return actionNum(*arg1, *conv2);
+}
+Litterale* OpSymbole::fonctionNum2(Reelle* arg1, Litterale *arg2) {
+    Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
+    Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+    Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg2); if(conv2 != nullptr) return actionNum(*arg1, *conv2);
+}
+Litterale* OpSymbole::fonctionNum2(Rationnelle* arg1, Litterale *arg2) {
+    Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
+    Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+    Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg2); if(conv2 != nullptr) return actionNum(*arg1, *conv2);
+}
+
+Litterale* OpSymbole::fonctionExpression(LitExpression* arg1, Litterale* arg2){
+    QString symb = this->getName();
+    LitExpression* conv2 = dynamic_cast<LitExpression*>(arg2);
+    if (conv2 != nullptr){
+        QString valArg2 = arg2->toString();
+        delete arg2;
+        return (new LitExpression("("+arg1->toString()+")"+" "+symb+" "+"("+valArg2+")"));
+    }
+    else{
+        //Ici le second argument doit être transformer en litterale expression avant.
+        LitExpression* conv2 = new LitExpression(arg2->toString());
+        Litterale* old = arg2;
+        arg2 = conv2;
+        delete old;
+        return (new LitExpression("("+arg1->toString()+")"+" "+symb+" "+"("+arg2->toString()+")"));
+    }
+}
+
+
+Litterale* OpCaractere::fonctionNum(Nombres* arg1, Litterale *arg2) {
+    Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return fonctionNum2(conv, arg2);
+    Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return fonctionNum2(conv1, arg2);
+    Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg1); if(conv2 != nullptr) return fonctionNum2(conv2, arg2);
+}
+Litterale* OpCaractere::fonctionNum2(Entier* arg1, Litterale *arg2) {
+    Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
+    Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+    Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg2); if(conv2 != nullptr) return actionNum(*arg1, *conv2);
+}
+Litterale* OpCaractere::fonctionNum2(Reelle* arg1, Litterale *arg2) {
+    Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
+    Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+    Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg2); if(conv2 != nullptr) return actionNum(*arg1, *conv2);
+}
+Litterale* OpCaractere::fonctionNum2(Rationnelle* arg1, Litterale *arg2) {
+    Entier* conv = dynamic_cast<Entier*>(arg2); if(conv != nullptr) return actionNum(*arg1, *conv);
+    Reelle* conv1 = dynamic_cast<Reelle*>(arg2); if(conv1 != nullptr) return actionNum(*arg1, *conv1);
+    Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg2); if(conv2 != nullptr) return actionNum(*arg1, *conv2);
+}
+
+Litterale* OpCaractere::fonctionExpression(LitExpression* arg1, Litterale* arg2){
+    QString str = this->getName();
+    LitExpression* conv2 = dynamic_cast<LitExpression*>(arg2);
+    if (conv2 != nullptr){
+        QString valArg2 = arg2->toString();
+        delete arg2;
+        return (new LitExpression(str+"("+arg1->toString()+" , "+valArg2+")"));
+    }
+    else{
+        //Ici le second argument doit être transformer en litterale expression avant.
+        LitExpression* conv2 = new LitExpression(arg2->toString());
+        Litterale* old = arg2;
+        arg2 = conv2;
+        delete old;
+        return (new LitExpression(str+"("+arg1->toString()+","+arg2->toString()+")"));
+    }
+}
+
 //OpPlus
 Litterale* OpPlus::actionNum(Entier& arg1, Entier& arg2){
     long y; bool neg =false;
@@ -192,7 +272,7 @@ Litterale* OpMoins::actionNum(Rationnelle& arg1, Reelle& arg2){
 Litterale* OpDiv::fonctionNum(Nombres* arg1, Litterale* arg2){
     LitNumerique* conv = dynamic_cast<LitNumerique*>(arg2);
     if (conv!= nullptr) if(conv->getValue() ==0) throw ComputerException("Error : div par 0 impossible");
-    OpBinaire::fonctionNum(arg1, arg2);//sinon on reappelle la division classique.
+    OpSymbole::fonctionNum(arg1, arg2);//sinon on reappelle la division classique.
 }
 
 Litterale* OpDiv::fonctionNum2(Entier* arg1, Litterale *arg2) {

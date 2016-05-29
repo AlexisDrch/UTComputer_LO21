@@ -16,6 +16,7 @@
         virtual ~Operateur();
         virtual Litterale* executer() = 0;
         virtual void addArg(Pile* pile);
+        virtual void addArg(Litterale* arg1);
         unsigned int getTaille() const {return taille;}
         QString toString() const { return name;}
 
@@ -30,11 +31,12 @@
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
             virtual Litterale* fonctionNum(Nombres* arg1) ; // definie action commune a tout LitNumerique puis appelle la bonne surcharge
-            Litterale* fonctionExpression(LitExpression* arg1);
+            virtual Litterale* fonctionExpression(LitExpression* arg1);
             virtual Litterale* actionNum(Entier& arg1)  =0;
             virtual Litterale* actionNum(Reelle& arg1)  =0;
             virtual Litterale* actionNum(Rationnelle& arg1)  =0;
             void addArg(Pile* pile);
+            void addArg(Litterale* arg1);
         };
 
         //1.1 logique unaire
@@ -62,7 +64,6 @@
         class OpExp : public OpUnaire {
         public:
             OpExp(): OpUnaire("EXP"){}
-            Litterale* fonctionExpression(LitExpression* arg1);
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
             Litterale* actionNum(Rationnelle &arg1) ;
@@ -111,13 +112,18 @@
             OpNorm(): OpUnaire("NORM"){}
             Litterale* fonctionNum(LitNumerique& arg1) const;
         };
-
+        */
         class OpEval : public OpUnaire {
         public:
             OpEval(): OpUnaire("EVAL"){}
-            Litterale* fonctionNum(LitNumerique& arg1) const;
+            Litterale* fonctionExpression(LitExpression* arg1);
+            Litterale* Evaluation(QVector<Operande*>& vec);
+            Litterale* actionNum(Entier &arg1) ;
+            Litterale* actionNum(Reelle &arg1) ;
+            Litterale* actionNum(Rationnelle &arg1) ;
         };
-        */
+
+
         class OpNeg : public OpUnaire {
         public:
             OpNeg(): OpUnaire("NEG"){}
@@ -183,21 +189,10 @@
             virtual ~OpBinaire();
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
-            virtual Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
-            virtual Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
-            virtual Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
-            virtual Litterale* fonctionNum2(Rationnelle* arg1, Litterale* arg2);
-            Litterale* fonctionExpression(LitExpression* arg1, Litterale* arg2);
-            virtual Litterale* actionNum(Entier& arg1, Entier& arg2) =0;
-            virtual Litterale* actionNum(Entier& arg1, Reelle& arg2) =0;
-            virtual Litterale* actionNum(Entier& arg1, Rationnelle& arg2) =0;
-            virtual Litterale* actionNum(Reelle& arg1, Reelle& arg2) =0;
-            virtual Litterale* actionNum(Reelle& arg1, Entier& arg2) =0;
-            virtual Litterale* actionNum(Reelle& arg1, Rationnelle& arg2) =0;
-            virtual Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2) =0;
-            virtual Litterale* actionNum(Rationnelle& arg1, Entier& arg2) =0;
-            virtual Litterale* actionNum(Rationnelle& arg1, Reelle& arg2) =0;
+            virtual Litterale* fonctionNum(Nombres* arg1, Litterale* arg2)=0;
+            virtual Litterale* fonctionExpression(LitExpression* arg1, Litterale* arg2) =0;
             void addArg(Pile* pile);
+            void addArg(Litterale* arg);
 
         };
 
@@ -225,9 +220,6 @@
             virtual ~OpPileUnaire();
             //Executer :squelette pour classe fille : template methode
             virtual void executerPile();
-           /* void fonctionNum(LitNumerique* arg1);
-            virtual void actionNum(Entier &arg1) = 0;
-            virtual void actionNum(Reelle &arg1) = 0;*/
         };
 
         class OpDup : public OpPileUnaire {
@@ -235,8 +227,7 @@
             OpDup(): OpPileUnaire("DUP"){}
             void executerPile();
             void fonctionNum(Litterale* arg1); //TODO: a definir en virtuelle pure dans la classe OPUNAIRE/OPBINAIRE
-           /* void actionNum(Entier &arg1) ;
-            void actionNum(Reelle &arg1) ;*/
+
         };
 
         class OpDrop : public OpPileUnaire {

@@ -10,19 +10,10 @@ public :
     OpLogiqueBinaire(const QString &na):OpBinaire(na){}
     virtual ~OpLogiqueBinaire();
     Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
+    Litterale* fonctionExpression(LitExpression *arg1, Litterale *arg2); // TODO
     virtual Litterale* actionLogiNumerique(LitNumerique* arg1, LitNumerique* arg2) =0;
     //virtual //Litterale* actionLogiLitterale(Litterale* arg1, Litterale* arg2) const =0;
     //actionLogiqueComplexe ? Expression ?
-    Litterale* actionNum(Entier& arg1, Entier& arg2);
-    Litterale* actionNum(Entier& arg1, Reelle& arg2);
-    Litterale* actionNum(Entier& arg1, Rationnelle& arg2);
-    Litterale* actionNum(Reelle& arg1, Reelle& arg2);
-    Litterale* actionNum(Reelle& arg1, Entier& arg2);
-    Litterale* actionNum(Reelle& arg1, Rationnelle& arg2);
-    Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2);
-    Litterale* actionNum(Rationnelle& arg1, Entier& arg2);
-    Litterale* actionNum(Rationnelle& arg1, Reelle& arg2);
-
 };
 
 class OpInf : public OpLogiqueBinaire{

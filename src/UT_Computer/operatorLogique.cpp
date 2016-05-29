@@ -10,16 +10,23 @@ Litterale* OpLogiqueBinaire::fonctionNum(Nombres* arg1, Litterale* arg2){
     else throw ComputerException("Operation < impossible sur ces littéraux");
 }
 
-Litterale* OpLogiqueBinaire::actionNum(Entier& arg1, Entier& arg2){ throw ("Error ");}
-Litterale* OpLogiqueBinaire::actionNum(Entier& arg1, Reelle& arg2){ throw ("Error ");}
-Litterale* OpLogiqueBinaire::actionNum(Entier& arg1, Rationnelle& arg2){ throw ("Error ");}
-Litterale* OpLogiqueBinaire::actionNum(Reelle& arg1, Reelle& arg2){ throw ("Error ");}
-Litterale* OpLogiqueBinaire::actionNum(Reelle& arg1, Entier& arg2){ throw ("Error ");}
-Litterale* OpLogiqueBinaire::actionNum(Reelle& arg1, Rationnelle& arg2){ throw ("Error ");}
-Litterale* OpLogiqueBinaire::actionNum(Rationnelle& arg1, Rationnelle& arg2){ throw ("Error ");}
-Litterale* OpLogiqueBinaire::actionNum(Rationnelle& arg1, Entier& arg2){ throw ("Error ");}
-Litterale* OpLogiqueBinaire::actionNum(Rationnelle& arg1, Reelle& arg2){ throw ("Error ");}
-
+Litterale* OpLogiqueBinaire::fonctionExpression(LitExpression* arg1, Litterale* arg2){
+    QString symb = this->getName();
+    LitExpression* conv2 = dynamic_cast<LitExpression*>(arg2);
+    if (conv2 != nullptr){
+        QString valArg2 = arg2->toString();
+        delete arg2;
+        return (new LitExpression("("+arg1->toString()+")"+" "+symb+" "+"("+valArg2+")"));
+    }
+    else{
+        //Ici le second argument doit être transformer en litterale expression avant.
+        LitExpression* conv2 = new LitExpression(arg2->toString());
+        Litterale* old = arg2;
+        arg2 = conv2;
+        delete old;
+        return (new LitExpression("("+arg1->toString()+")"+" "+symb+" "+"("+arg2->toString()+")"));
+    }
+}
 
 //OpInf
 Litterale* OpInf::actionLogiNumerique(LitNumerique *arg1, LitNumerique *arg2)  { // faire avec Litterale génerale (complexe ? )

@@ -13,7 +13,7 @@ QMap<QString,OperateurFactory*> OperateurFactory::getFactoriesMap() {
     factories["-"] = new OpMoinsFactory();
     factories["*"] = new OpMulFactory();
     factories["/"] = new OpDivFactory();
-    factories["DIV"] = new OpDiventFactory();
+  /*  factories["DIV"] = new OpDiventFactory();
     /*factories["POW"] = new OpPowFactory(); */
     factories["NEG"] = new OpNegFactory();
     factories["SIN"] = new OpSinFactory();/*
@@ -40,9 +40,9 @@ QMap<QString,OperateurFactory*> OperateurFactory::getFactoriesMap() {
     factories[">"] = new OpSupFactory();
     factories["AND"] = new OpAndFactory();
     factories["OR"] = new OpOrFactory();
-    factories["NOT"] = new OpNotFactory();/*
+    factories["NOT"] = new OpNotFactory();
     factories["EVAL"] = new OpEvalFactory();
-*/  factories["DUP"] = new OpDupFactory();
+    factories["DUP"] = new OpDupFactory();
     factories["DROP"] = new OpDropFactory();
     factories["CLEAR"] = new OpClearFactory();
     factories["SWAP"] = new OpSwapFactory();/*

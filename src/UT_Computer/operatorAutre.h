@@ -7,7 +7,7 @@ class OpAutre : public OpBinaire {
 public:
     OpAutre(const QString& na) : OpBinaire(na) {}
 };
-
+/*
 class OpDivent : public OpAutre{
 public:
     OpDivent() : OpAutre("DIV"){}
@@ -23,7 +23,7 @@ public:
     Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2){}
     Litterale* actionNum(Rationnelle& arg1, Entier& arg2){}
     Litterale* actionNum(Rationnelle& arg1, Reelle& arg2){}
-};
+};*/
 
 /*
 class OpMod : public OpAutre{

@@ -12,17 +12,49 @@ class OpClassique : public OpBinaire {
 public:
     OpClassique(const QString& na) : OpBinaire(na) {}
 
+    virtual Litterale* fonctionNum(Nombres* arg1, Litterale* arg2)=0;
+    virtual Litterale* fonctionExpression(LitExpression* arg1, Litterale* arg2) =0;
 };
 
 
 class OpSymbole : public OpClassique{
 public:
     OpSymbole(const QString& na) : OpClassique(na) {}
+    virtual Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
+    virtual Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
+    virtual Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
+    virtual Litterale* fonctionNum2(Rationnelle* arg1, Litterale* arg2);
+    Litterale* fonctionExpression(LitExpression* arg1, Litterale* arg2);
+
+    virtual Litterale* actionNum(Entier& arg1, Entier& arg2) =0;
+    virtual Litterale* actionNum(Entier& arg1, Reelle& arg2) =0;
+    virtual Litterale* actionNum(Entier& arg1, Rationnelle& arg2) =0;
+    virtual Litterale* actionNum(Reelle& arg1, Reelle& arg2) =0;
+    virtual Litterale* actionNum(Reelle& arg1, Entier& arg2) =0;
+    virtual Litterale* actionNum(Reelle& arg1, Rationnelle& arg2) =0;
+    virtual Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2) =0;
+    virtual Litterale* actionNum(Rationnelle& arg1, Entier& arg2) =0;
+    virtual Litterale* actionNum(Rationnelle& arg1, Reelle& arg2) =0;
 };
 
 class OpCaractere : public OpClassique{
 public:
     OpCaractere(const QString& na) : OpClassique(na) {}
+    virtual Litterale* fonctionNum(Nombres* arg1, Litterale* arg2);
+    virtual Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
+    virtual Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
+    virtual Litterale* fonctionNum2(Rationnelle* arg1, Litterale* arg2);
+    Litterale* fonctionExpression(LitExpression* arg1, Litterale* arg2);
+
+    virtual Litterale* actionNum(Entier& arg1, Entier& arg2) =0;
+    virtual Litterale* actionNum(Entier& arg1, Reelle& arg2) =0;
+    virtual Litterale* actionNum(Entier& arg1, Rationnelle& arg2) =0;
+    virtual Litterale* actionNum(Reelle& arg1, Reelle& arg2) =0;
+    virtual Litterale* actionNum(Reelle& arg1, Entier& arg2) =0;
+    virtual Litterale* actionNum(Reelle& arg1, Rationnelle& arg2) =0;
+    virtual Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2) =0;
+    virtual Litterale* actionNum(Rationnelle& arg1, Entier& arg2) =0;
+    virtual Litterale* actionNum(Rationnelle& arg1, Reelle& arg2) =0;
 
 };
 
