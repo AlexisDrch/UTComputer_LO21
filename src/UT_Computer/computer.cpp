@@ -145,7 +145,6 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
        unsigned int val = v.toLongLong(&ok); if(ok){return (new Entier(val));}
        float val2 = v.toFloat(&ok) ; if(ok){return (new Reelle(val2));}
 
-       // Factorielle : to do
        QString::const_iterator it = v.end(); it--;
        if ( ((*v.begin()) == '\'') && ((*it) == '\'') ) return(new LitExpression(v));
        if ( ((*v.begin()) == '[') && ((*it) == ']') ) return(new LitProgramme(v));
@@ -170,6 +169,21 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
 
            return(new LitProgramme(v));
        }
+
+       //Atome
+       bool atome = false;
+       if (v.at(0).isUpper()) {
+           atome = true;
+           int i = 0;
+           while (i<v.size() && atome) {
+               if (!(v.at(i).isUpper() || v.at(i).isNumber())) {
+                   atome = false;
+               }
+               i++;
+           }
+       }
+       if (atome)
+           return new LitAtome(v);
 
     //setVerif(false);
     return nullptr;//(new LitExpression(v+"dead")); //car atome beug pour l'instant
@@ -219,6 +233,9 @@ QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
     Entier* newe3 = dynamic_cast<Entier*>(&lit); if (newe3 != nullptr){return "New : ENTIER";}
     Reelle* newe4 = dynamic_cast<Reelle*>(&lit); if (newe4 != nullptr){return "New : REELLE";}
     Rationnelle* newe5 = dynamic_cast<Rationnelle*>(&lit);if (newe5 != nullptr){return "New : Rationnelle" ;}
+    Complexe* newe6 = dynamic_cast<Complexe*>(&lit);if (newe6 != nullptr){return "New : Complexe" ;}
+    LitAtome* newe7 = dynamic_cast<LitAtome*>(&lit);if (newe7 != nullptr){return "New : Atome" ;}
+    return "";
 }
 
 
@@ -269,8 +286,8 @@ bool isVarProgramme(const QString s){
     test = true;
 
     try {
-        QVector<Litterale*> temp; // stockage temporaire des littérales passées en argument de l'opérateur
         Operateur* op = getOperateur(c);
+        QVector<Litterale*> temp; // stockage temporaire des littérales passées en argument de l'opérateur
         OpPile* conv1 = dynamic_cast<OpPile*>(op);//Va changer le comportement de l'algorithme sur la pile
 
         test = false;
@@ -286,15 +303,17 @@ bool isVarProgramme(const QString s){
                 litAff.push(*temp.at(temp.size()-(i+1)));//On les remet temporairement  // ICI ON REMOVERAIT LE LIT MANA
             }
             Litterale* res = op->executer();
-                if(conv1 == nullptr){ //POURQUOI NE PAS GERER DANS L'OPERATEUR DIRECTEMENT ??
+                if(conv1 == nullptr && !(v=="STO" && res == nullptr)){ //POURQUOI NE PAS GERER DANS L'OPERATEUR DIRECTEMENT ??
                 //Seulement si execution sans déclenchement d'exception :
-                for(unsigned int i =0; i <opSize; i++){
-                    litMng.removeLitterale(litAff.top()); //si tout s'est bien passé on pop la pile deux fois + littmanager
-                    litAff.pop();
-                }
-                Litterale& e=litMng.addLitterale(res);
-                litAff.push(e);
-                litAff.setMessage(litAff.getMessage() + " *** "+ litMng.messageNouvelleCreation(e));
+                    for(unsigned int i =0; i <opSize; i++){
+                        litMng.removeLitterale(litAff.top()); //si tout s'est bien passé on pop la pile deux fois + littmanager
+                        litAff.pop();
+                    }
+                    if (v!="STO" && res != nullptr) {
+                        Litterale& e=litMng.addLitterale(res);
+                        litAff.push(e);
+                        litAff.setMessage(litAff.getMessage() + " *** "+ litMng.messageNouvelleCreation(e));
+                    }
                }
             delete op; //detruit les litterales qui ne sont plus à jour
 

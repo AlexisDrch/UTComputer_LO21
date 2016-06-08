@@ -2,6 +2,9 @@
 #define OPERATOR_H
 
 #include "pile.h"
+#include "storage.h"
+
+class OpDol;
 
 //III] Opérateur /////FAIRE OPERATEUR DE PILE + DE BOUCLE////
     class Operateur : public Operande {
@@ -18,6 +21,7 @@
         virtual void addArg(Pile* pile);
         virtual void addArg(Litterale* arg1);
         unsigned int getTaille() const {return taille;}
+        void setTaille(unsigned int t) { taille = t; }
         QString toString() const { return name;}
 
     };
@@ -35,6 +39,7 @@
             virtual Litterale* actionNum(Entier& arg1)  =0;
             virtual Litterale* actionNum(Reelle& arg1)  =0;
             virtual Litterale* actionNum(Rationnelle& arg1)  =0;
+            virtual Litterale* actionNum(Complexe& arg1)  =0;
             void addArg(Pile* pile);
             void addArg(Litterale* arg1);
         };
@@ -51,6 +56,7 @@
             Litterale* actionNum(Reelle& arg1);
             Litterale* actionNum(Entier& arg1);
             Litterale* actionNum(Rationnelle& arg1);
+            Litterale* actionNum(Complexe& arg1);
 
         };
 
@@ -67,6 +73,7 @@
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
             Litterale* actionNum(Rationnelle &arg1) ;
+            Litterale* actionNum(Complexe &arg1) ;
 
         };
         class OpLn : public OpUnaire {
@@ -75,6 +82,7 @@
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
             Litterale* actionNum(Rationnelle &arg1) ;
+            Litterale* actionNum(Complexe &arg1) ;
         };
         /*
         class OpNum : public OpUnaire {
@@ -121,6 +129,7 @@
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
             Litterale* actionNum(Rationnelle &arg1) ;
+            Litterale* actionNum(Complexe &arg1) ;
         };
 
 
@@ -131,7 +140,7 @@
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
             Litterale* actionNum(Rationnelle &arg1) ;
-
+            Litterale* actionNum(Complexe &arg1) ;
         };
 
         class OpSin : public OpUnaire {
@@ -140,6 +149,7 @@
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
             Litterale* actionNum(Rationnelle &arg1) ;
+            Litterale* actionNum(Complexe &arg1) ;
 
         };/*
 

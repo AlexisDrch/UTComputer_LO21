@@ -24,6 +24,7 @@ public:
     virtual Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
     virtual Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
     virtual Litterale* fonctionNum2(Rationnelle* arg1, Litterale* arg2);
+    virtual Litterale* fonctionNum2(Complexe* arg1, Litterale* arg2);
     Litterale* fonctionExpression(LitExpression* arg1, Litterale* arg2);
 
     virtual Litterale* actionNum(Entier& arg1, Entier& arg2) =0;
@@ -35,6 +36,9 @@ public:
     virtual Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2) =0;
     virtual Litterale* actionNum(Rationnelle& arg1, Entier& arg2) =0;
     virtual Litterale* actionNum(Rationnelle& arg1, Reelle& arg2) =0;
+    virtual Litterale* actionNum(LitNumerique& arg1, Complexe& arg2) =0;
+    virtual Litterale* actionNum(Complexe& arg1, LitNumerique& arg2) =0;
+    virtual Litterale* actionNum(Complexe& arg1, Complexe& arg2) =0;
 };
 
 class OpCaractere : public OpClassique{
@@ -44,6 +48,7 @@ public:
     virtual Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
     virtual Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
     virtual Litterale* fonctionNum2(Rationnelle* arg1, Litterale* arg2);
+    virtual Litterale* fonctionNum2(Complexe* arg1, Litterale* arg2);
     Litterale* fonctionExpression(LitExpression* arg1, Litterale* arg2);
 
     virtual Litterale* actionNum(Entier& arg1, Entier& arg2) =0;
@@ -55,6 +60,9 @@ public:
     virtual Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2) =0;
     virtual Litterale* actionNum(Rationnelle& arg1, Entier& arg2) =0;
     virtual Litterale* actionNum(Rationnelle& arg1, Reelle& arg2) =0;
+    virtual Litterale* actionNum(LitNumerique& arg1, Complexe& arg2) =0;
+    virtual Litterale* actionNum(Complexe& arg1, LitNumerique& arg2) =0;
+    virtual Litterale* actionNum(Complexe& arg1, Complexe& arg2) =0;
 
 };
 
@@ -71,6 +79,9 @@ public:
     Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2);
     Litterale* actionNum(Rationnelle& arg1, Entier& arg2);
     Litterale* actionNum(Rationnelle& arg1, Reelle& arg2);
+    Litterale* actionNum(LitNumerique& arg1, Complexe& arg2);
+    Litterale* actionNum(Complexe& arg1, LitNumerique& arg2);
+    Litterale* actionNum(Complexe& arg1, Complexe& arg2);
 
 };
 
@@ -86,6 +97,9 @@ public:
     Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2);
     Litterale* actionNum(Rationnelle& arg1, Entier& arg2);
     Litterale* actionNum(Rationnelle& arg1, Reelle& arg2);
+    Litterale* actionNum(LitNumerique& arg1, Complexe& arg2);
+    Litterale* actionNum(Complexe& arg1, LitNumerique& arg2);
+    Litterale* actionNum(Complexe& arg1, Complexe& arg2);
 };
 
 class OpDiv : public OpSymbole{
@@ -95,6 +109,7 @@ public:
     Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
     Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
     Litterale* fonctionNum2(Rationnelle* arg1, Litterale* arg2);
+    Litterale* fonctionNum2(Complexe* arg1, Litterale* arg2);
     Litterale* actionNum(Entier& arg1, Entier& arg2);
     Litterale* actionNum(Entier& arg1, Reelle& arg2);
     Litterale* actionNum(Entier& arg1, Rationnelle& arg2);
@@ -104,6 +119,9 @@ public:
     Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2);
     Litterale* actionNum(Rationnelle& arg1, Entier& arg2);
     Litterale* actionNum(Rationnelle& arg1, Reelle& arg2);
+    Litterale* actionNum(LitNumerique& arg1, Complexe& arg2);
+    Litterale* actionNum(Complexe& arg1, LitNumerique& arg2);
+    Litterale* actionNum(Complexe& arg1, Complexe& arg2);
 };
 
 class OpMul : public OpSymbole{
@@ -112,6 +130,7 @@ public:
     Litterale* fonctionNum2(Entier* arg1, Litterale* arg2);
     Litterale* fonctionNum2(Reelle* arg1, Litterale* arg2);
     Litterale* fonctionNum2(Rationnelle* arg1, Litterale* arg2);
+    Litterale* fonctionNum2(Complexe* arg1, Litterale* arg2);
     Litterale* actionNum(Entier& arg1, Entier& arg2);
     Litterale* actionNum(Entier& arg1, Reelle& arg2);
     Litterale* actionNum(Entier& arg1, Rationnelle& arg2);
@@ -121,16 +140,10 @@ public:
     Litterale* actionNum(Rationnelle& arg1, Rationnelle& arg2);
     Litterale* actionNum(Rationnelle& arg1, Entier& arg2);
     Litterale* actionNum(Rationnelle& arg1, Reelle& arg2);
+    Litterale* actionNum(LitNumerique& arg1, Complexe& arg2);
+    Litterale* actionNum(Complexe& arg1, LitNumerique& arg2);
+    Litterale* actionNum(Complexe& arg1, Complexe& arg2);
 };
-
-
-
-/*class OpDol : public OpSymbole{
-public:
-    OpDol() : OpSymbole("$"){}
-    Litterale* fonction(const Litterale& arg1, const Litterale& arg2) const;
-};
-*/
 
 #endif // OPERATEURCLASSIQUE
 
