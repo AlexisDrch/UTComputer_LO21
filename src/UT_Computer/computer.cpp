@@ -143,7 +143,11 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
 
     if(v.at(0).isNumber()){
        unsigned int val = v.toLongLong(&ok); if(ok){return (new Entier(val));}
-       float val2 = v.toFloat(&ok) ; if(ok){return (new Reelle(val2));}
+       float val2 = v.toFloat(&ok) ; if(ok){
+           Reelle r(val2);
+           Litterale* res = r.simplification();
+           return res;
+       }
 
        QString::const_iterator it = v.end(); it--;
        if ( ((*v.begin()) == '\'') && ((*it) == '\'') ) return(new LitExpression(v));

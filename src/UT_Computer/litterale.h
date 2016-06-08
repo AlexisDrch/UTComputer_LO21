@@ -139,7 +139,6 @@ public:
                     QString toString() const;
                     float getValue()const;
                     float toFloatPositif() const;
-
                 };
 
         //4.2) Complexe

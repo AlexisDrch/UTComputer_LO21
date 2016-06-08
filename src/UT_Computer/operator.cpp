@@ -37,6 +37,11 @@
 
             if(arg11 != nullptr){
                 Litterale* res = fonctionNum(arg11);
+                Reelle* r = dynamic_cast<Reelle*>(res);
+                if (r != nullptr) {
+                    Litterale* res2 = r->simplification();
+                    return res2;
+                }
                 return res;
             }
 
@@ -261,6 +266,11 @@
 
             if(arg1 != nullptr){
                 Litterale* res = fonctionNum(arg1,arg2);
+                Reelle* r = dynamic_cast<Reelle*>(res);
+                if (r != nullptr) {
+                    Litterale* res2 = r->simplification();
+                    return res2;
+                }
                 return res;
             }
             else {
