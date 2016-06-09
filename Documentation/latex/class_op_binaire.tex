@@ -1,0 +1,140 @@
+\hypertarget{class_op_binaire}{}\section{Op\+Binaire Class Reference}
+\label{class_op_binaire}\index{Op\+Binaire@{Op\+Binaire}}
+
+
+{\ttfamily \#include $<$operator.\+h$>$}
+
+Inheritance diagram for Op\+Binaire\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=11.107438cm]{class_op_binaire}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_op_binaire_ac70aab4bf3d8f220bcb164027b4bb404}{Op\+Binaire} (const Q\+String \&na)
+\item 
+virtual \hyperlink{class_op_binaire_af92a746a738f8f56ca1e402d3c2b529b}{$\sim$\+Op\+Binaire} ()
+\item 
+\hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_op_binaire_aa81570ae3aeb44b9533e7ddd82a397be}{executer} ()
+\item 
+virtual \hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_op_binaire_afb16dbd5f455b97afb5c07fae29b94fc}{fonction\+Num} (\hyperlink{class_nombres}{Nombres} $\ast$arg1, \hyperlink{class_litterale}{Litterale} $\ast$arg2)=0
+\item 
+virtual \hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_op_binaire_a72ea45bf3157516edeca687668d83b32}{fonction\+Expression} (\hyperlink{class_lit_expression}{Lit\+Expression} $\ast$arg1, \hyperlink{class_litterale}{Litterale} $\ast$arg2)=0
+\item 
+void \hyperlink{class_op_binaire_ac48be97498d47266542ff81c86c1a118}{add\+Arg} (\hyperlink{class_pile}{Pile} $\ast$pile)
+\item 
+void \hyperlink{class_op_binaire_af39b73a32c35ed7722fac1d380b92bbd}{add\+Arg} (\hyperlink{class_litterale}{Litterale} $\ast$arg)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 185 of file operator.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Op\+Binaire@{Op\+Binaire}!Op\+Binaire@{Op\+Binaire}}
+\index{Op\+Binaire@{Op\+Binaire}!Op\+Binaire@{Op\+Binaire}}
+\subsubsection[{\texorpdfstring{Op\+Binaire(const Q\+String \&na)}{OpBinaire(const QString &na)}}]{\setlength{\rightskip}{0pt plus 5cm}Op\+Binaire\+::\+Op\+Binaire (
+\begin{DoxyParamCaption}
+\item[{const Q\+String \&}]{na}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_op_binaire_ac70aab4bf3d8f220bcb164027b4bb404}{}\label{class_op_binaire_ac70aab4bf3d8f220bcb164027b4bb404}
+
+
+Definition at line 188 of file operator.\+h.
+
+\index{Op\+Binaire@{Op\+Binaire}!````~Op\+Binaire@{$\sim$\+Op\+Binaire}}
+\index{````~Op\+Binaire@{$\sim$\+Op\+Binaire}!Op\+Binaire@{Op\+Binaire}}
+\subsubsection[{\texorpdfstring{$\sim$\+Op\+Binaire()}{~OpBinaire()}}]{\setlength{\rightskip}{0pt plus 5cm}Op\+Binaire\+::$\sim$\+Op\+Binaire (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_binaire_af92a746a738f8f56ca1e402d3c2b529b}{}\label{class_op_binaire_af92a746a738f8f56ca1e402d3c2b529b}
+
+
+Definition at line 210 of file operator.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\index{Op\+Binaire@{Op\+Binaire}!add\+Arg@{add\+Arg}}
+\index{add\+Arg@{add\+Arg}!Op\+Binaire@{Op\+Binaire}}
+\subsubsection[{\texorpdfstring{add\+Arg(\+Pile $\ast$pile)}{addArg(Pile *pile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Op\+Binaire\+::add\+Arg (
+\begin{DoxyParamCaption}
+\item[{{\bf Pile} $\ast$}]{pile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_binaire_ac48be97498d47266542ff81c86c1a118}{}\label{class_op_binaire_ac48be97498d47266542ff81c86c1a118}
+
+
+Reimplemented from \hyperlink{class_operateur_ae9b209c3a9f55eb3b3821f43fe437105}{Operateur}.
+
+
+
+Definition at line 214 of file operator.\+cpp.
+
+\index{Op\+Binaire@{Op\+Binaire}!add\+Arg@{add\+Arg}}
+\index{add\+Arg@{add\+Arg}!Op\+Binaire@{Op\+Binaire}}
+\subsubsection[{\texorpdfstring{add\+Arg(\+Litterale $\ast$arg)}{addArg(Litterale *arg)}}]{\setlength{\rightskip}{0pt plus 5cm}void Op\+Binaire\+::add\+Arg (
+\begin{DoxyParamCaption}
+\item[{{\bf Litterale} $\ast$}]{arg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_binaire_af39b73a32c35ed7722fac1d380b92bbd}{}\label{class_op_binaire_af39b73a32c35ed7722fac1d380b92bbd}
+
+
+Reimplemented from \hyperlink{class_operateur_ae39d95062e174881d250561617cf7a6a}{Operateur}.
+
+
+
+Definition at line 221 of file operator.\+cpp.
+
+\index{Op\+Binaire@{Op\+Binaire}!executer@{executer}}
+\index{executer@{executer}!Op\+Binaire@{Op\+Binaire}}
+\subsubsection[{\texorpdfstring{executer()}{executer()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale} $\ast$ Op\+Binaire\+::executer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_binaire_aa81570ae3aeb44b9533e7ddd82a397be}{}\label{class_op_binaire_aa81570ae3aeb44b9533e7ddd82a397be}
+
+
+Implements \hyperlink{class_operateur_a875ee3c8ad2284fd8537c32070d059d2}{Operateur}.
+
+
+
+Definition at line 228 of file operator.\+cpp.
+
+\index{Op\+Binaire@{Op\+Binaire}!fonction\+Expression@{fonction\+Expression}}
+\index{fonction\+Expression@{fonction\+Expression}!Op\+Binaire@{Op\+Binaire}}
+\subsubsection[{\texorpdfstring{fonction\+Expression(\+Lit\+Expression $\ast$arg1, Litterale $\ast$arg2)=0}{fonctionExpression(LitExpression *arg1, Litterale *arg2)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Litterale}$\ast$ Op\+Binaire\+::fonction\+Expression (
+\begin{DoxyParamCaption}
+\item[{{\bf Lit\+Expression} $\ast$}]{arg1, }
+\item[{{\bf Litterale} $\ast$}]{arg2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_op_binaire_a72ea45bf3157516edeca687668d83b32}{}\label{class_op_binaire_a72ea45bf3157516edeca687668d83b32}
+
+
+Implemented in \hyperlink{class_op_caractere_ae79a9c802c54f07d7650603c58d44eff}{Op\+Caractere}, \hyperlink{class_op_symbole_a0b9eb81e1a88d0d1470f642c7afa2b8c}{Op\+Symbole}, \hyperlink{class_op_classique_aad9c17d4a2744d7e1afe6802fbbc3cdd}{Op\+Classique}, and \hyperlink{class_op_logique_binaire_a4fbde2ff67fe7f2bfa1898522158bff1}{Op\+Logique\+Binaire}.
+
+\index{Op\+Binaire@{Op\+Binaire}!fonction\+Num@{fonction\+Num}}
+\index{fonction\+Num@{fonction\+Num}!Op\+Binaire@{Op\+Binaire}}
+\subsubsection[{\texorpdfstring{fonction\+Num(\+Nombres $\ast$arg1, Litterale $\ast$arg2)=0}{fonctionNum(Nombres *arg1, Litterale *arg2)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Litterale}$\ast$ Op\+Binaire\+::fonction\+Num (
+\begin{DoxyParamCaption}
+\item[{{\bf Nombres} $\ast$}]{arg1, }
+\item[{{\bf Litterale} $\ast$}]{arg2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_op_binaire_afb16dbd5f455b97afb5c07fae29b94fc}{}\label{class_op_binaire_afb16dbd5f455b97afb5c07fae29b94fc}
+
+
+Implemented in \hyperlink{class_op_div_a2607c7a6356f4a3d358070b924e077ad}{Op\+Div}, \hyperlink{class_op_caractere_a1bf53676903dbdcff31c9528f5cf09c7}{Op\+Caractere}, \hyperlink{class_op_symbole_ae908fd3da24f9cc8aa93f87360e07009}{Op\+Symbole}, \hyperlink{class_op_classique_a79bb2899f581c5773056611216a6ef7b}{Op\+Classique}, and \hyperlink{class_op_logique_binaire_a5565bc1dd13c6bddea8b91995dda703a}{Op\+Logique\+Binaire}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{operator_8h}{operator.\+h}\item 
+\hyperlink{operator_8cpp}{operator.\+cpp}\end{DoxyCompactItemize}

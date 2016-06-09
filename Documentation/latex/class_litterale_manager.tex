@@ -1,0 +1,246 @@
+\hypertarget{class_litterale_manager}{}\section{Litterale\+Manager Class Reference}
+\label{class_litterale_manager}\index{Litterale\+Manager@{Litterale\+Manager}}
+
+
+{\ttfamily \#include $<$computer.\+h$>$}
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_litterale_manager_1_1const__iterator}{const\+\_\+iterator}
+\item 
+class \hyperlink{class_litterale_manager_1_1iterator}{iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_litterale_manager_ab6a5158f0a5a94d79744188ae9540fc9}{get\+Verif} ()
+\item 
+void \hyperlink{class_litterale_manager_a4b1068f038f88ccd13fc78b18d979d14}{set\+Verif} (bool v)
+\item 
+\hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_litterale_manager_aba80b29edd7b1c69cd8cf3d925190523}{add\+Litterale} (const Q\+String \&str)
+\item 
+\hyperlink{class_litterale}{Litterale} \& \hyperlink{class_litterale_manager_a15a4544d62ce9c19f69a48f152fee97a}{add\+Litterale} (\hyperlink{class_litterale}{Litterale} $\ast$res)
+\item 
+\hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_litterale_manager_aa1bda888af4e7891092f2c4f38cda6d1}{is\+Rationnelle} (const Q\+String \&c)
+\item 
+bool \hyperlink{class_litterale_manager_a2430ede43517c01686653397644677a1}{verif\+Litterale} (Q\+String \&op, Q\+String \&nouvelle, Q\+Vector$<$ \hyperlink{class_operande}{Operande} $\ast$ $>$ \&vector\+Exp)
+\item 
+Q\+String \hyperlink{class_litterale_manager_a755bbf36636b2ad3ebb8590efdd60566}{verif\+Expression\+Valide} (const Q\+String \&c, Q\+Vector$<$ \hyperlink{class_operande}{Operande} $\ast$ $>$ \&vect)
+\item 
+\hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_litterale_manager_a8be64db76a4365bd5b287c7ed5c87ca3}{fabriq\+Litterale} (const Q\+String \&v)
+\item 
+void \hyperlink{class_litterale_manager_a02ac5f4d721e6cb2154c26e589e79076}{remove\+Litterale} (\hyperlink{class_litterale}{Litterale} \&e)
+\item 
+Q\+String \hyperlink{class_litterale_manager_a1c0db3db1e3f62e480f0717b8c10b79f}{message\+Nouvelle\+Creation} (\hyperlink{class_litterale}{Litterale} \&lit)
+\item 
+\hyperlink{class_litterale_manager_1_1iterator}{iterator} \hyperlink{class_litterale_manager_a4797bac6083540c62424efebba3d3b82}{begin} ()
+\item 
+\hyperlink{class_litterale_manager_1_1iterator}{iterator} \hyperlink{class_litterale_manager_a89555cde8edcae47c1cb682a51be5880}{end} ()
+\item 
+\hyperlink{class_litterale_manager_1_1const__iterator}{const\+\_\+iterator} \hyperlink{class_litterale_manager_addd9a9a3b5d5846cd4e4e88881c48821}{begin} () const 
+\item 
+\hyperlink{class_litterale_manager_1_1const__iterator}{const\+\_\+iterator} \hyperlink{class_litterale_manager_aa3b3319b0d2a657d1a894ec07869c2a1}{end} () const 
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_litterale_manager}{Litterale\+Manager} \& \hyperlink{class_litterale_manager_ac8d443e8cfb074539064d2e02ef95416}{get\+Instance} ()
+\item 
+static void \hyperlink{class_litterale_manager_a9b97f46ce105dcaf3128745a6e1f239c}{liberer\+Instance} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 13 of file computer.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\index{Litterale\+Manager@{Litterale\+Manager}!add\+Litterale@{add\+Litterale}}
+\index{add\+Litterale@{add\+Litterale}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{add\+Litterale(const Q\+String \&str)}{addLitterale(const QString &str)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale} $\ast$ Litterale\+Manager\+::add\+Litterale (
+\begin{DoxyParamCaption}
+\item[{const Q\+String \&}]{str}
+\end{DoxyParamCaption}
+)}\hypertarget{class_litterale_manager_aba80b29edd7b1c69cd8cf3d925190523}{}\label{class_litterale_manager_aba80b29edd7b1c69cd8cf3d925190523}
+
+
+Definition at line 178 of file computer.\+cpp.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!add\+Litterale@{add\+Litterale}}
+\index{add\+Litterale@{add\+Litterale}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{add\+Litterale(\+Litterale $\ast$res)}{addLitterale(Litterale *res)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale} \& Litterale\+Manager\+::add\+Litterale (
+\begin{DoxyParamCaption}
+\item[{{\bf Litterale} $\ast$}]{res}
+\end{DoxyParamCaption}
+)}\hypertarget{class_litterale_manager_a15a4544d62ce9c19f69a48f152fee97a}{}\label{class_litterale_manager_a15a4544d62ce9c19f69a48f152fee97a}
+
+
+Definition at line 188 of file computer.\+cpp.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!begin@{begin}}
+\index{begin@{begin}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{begin()}{begin()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf iterator} Litterale\+Manager\+::begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_litterale_manager_a4797bac6083540c62424efebba3d3b82}{}\label{class_litterale_manager_a4797bac6083540c62424efebba3d3b82}
+
+
+Definition at line 54 of file computer.\+h.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!begin@{begin}}
+\index{begin@{begin}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{begin() const }{begin() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf const\+\_\+iterator} Litterale\+Manager\+::begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_litterale_manager_addd9a9a3b5d5846cd4e4e88881c48821}{}\label{class_litterale_manager_addd9a9a3b5d5846cd4e4e88881c48821}
+
+
+Definition at line 67 of file computer.\+h.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!end@{end}}
+\index{end@{end}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{end()}{end()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf iterator} Litterale\+Manager\+::end (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_litterale_manager_a89555cde8edcae47c1cb682a51be5880}{}\label{class_litterale_manager_a89555cde8edcae47c1cb682a51be5880}
+
+
+Definition at line 55 of file computer.\+h.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!end@{end}}
+\index{end@{end}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{end() const }{end() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf const\+\_\+iterator} Litterale\+Manager\+::end (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_litterale_manager_aa3b3319b0d2a657d1a894ec07869c2a1}{}\label{class_litterale_manager_aa3b3319b0d2a657d1a894ec07869c2a1}
+
+
+Definition at line 68 of file computer.\+h.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!fabriq\+Litterale@{fabriq\+Litterale}}
+\index{fabriq\+Litterale@{fabriq\+Litterale}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{fabriq\+Litterale(const Q\+String \&v)}{fabriqLitterale(const QString &v)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale} $\ast$ Litterale\+Manager\+::fabriq\+Litterale (
+\begin{DoxyParamCaption}
+\item[{const Q\+String \&}]{v}
+\end{DoxyParamCaption}
+)}\hypertarget{class_litterale_manager_a8be64db76a4365bd5b287c7ed5c87ca3}{}\label{class_litterale_manager_a8be64db76a4365bd5b287c7ed5c87ca3}
+
+
+Definition at line 140 of file computer.\+cpp.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!get\+Instance@{get\+Instance}}
+\index{get\+Instance@{get\+Instance}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{get\+Instance()}{getInstance()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale\+Manager} \& Litterale\+Manager\+::get\+Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_litterale_manager_ac8d443e8cfb074539064d2e02ef95416}{}\label{class_litterale_manager_ac8d443e8cfb074539064d2e02ef95416}
+
+
+Definition at line 7 of file computer.\+cpp.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!get\+Verif@{get\+Verif}}
+\index{get\+Verif@{get\+Verif}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{get\+Verif()}{getVerif()}}]{\setlength{\rightskip}{0pt plus 5cm}bool Litterale\+Manager\+::get\+Verif (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_litterale_manager_ab6a5158f0a5a94d79744188ae9540fc9}{}\label{class_litterale_manager_ab6a5158f0a5a94d79744188ae9540fc9}
+
+
+Definition at line 32 of file computer.\+h.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!is\+Rationnelle@{is\+Rationnelle}}
+\index{is\+Rationnelle@{is\+Rationnelle}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{is\+Rationnelle(const Q\+String \&c)}{isRationnelle(const QString &c)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale} $\ast$ Litterale\+Manager\+::is\+Rationnelle (
+\begin{DoxyParamCaption}
+\item[{const Q\+String \&}]{c}
+\end{DoxyParamCaption}
+)}\hypertarget{class_litterale_manager_aa1bda888af4e7891092f2c4f38cda6d1}{}\label{class_litterale_manager_aa1bda888af4e7891092f2c4f38cda6d1}
+
+
+Definition at line 27 of file computer.\+cpp.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!liberer\+Instance@{liberer\+Instance}}
+\index{liberer\+Instance@{liberer\+Instance}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{liberer\+Instance()}{libererInstance()}}]{\setlength{\rightskip}{0pt plus 5cm}void Litterale\+Manager\+::liberer\+Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_litterale_manager_a9b97f46ce105dcaf3128745a6e1f239c}{}\label{class_litterale_manager_a9b97f46ce105dcaf3128745a6e1f239c}
+
+
+Definition at line 12 of file computer.\+cpp.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!message\+Nouvelle\+Creation@{message\+Nouvelle\+Creation}}
+\index{message\+Nouvelle\+Creation@{message\+Nouvelle\+Creation}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{message\+Nouvelle\+Creation(\+Litterale \&lit)}{messageNouvelleCreation(Litterale &lit)}}]{\setlength{\rightskip}{0pt plus 5cm}Q\+String Litterale\+Manager\+::message\+Nouvelle\+Creation (
+\begin{DoxyParamCaption}
+\item[{{\bf Litterale} \&}]{lit}
+\end{DoxyParamCaption}
+)}\hypertarget{class_litterale_manager_a1c0db3db1e3f62e480f0717b8c10b79f}{}\label{class_litterale_manager_a1c0db3db1e3f62e480f0717b8c10b79f}
+
+
+Definition at line 216 of file computer.\+cpp.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!remove\+Litterale@{remove\+Litterale}}
+\index{remove\+Litterale@{remove\+Litterale}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{remove\+Litterale(\+Litterale \&e)}{removeLitterale(Litterale &e)}}]{\setlength{\rightskip}{0pt plus 5cm}void Litterale\+Manager\+::remove\+Litterale (
+\begin{DoxyParamCaption}
+\item[{{\bf Litterale} \&}]{e}
+\end{DoxyParamCaption}
+)}\hypertarget{class_litterale_manager_a02ac5f4d721e6cb2154c26e589e79076}{}\label{class_litterale_manager_a02ac5f4d721e6cb2154c26e589e79076}
+
+
+Definition at line 195 of file computer.\+cpp.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!set\+Verif@{set\+Verif}}
+\index{set\+Verif@{set\+Verif}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{set\+Verif(bool v)}{setVerif(bool v)}}]{\setlength{\rightskip}{0pt plus 5cm}void Litterale\+Manager\+::set\+Verif (
+\begin{DoxyParamCaption}
+\item[{bool}]{v}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_litterale_manager_a4b1068f038f88ccd13fc78b18d979d14}{}\label{class_litterale_manager_a4b1068f038f88ccd13fc78b18d979d14}
+
+
+Definition at line 33 of file computer.\+h.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!verif\+Expression\+Valide@{verif\+Expression\+Valide}}
+\index{verif\+Expression\+Valide@{verif\+Expression\+Valide}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{verif\+Expression\+Valide(const Q\+String \&c, Q\+Vector$<$ Operande $\ast$ $>$ \&vect)}{verifExpressionValide(const QString &c, QVector< Operande * > &vect)}}]{\setlength{\rightskip}{0pt plus 5cm}Q\+String Litterale\+Manager\+::verif\+Expression\+Valide (
+\begin{DoxyParamCaption}
+\item[{const Q\+String \&}]{c, }
+\item[{Q\+Vector$<$ {\bf Operande} $\ast$ $>$ \&}]{vect}
+\end{DoxyParamCaption}
+)}\hypertarget{class_litterale_manager_a755bbf36636b2ad3ebb8590efdd60566}{}\label{class_litterale_manager_a755bbf36636b2ad3ebb8590efdd60566}
+
+
+Definition at line 82 of file computer.\+cpp.
+
+\index{Litterale\+Manager@{Litterale\+Manager}!verif\+Litterale@{verif\+Litterale}}
+\index{verif\+Litterale@{verif\+Litterale}!Litterale\+Manager@{Litterale\+Manager}}
+\subsubsection[{\texorpdfstring{verif\+Litterale(\+Q\+String \&op, Q\+String \&nouvelle, Q\+Vector$<$ Operande $\ast$ $>$ \&vector\+Exp)}{verifLitterale(QString &op, QString &nouvelle, QVector< Operande * > &vectorExp)}}]{\setlength{\rightskip}{0pt plus 5cm}bool Litterale\+Manager\+::verif\+Litterale (
+\begin{DoxyParamCaption}
+\item[{Q\+String \&}]{op, }
+\item[{Q\+String \&}]{nouvelle, }
+\item[{Q\+Vector$<$ {\bf Operande} $\ast$ $>$ \&}]{vector\+Exp}
+\end{DoxyParamCaption}
+)}\hypertarget{class_litterale_manager_a2430ede43517c01686653397644677a1}{}\label{class_litterale_manager_a2430ede43517c01686653397644677a1}
+
+
+Definition at line 59 of file computer.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{computer_8h}{computer.\+h}\item 
+\hyperlink{computer_8cpp}{computer.\+cpp}\end{DoxyCompactItemize}

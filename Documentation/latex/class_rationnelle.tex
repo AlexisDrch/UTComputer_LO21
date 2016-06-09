@@ -1,0 +1,136 @@
+\hypertarget{class_rationnelle}{}\section{Rationnelle Class Reference}
+\label{class_rationnelle}\index{Rationnelle@{Rationnelle}}
+
+
+{\ttfamily \#include $<$litterale.\+h$>$}
+
+Inheritance diagram for Rationnelle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=5.000000cm]{class_rationnelle}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_rationnelle_ad81843f23e1bc08340d7028ccf9f33da}{Rationnelle} (\hyperlink{class_entier}{Entier} num, \hyperlink{class_entier}{Entier} den, const Q\+String \&na=\char`\"{}\char`\"{})
+\item 
+Q\+String \hyperlink{class_rationnelle_a406d82b3db71b5d7cac720a12e756c3c}{to\+String} () const 
+\item 
+\hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_rationnelle_a065e5d1e2c9a855387572c8bd68d50d1}{simplification} ()
+\item 
+float \hyperlink{class_rationnelle_a7ad6ea7c336cff4e7c897ce1b1eae141}{get\+Value} () const 
+\item 
+float \hyperlink{class_rationnelle_a65453f519fa0c404639d4305edf48dba}{get\+Value\+Rat} () const 
+\item 
+unsigned int \hyperlink{class_rationnelle_a1888caed6c60ad7d0a30c3f784235b71}{get\+Num} ()
+\item 
+unsigned int \hyperlink{class_rationnelle_a453cdf92bbdbc0f7a3233d2d60d6146b}{get\+Den} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 120 of file litterale.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Rationnelle@{Rationnelle}!Rationnelle@{Rationnelle}}
+\index{Rationnelle@{Rationnelle}!Rationnelle@{Rationnelle}}
+\subsubsection[{\texorpdfstring{Rationnelle(\+Entier num, Entier den, const Q\+String \&na="""")}{Rationnelle(Entier num, Entier den, const QString &na="")}}]{\setlength{\rightskip}{0pt plus 5cm}Rationnelle\+::\+Rationnelle (
+\begin{DoxyParamCaption}
+\item[{{\bf Entier}}]{num, }
+\item[{{\bf Entier}}]{den, }
+\item[{const Q\+String \&}]{na = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_rationnelle_ad81843f23e1bc08340d7028ccf9f33da}{}\label{class_rationnelle_ad81843f23e1bc08340d7028ccf9f33da}
+
+
+Definition at line 125 of file litterale.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\index{Rationnelle@{Rationnelle}!get\+Den@{get\+Den}}
+\index{get\+Den@{get\+Den}!Rationnelle@{Rationnelle}}
+\subsubsection[{\texorpdfstring{get\+Den()}{getDen()}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Rationnelle\+::get\+Den (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_rationnelle_a453cdf92bbdbc0f7a3233d2d60d6146b}{}\label{class_rationnelle_a453cdf92bbdbc0f7a3233d2d60d6146b}
+
+
+Definition at line 131 of file litterale.\+h.
+
+\index{Rationnelle@{Rationnelle}!get\+Num@{get\+Num}}
+\index{get\+Num@{get\+Num}!Rationnelle@{Rationnelle}}
+\subsubsection[{\texorpdfstring{get\+Num()}{getNum()}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Rationnelle\+::get\+Num (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_rationnelle_a1888caed6c60ad7d0a30c3f784235b71}{}\label{class_rationnelle_a1888caed6c60ad7d0a30c3f784235b71}
+
+
+Definition at line 130 of file litterale.\+h.
+
+\index{Rationnelle@{Rationnelle}!get\+Value@{get\+Value}}
+\index{get\+Value@{get\+Value}!Rationnelle@{Rationnelle}}
+\subsubsection[{\texorpdfstring{get\+Value() const }{getValue() const }}]{\setlength{\rightskip}{0pt plus 5cm}float Rationnelle\+::get\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_rationnelle_a7ad6ea7c336cff4e7c897ce1b1eae141}{}\label{class_rationnelle_a7ad6ea7c336cff4e7c897ce1b1eae141}
+
+
+Implements \hyperlink{class_lit_numerique_ae7ecb1f7671754bc2155e35428e21124}{Lit\+Numerique}.
+
+
+
+Definition at line 103 of file litterale.\+cpp.
+
+\index{Rationnelle@{Rationnelle}!get\+Value\+Rat@{get\+Value\+Rat}}
+\index{get\+Value\+Rat@{get\+Value\+Rat}!Rationnelle@{Rationnelle}}
+\subsubsection[{\texorpdfstring{get\+Value\+Rat() const }{getValueRat() const }}]{\setlength{\rightskip}{0pt plus 5cm}float Rationnelle\+::get\+Value\+Rat (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_rationnelle_a65453f519fa0c404639d4305edf48dba}{}\label{class_rationnelle_a65453f519fa0c404639d4305edf48dba}
+
+
+Definition at line 129 of file litterale.\+h.
+
+\index{Rationnelle@{Rationnelle}!simplification@{simplification}}
+\index{simplification@{simplification}!Rationnelle@{Rationnelle}}
+\subsubsection[{\texorpdfstring{simplification()}{simplification()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale} $\ast$ Rationnelle\+::simplification (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_rationnelle_a065e5d1e2c9a855387572c8bd68d50d1}{}\label{class_rationnelle_a065e5d1e2c9a855387572c8bd68d50d1}
+
+
+Definition at line 92 of file litterale.\+cpp.
+
+\index{Rationnelle@{Rationnelle}!to\+String@{to\+String}}
+\index{to\+String@{to\+String}!Rationnelle@{Rationnelle}}
+\subsubsection[{\texorpdfstring{to\+String() const }{toString() const }}]{\setlength{\rightskip}{0pt plus 5cm}Q\+String Rationnelle\+::to\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_rationnelle_a406d82b3db71b5d7cac720a12e756c3c}{}\label{class_rationnelle_a406d82b3db71b5d7cac720a12e756c3c}
+
+
+Implements \hyperlink{class_lit_numerique_a6e3c66f0b484c5be954eb788a95c0d16}{Lit\+Numerique}.
+
+
+
+Definition at line 107 of file litterale.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{litterale_8h}{litterale.\+h}\item 
+\hyperlink{litterale_8cpp}{litterale.\+cpp}\end{DoxyCompactItemize}

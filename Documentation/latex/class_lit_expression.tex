@@ -1,0 +1,110 @@
+\hypertarget{class_lit_expression}{}\section{Lit\+Expression Class Reference}
+\label{class_lit_expression}\index{Lit\+Expression@{Lit\+Expression}}
+
+
+{\ttfamily \#include $<$litterale.\+h$>$}
+
+Inheritance diagram for Lit\+Expression\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_lit_expression}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_lit_expression_a5d6cb1828c33a9c39684766c21042216}{Lit\+Expression} (const Q\+String \&str, const Q\+String \&na=\char`\"{}\char`\"{})
+\item 
+\hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_lit_expression_aa4b5ba342bdf239612d733d7f8e5319c}{get\+Value} () const 
+\item 
+void \hyperlink{class_lit_expression_a60a52c1344ff29fa1576720bc60c0577}{set\+Vector} (Q\+Vector$<$ \hyperlink{class_operande}{Operande} $\ast$ $>$ \&vec)
+\item 
+Q\+Vector$<$ \hyperlink{class_operande}{Operande} $\ast$ $>$ \& \hyperlink{class_lit_expression_a9ba612027808bbc67d762e7592332d79}{get\+Vector} ()
+\item 
+Q\+String \hyperlink{class_lit_expression_a108f8809e4ca49343426c9d0c30c28c4}{to\+String} () const 
+\item 
+void \hyperlink{class_lit_expression_a6673aba807725a2e1820af3bfeb8cf36}{verif\+Neg} () const 
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 63 of file litterale.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Lit\+Expression@{Lit\+Expression}!Lit\+Expression@{Lit\+Expression}}
+\index{Lit\+Expression@{Lit\+Expression}!Lit\+Expression@{Lit\+Expression}}
+\subsubsection[{\texorpdfstring{Lit\+Expression(const Q\+String \&str, const Q\+String \&na="""")}{LitExpression(const QString &str, const QString &na="")}}]{\setlength{\rightskip}{0pt plus 5cm}Lit\+Expression\+::\+Lit\+Expression (
+\begin{DoxyParamCaption}
+\item[{const Q\+String \&}]{str, }
+\item[{const Q\+String \&}]{na = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_lit_expression_a5d6cb1828c33a9c39684766c21042216}{}\label{class_lit_expression_a5d6cb1828c33a9c39684766c21042216}
+
+
+Definition at line 35 of file litterale.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\index{Lit\+Expression@{Lit\+Expression}!get\+Value@{get\+Value}}
+\index{get\+Value@{get\+Value}!Lit\+Expression@{Lit\+Expression}}
+\subsubsection[{\texorpdfstring{get\+Value() const }{getValue() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale}$\ast$ Lit\+Expression\+::get\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_lit_expression_aa4b5ba342bdf239612d733d7f8e5319c}{}\label{class_lit_expression_aa4b5ba342bdf239612d733d7f8e5319c}
+\index{Lit\+Expression@{Lit\+Expression}!get\+Vector@{get\+Vector}}
+\index{get\+Vector@{get\+Vector}!Lit\+Expression@{Lit\+Expression}}
+\subsubsection[{\texorpdfstring{get\+Vector()}{getVector()}}]{\setlength{\rightskip}{0pt plus 5cm}Q\+Vector$<${\bf Operande}$\ast$$>$\& Lit\+Expression\+::get\+Vector (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_lit_expression_a9ba612027808bbc67d762e7592332d79}{}\label{class_lit_expression_a9ba612027808bbc67d762e7592332d79}
+
+
+Definition at line 72 of file litterale.\+h.
+
+\index{Lit\+Expression@{Lit\+Expression}!set\+Vector@{set\+Vector}}
+\index{set\+Vector@{set\+Vector}!Lit\+Expression@{Lit\+Expression}}
+\subsubsection[{\texorpdfstring{set\+Vector(\+Q\+Vector$<$ Operande $\ast$ $>$ \&vec)}{setVector(QVector< Operande * > &vec)}}]{\setlength{\rightskip}{0pt plus 5cm}void Lit\+Expression\+::set\+Vector (
+\begin{DoxyParamCaption}
+\item[{Q\+Vector$<$ {\bf Operande} $\ast$ $>$ \&}]{vec}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_lit_expression_a60a52c1344ff29fa1576720bc60c0577}{}\label{class_lit_expression_a60a52c1344ff29fa1576720bc60c0577}
+
+
+Definition at line 71 of file litterale.\+h.
+
+\index{Lit\+Expression@{Lit\+Expression}!to\+String@{to\+String}}
+\index{to\+String@{to\+String}!Lit\+Expression@{Lit\+Expression}}
+\subsubsection[{\texorpdfstring{to\+String() const }{toString() const }}]{\setlength{\rightskip}{0pt plus 5cm}Q\+String Lit\+Expression\+::to\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_lit_expression_a108f8809e4ca49343426c9d0c30c28c4}{}\label{class_lit_expression_a108f8809e4ca49343426c9d0c30c28c4}
+
+
+Implements \hyperlink{class_litterale_a3b427621132af2903259390143d1b16d}{Litterale}.
+
+
+
+Definition at line 53 of file litterale.\+cpp.
+
+\index{Lit\+Expression@{Lit\+Expression}!verif\+Neg@{verif\+Neg}}
+\index{verif\+Neg@{verif\+Neg}!Lit\+Expression@{Lit\+Expression}}
+\subsubsection[{\texorpdfstring{verif\+Neg() const }{verifNeg() const }}]{\setlength{\rightskip}{0pt plus 5cm}void Lit\+Expression\+::verif\+Neg (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{class_lit_expression_a6673aba807725a2e1820af3bfeb8cf36}{}\label{class_lit_expression_a6673aba807725a2e1820af3bfeb8cf36}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{litterale_8h}{litterale.\+h}\item 
+\hyperlink{litterale_8cpp}{litterale.\+cpp}\end{DoxyCompactItemize}

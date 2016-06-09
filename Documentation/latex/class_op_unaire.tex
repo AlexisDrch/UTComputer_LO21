@@ -1,0 +1,185 @@
+\hypertarget{class_op_unaire}{}\section{Op\+Unaire Class Reference}
+\label{class_op_unaire}\index{Op\+Unaire@{Op\+Unaire}}
+
+
+{\ttfamily \#include $<$operator.\+h$>$}
+
+Inheritance diagram for Op\+Unaire\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.954802cm]{class_op_unaire}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_op_unaire_ad13b6ddecf2d4be9311fa2e8acfe459b}{Op\+Unaire} (const Q\+String \&na)
+\item 
+virtual \hyperlink{class_op_unaire_a3ab73941cc8f0af333e4a8c321e8d3ce}{$\sim$\+Op\+Unaire} ()
+\item 
+\hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_op_unaire_a37fd2b7149554eb575280e88e8914ff6}{executer} ()
+\item 
+virtual \hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_op_unaire_a05586cb26efdcc8fa3aba5be681a71c8}{fonction\+Num} (\hyperlink{class_nombres}{Nombres} $\ast$arg1)
+\item 
+virtual \hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_op_unaire_aba2ca8e42f0fb230de466114eab02f62}{fonction\+Expression} (\hyperlink{class_lit_expression}{Lit\+Expression} $\ast$arg1)
+\item 
+virtual \hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_op_unaire_a4db1c0cbd6ec4acbe89a6ef2ae68f901}{action\+Num} (\hyperlink{class_entier}{Entier} \&arg1)=0
+\item 
+virtual \hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_op_unaire_a0b92d632cf248e765783f23d6d637d1f}{action\+Num} (\hyperlink{class_reelle}{Reelle} \&arg1)=0
+\item 
+virtual \hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_op_unaire_a7728e3d41bfe8ace1f9343a4cd404502}{action\+Num} (\hyperlink{class_rationnelle}{Rationnelle} \&arg1)=0
+\item 
+void \hyperlink{class_op_unaire_a180e3556bac104e4762b16dc23675afc}{add\+Arg} (\hyperlink{class_pile}{Pile} $\ast$pile)
+\item 
+void \hyperlink{class_op_unaire_a7bd766f9358b3d286a29a876ab82ebf6}{add\+Arg} (\hyperlink{class_litterale}{Litterale} $\ast$arg1)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 26 of file operator.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Op\+Unaire@{Op\+Unaire}!Op\+Unaire@{Op\+Unaire}}
+\index{Op\+Unaire@{Op\+Unaire}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{Op\+Unaire(const Q\+String \&na)}{OpUnaire(const QString &na)}}]{\setlength{\rightskip}{0pt plus 5cm}Op\+Unaire\+::\+Op\+Unaire (
+\begin{DoxyParamCaption}
+\item[{const Q\+String \&}]{na}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_op_unaire_ad13b6ddecf2d4be9311fa2e8acfe459b}{}\label{class_op_unaire_ad13b6ddecf2d4be9311fa2e8acfe459b}
+
+
+Definition at line 29 of file operator.\+h.
+
+\index{Op\+Unaire@{Op\+Unaire}!````~Op\+Unaire@{$\sim$\+Op\+Unaire}}
+\index{````~Op\+Unaire@{$\sim$\+Op\+Unaire}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{$\sim$\+Op\+Unaire()}{~OpUnaire()}}]{\setlength{\rightskip}{0pt plus 5cm}Op\+Unaire\+::$\sim$\+Op\+Unaire (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_unaire_a3ab73941cc8f0af333e4a8c321e8d3ce}{}\label{class_op_unaire_a3ab73941cc8f0af333e4a8c321e8d3ce}
+
+
+Definition at line 16 of file operator.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\index{Op\+Unaire@{Op\+Unaire}!action\+Num@{action\+Num}}
+\index{action\+Num@{action\+Num}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{action\+Num(\+Entier \&arg1)=0}{actionNum(Entier &arg1)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Litterale}$\ast$ Op\+Unaire\+::action\+Num (
+\begin{DoxyParamCaption}
+\item[{{\bf Entier} \&}]{arg1}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_op_unaire_a4db1c0cbd6ec4acbe89a6ef2ae68f901}{}\label{class_op_unaire_a4db1c0cbd6ec4acbe89a6ef2ae68f901}
+
+
+Implemented in \hyperlink{class_op_sin_a9812e69009b3d29a25a05bbf2c4929ec}{Op\+Sin}, \hyperlink{class_op_neg_a716a9d79a42c5d5993bcc7bab10a167e}{Op\+Neg}, \hyperlink{class_op_eval_a4b18ba29a4c6dbc0ce5209649be31135}{Op\+Eval}, \hyperlink{class_op_ln_af3ccbade0164af76ae941400b7bbe6ce}{Op\+Ln}, \hyperlink{class_op_exp_a2a7a7e5e698b864749b50b2e33b367fb}{Op\+Exp}, and \hyperlink{class_op_logique_unaire_a396bd51e071632ec4e607473068e1a62}{Op\+Logique\+Unaire}.
+
+\index{Op\+Unaire@{Op\+Unaire}!action\+Num@{action\+Num}}
+\index{action\+Num@{action\+Num}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{action\+Num(\+Reelle \&arg1)=0}{actionNum(Reelle &arg1)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Litterale}$\ast$ Op\+Unaire\+::action\+Num (
+\begin{DoxyParamCaption}
+\item[{{\bf Reelle} \&}]{arg1}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_op_unaire_a0b92d632cf248e765783f23d6d637d1f}{}\label{class_op_unaire_a0b92d632cf248e765783f23d6d637d1f}
+
+
+Implemented in \hyperlink{class_op_sin_a090eb911b7778adc6a5870552d2b0316}{Op\+Sin}, \hyperlink{class_op_neg_a18050dc2d64ca60845616b295af9b10c}{Op\+Neg}, \hyperlink{class_op_eval_a56b918642321c739817131a3623a9a9b}{Op\+Eval}, \hyperlink{class_op_ln_a3fd161533906f6e658aa9cdc1512bd01}{Op\+Ln}, \hyperlink{class_op_exp_ad4ea20ea7b9f02c76eb3a6bdb4455161}{Op\+Exp}, and \hyperlink{class_op_logique_unaire_a58809367f9cd3dbb4c0f3d66c21428c0}{Op\+Logique\+Unaire}.
+
+\index{Op\+Unaire@{Op\+Unaire}!action\+Num@{action\+Num}}
+\index{action\+Num@{action\+Num}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{action\+Num(\+Rationnelle \&arg1)=0}{actionNum(Rationnelle &arg1)=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Litterale}$\ast$ Op\+Unaire\+::action\+Num (
+\begin{DoxyParamCaption}
+\item[{{\bf Rationnelle} \&}]{arg1}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_op_unaire_a7728e3d41bfe8ace1f9343a4cd404502}{}\label{class_op_unaire_a7728e3d41bfe8ace1f9343a4cd404502}
+
+
+Implemented in \hyperlink{class_op_sin_af7975968a1981c55822561caa8a470be}{Op\+Sin}, \hyperlink{class_op_neg_a8801e50e3b9af195d71c3324b2aa4c33}{Op\+Neg}, \hyperlink{class_op_eval_a793878476d51abf60bed8e78206394b1}{Op\+Eval}, \hyperlink{class_op_ln_abba32df08a1aad16a84eac0c95c9fd76}{Op\+Ln}, \hyperlink{class_op_exp_a1d9e0f1afadd3eeab315b930f250b62e}{Op\+Exp}, and \hyperlink{class_op_logique_unaire_aa6c63a7c5b288d3c9e7d194453f4cffe}{Op\+Logique\+Unaire}.
+
+\index{Op\+Unaire@{Op\+Unaire}!add\+Arg@{add\+Arg}}
+\index{add\+Arg@{add\+Arg}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{add\+Arg(\+Pile $\ast$pile)}{addArg(Pile *pile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Op\+Unaire\+::add\+Arg (
+\begin{DoxyParamCaption}
+\item[{{\bf Pile} $\ast$}]{pile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_unaire_a180e3556bac104e4762b16dc23675afc}{}\label{class_op_unaire_a180e3556bac104e4762b16dc23675afc}
+
+
+Reimplemented from \hyperlink{class_operateur_ae9b209c3a9f55eb3b3821f43fe437105}{Operateur}.
+
+
+
+Definition at line 19 of file operator.\+cpp.
+
+\index{Op\+Unaire@{Op\+Unaire}!add\+Arg@{add\+Arg}}
+\index{add\+Arg@{add\+Arg}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{add\+Arg(\+Litterale $\ast$arg1)}{addArg(Litterale *arg1)}}]{\setlength{\rightskip}{0pt plus 5cm}void Op\+Unaire\+::add\+Arg (
+\begin{DoxyParamCaption}
+\item[{{\bf Litterale} $\ast$}]{arg1}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_unaire_a7bd766f9358b3d286a29a876ab82ebf6}{}\label{class_op_unaire_a7bd766f9358b3d286a29a876ab82ebf6}
+
+
+Reimplemented from \hyperlink{class_operateur_ae39d95062e174881d250561617cf7a6a}{Operateur}.
+
+
+
+Definition at line 26 of file operator.\+cpp.
+
+\index{Op\+Unaire@{Op\+Unaire}!executer@{executer}}
+\index{executer@{executer}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{executer()}{executer()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale} $\ast$ Op\+Unaire\+::executer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_unaire_a37fd2b7149554eb575280e88e8914ff6}{}\label{class_op_unaire_a37fd2b7149554eb575280e88e8914ff6}
+
+
+Implements \hyperlink{class_operateur_a875ee3c8ad2284fd8537c32070d059d2}{Operateur}.
+
+
+
+Definition at line 32 of file operator.\+cpp.
+
+\index{Op\+Unaire@{Op\+Unaire}!fonction\+Expression@{fonction\+Expression}}
+\index{fonction\+Expression@{fonction\+Expression}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{fonction\+Expression(\+Lit\+Expression $\ast$arg1)}{fonctionExpression(LitExpression *arg1)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale} $\ast$ Op\+Unaire\+::fonction\+Expression (
+\begin{DoxyParamCaption}
+\item[{{\bf Lit\+Expression} $\ast$}]{arg1}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_unaire_aba2ca8e42f0fb230de466114eab02f62}{}\label{class_op_unaire_aba2ca8e42f0fb230de466114eab02f62}
+
+
+Reimplemented in \hyperlink{class_op_eval_a1b949d04bab4f73df520319fa70befc9}{Op\+Eval}.
+
+
+
+Definition at line 56 of file operator.\+cpp.
+
+\index{Op\+Unaire@{Op\+Unaire}!fonction\+Num@{fonction\+Num}}
+\index{fonction\+Num@{fonction\+Num}!Op\+Unaire@{Op\+Unaire}}
+\subsubsection[{\texorpdfstring{fonction\+Num(\+Nombres $\ast$arg1)}{fonctionNum(Nombres *arg1)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Litterale} $\ast$ Op\+Unaire\+::fonction\+Num (
+\begin{DoxyParamCaption}
+\item[{{\bf Nombres} $\ast$}]{arg1}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_op_unaire_a05586cb26efdcc8fa3aba5be681a71c8}{}\label{class_op_unaire_a05586cb26efdcc8fa3aba5be681a71c8}
+
+
+Reimplemented in \hyperlink{class_op_neg_aba05bfb2ea8d1061303c2f98201b42c1}{Op\+Neg}, and \hyperlink{class_op_logique_unaire_a823d44ca7bb4caf3b9b34e3ff263001b}{Op\+Logique\+Unaire}.
+
+
+
+Definition at line 51 of file operator.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{operator_8h}{operator.\+h}\item 
+\hyperlink{operator_8cpp}{operator.\+cpp}\end{DoxyCompactItemize}

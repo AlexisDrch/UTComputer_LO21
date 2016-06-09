@@ -1,0 +1,162 @@
+\hypertarget{class_operateur}{}\section{Operateur Class Reference}
+\label{class_operateur}\index{Operateur@{Operateur}}
+
+
+{\ttfamily \#include $<$operator.\+h$>$}
+
+Inheritance diagram for Operateur\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=8.330579cm]{class_operateur}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_operateur_ad30f42803cab7fbffe07d6b6a3723ee2}{Operateur} (const Q\+String \&na, unsigned int t)
+\item 
+virtual \hyperlink{class_operateur_a6cf041d43e1cde240783492fc887a54a}{$\sim$\+Operateur} ()
+\item 
+virtual \hyperlink{class_litterale}{Litterale} $\ast$ \hyperlink{class_operateur_a875ee3c8ad2284fd8537c32070d059d2}{executer} ()=0
+\item 
+virtual void \hyperlink{class_operateur_ae9b209c3a9f55eb3b3821f43fe437105}{add\+Arg} (\hyperlink{class_pile}{Pile} $\ast$pile)
+\item 
+virtual void \hyperlink{class_operateur_ae39d95062e174881d250561617cf7a6a}{add\+Arg} (\hyperlink{class_litterale}{Litterale} $\ast$arg1)
+\item 
+unsigned int \hyperlink{class_operateur_a850af30f5bd589fb9c3f10b9dbc03f73}{get\+Taille} () const 
+\item 
+Q\+String \hyperlink{class_operateur_ad49ae9c67adcd3af3a9be0e2bc13c629}{to\+String} () const 
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\+Vector$<$ \hyperlink{class_litterale}{Litterale} $\ast$ $>$ \hyperlink{class_operateur_a8f8f737f9d972ac60d1f0d8700cd3857}{tab}
+\item 
+unsigned int \hyperlink{class_operateur_a616ac1808bc641e898d0ed97f770ffaf}{taille}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 7 of file operator.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Operateur@{Operateur}!Operateur@{Operateur}}
+\index{Operateur@{Operateur}!Operateur@{Operateur}}
+\subsubsection[{\texorpdfstring{Operateur(const Q\+String \&na, unsigned int t)}{Operateur(const QString &na, unsigned int t)}}]{\setlength{\rightskip}{0pt plus 5cm}Operateur\+::\+Operateur (
+\begin{DoxyParamCaption}
+\item[{const Q\+String \&}]{na, }
+\item[{unsigned int}]{t}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_operateur_ad30f42803cab7fbffe07d6b6a3723ee2}{}\label{class_operateur_ad30f42803cab7fbffe07d6b6a3723ee2}
+
+
+Definition at line 15 of file operator.\+h.
+
+\index{Operateur@{Operateur}!````~Operateur@{$\sim$\+Operateur}}
+\index{````~Operateur@{$\sim$\+Operateur}!Operateur@{Operateur}}
+\subsubsection[{\texorpdfstring{$\sim$\+Operateur()}{~Operateur()}}]{\setlength{\rightskip}{0pt plus 5cm}Operateur\+::$\sim$\+Operateur (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_operateur_a6cf041d43e1cde240783492fc887a54a}{}\label{class_operateur_a6cf041d43e1cde240783492fc887a54a}
+
+
+Definition at line 5 of file operator.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\index{Operateur@{Operateur}!add\+Arg@{add\+Arg}}
+\index{add\+Arg@{add\+Arg}!Operateur@{Operateur}}
+\subsubsection[{\texorpdfstring{add\+Arg(\+Pile $\ast$pile)}{addArg(Pile *pile)}}]{\setlength{\rightskip}{0pt plus 5cm}void Operateur\+::add\+Arg (
+\begin{DoxyParamCaption}
+\item[{{\bf Pile} $\ast$}]{pile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_operateur_ae9b209c3a9f55eb3b3821f43fe437105}{}\label{class_operateur_ae9b209c3a9f55eb3b3821f43fe437105}
+
+
+Reimplemented in \hyperlink{class_op_pile_ac05c50b3c226d57dbb866442ab8fd5e3}{Op\+Pile}, \hyperlink{class_op_binaire_ac48be97498d47266542ff81c86c1a118}{Op\+Binaire}, and \hyperlink{class_op_unaire_a180e3556bac104e4762b16dc23675afc}{Op\+Unaire}.
+
+
+
+Definition at line 11 of file operator.\+cpp.
+
+\index{Operateur@{Operateur}!add\+Arg@{add\+Arg}}
+\index{add\+Arg@{add\+Arg}!Operateur@{Operateur}}
+\subsubsection[{\texorpdfstring{add\+Arg(\+Litterale $\ast$arg1)}{addArg(Litterale *arg1)}}]{\setlength{\rightskip}{0pt plus 5cm}void Operateur\+::add\+Arg (
+\begin{DoxyParamCaption}
+\item[{{\bf Litterale} $\ast$}]{arg1}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{class_operateur_ae39d95062e174881d250561617cf7a6a}{}\label{class_operateur_ae39d95062e174881d250561617cf7a6a}
+
+
+Reimplemented in \hyperlink{class_op_binaire_af39b73a32c35ed7722fac1d380b92bbd}{Op\+Binaire}, and \hyperlink{class_op_unaire_a7bd766f9358b3d286a29a876ab82ebf6}{Op\+Unaire}.
+
+
+
+Definition at line 13 of file operator.\+cpp.
+
+\index{Operateur@{Operateur}!executer@{executer}}
+\index{executer@{executer}!Operateur@{Operateur}}
+\subsubsection[{\texorpdfstring{executer()=0}{executer()=0}}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Litterale}$\ast$ Operateur\+::executer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\hypertarget{class_operateur_a875ee3c8ad2284fd8537c32070d059d2}{}\label{class_operateur_a875ee3c8ad2284fd8537c32070d059d2}
+
+
+Implemented in \hyperlink{class_op_pile_a02b47fa3b5f7399a09681c80353024e0}{Op\+Pile}, \hyperlink{class_op_binaire_aa81570ae3aeb44b9533e7ddd82a397be}{Op\+Binaire}, and \hyperlink{class_op_unaire_a37fd2b7149554eb575280e88e8914ff6}{Op\+Unaire}.
+
+\index{Operateur@{Operateur}!get\+Taille@{get\+Taille}}
+\index{get\+Taille@{get\+Taille}!Operateur@{Operateur}}
+\subsubsection[{\texorpdfstring{get\+Taille() const }{getTaille() const }}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Operateur\+::get\+Taille (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{class_operateur_a850af30f5bd589fb9c3f10b9dbc03f73}{}\label{class_operateur_a850af30f5bd589fb9c3f10b9dbc03f73}
+
+
+Definition at line 20 of file operator.\+h.
+
+\index{Operateur@{Operateur}!to\+String@{to\+String}}
+\index{to\+String@{to\+String}!Operateur@{Operateur}}
+\subsubsection[{\texorpdfstring{to\+String() const }{toString() const }}]{\setlength{\rightskip}{0pt plus 5cm}Q\+String Operateur\+::to\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{class_operateur_ad49ae9c67adcd3af3a9be0e2bc13c629}{}\label{class_operateur_ad49ae9c67adcd3af3a9be0e2bc13c629}
+
+
+Implements \hyperlink{class_operande_a2acae8f59199e93850b3fdb13eba1672}{Operande}.
+
+
+
+Definition at line 21 of file operator.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\index{Operateur@{Operateur}!tab@{tab}}
+\index{tab@{tab}!Operateur@{Operateur}}
+\subsubsection[{\texorpdfstring{tab}{tab}}]{\setlength{\rightskip}{0pt plus 5cm}Q\+Vector$<${\bf Litterale}$\ast$$>$ Operateur\+::tab\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_operateur_a8f8f737f9d972ac60d1f0d8700cd3857}{}\label{class_operateur_a8f8f737f9d972ac60d1f0d8700cd3857}
+
+
+Definition at line 11 of file operator.\+h.
+
+\index{Operateur@{Operateur}!taille@{taille}}
+\index{taille@{taille}!Operateur@{Operateur}}
+\subsubsection[{\texorpdfstring{taille}{taille}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Operateur\+::taille\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{class_operateur_a616ac1808bc641e898d0ed97f770ffaf}{}\label{class_operateur_a616ac1808bc641e898d0ed97f770ffaf}
+
+
+Definition at line 12 of file operator.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{operator_8h}{operator.\+h}\item 
+\hyperlink{operator_8cpp}{operator.\+cpp}\end{DoxyCompactItemize}
