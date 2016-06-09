@@ -340,6 +340,15 @@ bool isVarProgramme(const QString s){
         litAff.setMessage(ex.getInfo() + " passage test");
 
         Litterale* res = litMng.addLitterale(c);
+        LitAtome* a = dynamic_cast<LitAtome*>(res);
+        if (a != nullptr){
+            /*if (isVariable(a)) {
+                StockVariable* sv = StockVariable::getInstance();
+            } else if (isVarProgramme()) {
+
+            }
+            litAff.setMessage("Erreur : impossible de saisir un atome qui n'est pas un identificateur");*/
+        }
         if(res != nullptr){
             litAff.push(*res);
             litAff.setMessage(litMng.messageNouvelleCreation(litAff.top()));
@@ -366,6 +375,4 @@ bool isVarProgramme(const QString s){
     }
     return "";
 }
-
-
 

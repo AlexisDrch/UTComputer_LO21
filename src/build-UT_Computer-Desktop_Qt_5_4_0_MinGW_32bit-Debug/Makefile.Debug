@@ -356,6 +356,8 @@ debug/moc_qcomputer.cpp: ../../../../Qt/5.4/mingw491_32/include/QtWidgets/QWidge
 		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
 		../UT_Computer/operatorClassique.h \
 		../UT_Computer/operatorLogique.h \
 		../UT_Computer/qcomputer.h
@@ -655,6 +657,8 @@ debug/main.o: ../UT_Computer/main.cpp ../../../../Qt/5.4/mingw491_32/include/QtW
 		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
 		../UT_Computer/operatorClassique.h \
 		../UT_Computer/operatorLogique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\UT_Computer\main.cpp
@@ -863,6 +867,8 @@ debug/qcomputer.o: ../UT_Computer/qcomputer.cpp ../UT_Computer/qcomputer.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
 		../UT_Computer/operatorClassique.h \
 		../UT_Computer/operatorLogique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\qcomputer.o ..\UT_Computer\qcomputer.cpp
@@ -969,6 +975,8 @@ debug/computer.o: ../UT_Computer/computer.cpp ../UT_Computer/computer.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
 		../UT_Computer/operatorClassique.h \
 		../UT_Computer/operatorLogique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\computer.o ..\UT_Computer\computer.cpp
@@ -1059,6 +1067,8 @@ debug/operatorFactory.o: ../UT_Computer/operatorFactory.cpp ../UT_Computer/Opera
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
 		../UT_Computer/operatorClassique.h \
 		../UT_Computer/operatorLogique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operatorFactory.o ..\UT_Computer\operatorFactory.cpp
@@ -1146,7 +1156,9 @@ debug/operator.o: ../UT_Computer/operator.cpp ../UT_Computer/operator.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
-		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operator.o ..\UT_Computer\operator.cpp
 
 debug/litterale.o: ../UT_Computer/litterale.cpp ../UT_Computer/litterale.h \
@@ -1353,7 +1365,9 @@ debug/operatorLogique.o: ../UT_Computer/operatorLogique.cpp ../UT_Computer/opera
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
-		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operatorLogique.o ..\UT_Computer\operatorLogique.cpp
 
 debug/operatorAutre.o: ../UT_Computer/operatorAutre.cpp ../UT_Computer/operatorAutre.h \
@@ -1440,7 +1454,9 @@ debug/operatorAutre.o: ../UT_Computer/operatorAutre.cpp ../UT_Computer/operatorA
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
-		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operatorAutre.o ..\UT_Computer\operatorAutre.cpp
 
 debug/operatorClassique.o: ../UT_Computer/operatorClassique.cpp ../UT_Computer/operatorClassique.h \
@@ -1527,7 +1543,9 @@ debug/operatorClassique.o: ../UT_Computer/operatorClassique.cpp ../UT_Computer/o
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
-		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operatorClassique.o ..\UT_Computer\operatorClassique.cpp
 
 debug/storage.o: ../UT_Computer/storage.cpp ../UT_Computer/storage.h \
@@ -1609,7 +1627,9 @@ debug/storage.o: ../UT_Computer/storage.cpp ../UT_Computer/storage.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
 		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
-		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\storage.o ..\UT_Computer\storage.cpp
 
 debug/qrc_res.o: debug/qrc_res.cpp 

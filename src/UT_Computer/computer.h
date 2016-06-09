@@ -4,7 +4,9 @@
 
 #include <QDebug>
 #include <QMediaPlayer>
+
 #include <operatorFactory.h>
+#include "storage.h"
 
 using namespace std;
 

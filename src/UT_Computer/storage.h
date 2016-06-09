@@ -8,7 +8,7 @@
 #include <QVariant>
 #include <QDebug>
 #include <QSqlError>
-
+#include <QSqlRecord>
 
 class DbManager {
     QSqlDatabase db;
@@ -21,7 +21,7 @@ public:
 };
 
 class StockVariable {
-    StockVariable() : nb(0){}
+    StockVariable();
     ~StockVariable(){}
 
     QMap<QString, Nombres*> listeVar;
@@ -31,6 +31,8 @@ public:
     static StockVariable* getInstance();
     void addVariable(const QString s, Nombres* n);
     void removeVariable(QString s);
+    Litterale* fabriqLitterale(const QString& v);
+    Litterale* isRationnelle(const QString& v);
 };
 
 
