@@ -4,7 +4,9 @@
 
 #include <QDebug>
 #include <QMediaPlayer>
+
 #include <operatorFactory.h>
+#include "storage.h"
 
 using namespace std;
 
@@ -33,10 +35,10 @@ public:
     void setVerif(bool v) {verif =v;}
     Litterale* addLitterale(const QString& str);
     Litterale& addLitterale(Litterale* res);
-    Litterale* isRationnelle(const QString& c);
-    bool verifLitterale(QString& op, QString& nouvelle, QVector<Operande*>& vectorExp);
-    QString verifExpressionValide(const QString& c, QVector<Operande*>& vect); // to implement
-    Litterale* fabriqLitterale(const QString& v);
+    static Litterale* isRationnelle(const QString& c);
+    static bool verifLitterale(QString& op, QString& nouvelle, QVector<Operande*>& vectorExp);
+    static QString verifExpressionValide(QString c, QVector<Operande*>& vect); // to implement
+    static Litterale* fabriqLitterale(const QString& v);
     void removeLitterale(Litterale& e);
     static LitteraleManager& getInstance();
     static void libererInstance();

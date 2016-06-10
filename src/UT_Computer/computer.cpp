@@ -56,11 +56,37 @@ Litterale* LitteraleManager::isRationnelle(const QString& v){
 
 }
 
+bool isVariable(LitAtome* a){
+      QString s = a->toString();
+      StockVariable* sv = StockVariable::getInstance();
+      //adapter de la map
+      return sv->contains(s);
+}
+
+bool isVarProgramme(const QString s){
+    //check in map var programme
+    return false;
+}
+
 bool LitteraleManager::verifLitterale(QString& operande,QString& nouvelle, QVector<Operande*>& vectorExp){
     Litterale*res = fabriqLitterale(operande);
     if (res == nullptr) return false;
+    LitAtome* a = dynamic_cast<LitAtome*>(res);
+    //traitement des variables
+    if (a != nullptr){
+        if (isVariable(a)) {
+            StockVariable* sv = StockVariable::getInstance();
+            //on recupère la littérale stockée
+            Nombres* resVar = sv->at(a->toString());
+            delete a;
+            vectorExp.push_back(resVar);
+    }
+            vectorExp.push_back(res);
+    }
+    else {
+        vectorExp.push_back(res);
+    }
     nouvelle.push_back(operande);
-    vectorExp.push_back(res);
     operande ="";
     return true;
 }
@@ -79,15 +105,17 @@ bool LitteraleManager::verifLitterale(QString& operande,QString& nouvelle, QVect
     else return fabriqueLitterale(LitExp->toString());
  */
 
-QString LitteraleManager::verifExpressionValide(const QString& v, QVector<Operande*>& vectorExp){
+QString LitteraleManager::verifExpressionValide(QString v, QVector<Operande*>& vectorExp){
 
     QString nouvelle;
     // vectorExp : Dedans possedera tous les operateurs de l'expression correctement initialisée avec les litteraux en arguments
     QMap<QString, OperateurFactory*> factories = OperateurFactory::getFactoriesMap();
     QString::const_iterator fin = v.end(); fin--; //on retire le ' finale
-    QString::const_iterator deb = v.begin(); deb++;    //on retire le ' debut
+    QString::const_iterator deb = v.begin();     //on retire le ' debut
+
     unsigned int sizeNewOp=0;
     bool binaryToFull = true;
+    unsigned int k =0;
 
         while (deb != fin){
             if(*deb != ' '){
@@ -101,6 +129,7 @@ QString LitteraleManager::verifExpressionValide(const QString& v, QVector<Operan
                     if(operande!=""){
                         if(!verifLitterale(operande,nouvelle,vectorExp)) return "false";
                     }
+
                     return nouvelle;
                 }//Cas ou le curseur s'est arrete car on a trouvé un operateur
                 if(factories.contains(operande)){
@@ -109,8 +138,8 @@ QString LitteraleManager::verifExpressionValide(const QString& v, QVector<Operan
                     sizeNewOp = newOp->getTaille();
                     if(sizeNewOp == 1)
                         vectorExp.push_back(newOp);
-                    else if(sizeNewOp == 2)
-                        vectorExp.push_front(newOp);
+                    else if(sizeNewOp == 2){
+                        vectorExp.push_front(newOp); k=1;}
                     nouvelle.push_back(operande);
                     operande ="";
                 }
@@ -118,16 +147,36 @@ QString LitteraleManager::verifExpressionValide(const QString& v, QVector<Operan
                     if(operande!=""){
                         if(!verifLitterale(operande,nouvelle,vectorExp)) return "false";
                     }
-                    //Cas ou le curseur s'est arrete car on a trouvé un espace ou parenthèse
-                     if(*deb=='(' || *deb==')') { nouvelle.push_back(*deb); deb++;}
+                    //Cas ou le curseur s'est arrete car on a trouvé un espace ou parenthèse : recursivité apparait
+                     if(*deb=='(' ){
+                         nouvelle.push_back(*deb);deb++;
+                         QString newOperand;
+                         while(*deb!= ')'&& deb !=fin) {
+                             newOperand +=*deb;deb++;
+                         }
+                         if(deb == fin) return false;
+                         newOperand+=*deb;
+                         QVector<Operande*> *vectExp = new QVector<Operande*>;
+                         QString str = verifExpressionValide(newOperand,*vectExp);
+                         if (str != "false"){                         //Si faux : on renvoie en ligne de commande
+                          LitExpression* newLit = new LitExpression(str);
+                          newLit->setVector(*vectExp);
+                          nouvelle.push_back(newOperand);
+                          vectorExp.push_back(newLit);
+                          //k==1 ? vectorExp.push_front(newLit): vectorExp.push_back(newLit);
+                          k=0;
+                          deb++;
+                         }
+                         else return "false";
+                     }
                      else if (factories.contains(*deb)){
                          OperateurFactory* fact= factories.operator [](*deb);
                          Operateur* newOp = (fact->getOperateur());
                          sizeNewOp = newOp->getTaille();
                          if(sizeNewOp == 1)
                              vectorExp.push_back(newOp);
-                         else if(sizeNewOp == 2)
-                             vectorExp.push_front(newOp); // On push le nouvel operateur symbole au début de de la pile +(1,1)
+                         else if(sizeNewOp == 2){
+                             vectorExp.push_front(newOp);k=1;} // On push le nouvel operateur symbole au début de de la pile +(1,1)
                          nouvelle.push_back(*deb); deb++;
                      }
                 }
@@ -139,37 +188,68 @@ QString LitteraleManager::verifExpressionValide(const QString& v, QVector<Operan
 // Fabrique des litterales selon l'étude de la string input en commande
 Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
     bool ok=false;
-    verif=true;
+    //verif=true;
 
     if(v.at(0).isNumber()){
        unsigned int val = v.toLongLong(&ok); if(ok){return (new Entier(val));}
-       float val2 = v.toFloat(&ok) ; if(ok){return (new Reelle(val2));}
+       float val2 = v.toFloat(&ok) ; if(ok){
+           Reelle r(val2);
+           Litterale* res = r.simplification();
+           return res;
+       }
 
-       // Factorielle : to do
-       QString::const_iterator it = v.end(); it--;
-       if ( ((*v.begin()) == '\'') && ((*it) == '\'') ) return(new LitExpression(v));
-       if ( ((*v.begin()) == '[') && ((*it) == ']') ) return(new LitProgramme(v));
-       Litterale* l = isRationnelle(v); if ( l != nullptr) return l; else delete l;
+       Litterale* l = isRationnelle(v); if ( l != nullptr){
+           return l;
+       }
+
+       // construction d'un complexe directement
+       delete l;
+       QString part1 = v.mid(0,v.indexOf("$"));
+       Litterale* l1 = fabriqLitterale(part1);
+       LitNumerique* ln1 = dynamic_cast<LitNumerique*>(l1); // aucun risque car le complexe stocké est valide
+       QString part2 = v.mid(v.indexOf("$")+1,v.size());
+       Litterale* l2 = fabriqLitterale(part2);
+       LitNumerique* ln2 = dynamic_cast<LitNumerique*>(l2); // aucun risque car le complexe stocké est valide
+       if(ln1 != nullptr && ln2 != nullptr){
+        return new Complexe(ln1,ln2);
+       }
+       delete l1,l2;
+   }
+
+   //Expression ou Programme
+   QString::const_iterator it = v.end(); it--;
+
+    //Expression
+    if ( ((*v.begin()) == '\'') && ((*it) == '\'')){
+       QString v2 = v; v2.remove(0,1); v2.remove(v2.size()+1,1);
+       QVector<Operande*> *vectExp = new QVector<Operande*>;
+       QString str = verifExpressionValide(v2,*vectExp);
+       if (str != "false"){                         //Si faux : on renvoie en ligne de commande
+        LitExpression* newLit = new LitExpression(str);
+        newLit->setVector(*vectExp);
+        return newLit;
+       }
+       else return nullptr;
     }
-       //Expression ou Programme
-       QString::const_iterator it = v.end(); it--;
+    //Programme
+    if ( ((*v.begin()) == '[') && ((*it) == ']') ){
+        return(new LitProgramme(v));
+    }
 
-       //Expression
-       if ( ((*v.begin()) == '\'') && ((*it) == '\'')){
-           QVector<Operande*> *vectExp = new QVector<Operande*>;
-           QString str = verifExpressionValide(v,*vectExp);
-           if (str != "false"){                         //Si faux : on renvoie en ligne de commande
-            LitExpression* newLit = new LitExpression(str);
-            newLit->setVector(*vectExp);
-            return newLit;
+    //Atome
+    bool atome = false;
+    if (v.at(0).isUpper()) {
+        atome = true;
+        int i = 0;
+        while (i<v.size() && atome) {
+           if (!(v.at(i).isUpper() || v.at(i).isNumber())) {
+               atome = false;
            }
-           else return nullptr;
-       }
-       //Programme
-       if ( ((*v.begin()) == '[') && ((*it) == ']') ){
-
-           return(new LitProgramme(v));
-       }
+           i++;
+        }
+    }
+    if (atome)
+    return new LitAtome(v);
 
     //setVerif(false);
     return nullptr;//(new LitExpression(v+"dead")); //car atome beug pour l'instant
@@ -219,18 +299,12 @@ QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
     Entier* newe3 = dynamic_cast<Entier*>(&lit); if (newe3 != nullptr){return "New : ENTIER";}
     Reelle* newe4 = dynamic_cast<Reelle*>(&lit); if (newe4 != nullptr){return "New : REELLE";}
     Rationnelle* newe5 = dynamic_cast<Rationnelle*>(&lit);if (newe5 != nullptr){return "New : Rationnelle" ;}
+    Complexe* newe6 = dynamic_cast<Complexe*>(&lit);if (newe6 != nullptr){return "New : Complexe" ;}
+    LitAtome* newe7 = dynamic_cast<LitAtome*>(&lit);if (newe7 != nullptr){return "New : Atome" ;}
+    return "";
 }
 
 
-bool isVariable(const QString s){
-    //check in map var
-    return false;
-}
-
-bool isVarProgramme(const QString s){
-    //check in map var programme
-    return false;
-}
 
 //III] Controleur
     Operateur* Controleur::getOperateur(const QString &v) {
@@ -269,8 +343,8 @@ bool isVarProgramme(const QString s){
     test = true;
 
     try {
-        QVector<Litterale*> temp; // stockage temporaire des littérales passées en argument de l'opérateur
         Operateur* op = getOperateur(c);
+        QVector<Litterale*> temp; // stockage temporaire des littérales passées en argument de l'opérateur
         OpPile* conv1 = dynamic_cast<OpPile*>(op);//Va changer le comportement de l'algorithme sur la pile
 
         test = false;
@@ -278,25 +352,35 @@ bool isVarProgramme(const QString s){
         if(litAff.taille() >= opSize){
 
             for(unsigned int i =0; i <opSize; i++){
-                temp.push_back(&litAff.top()); //POURQUOI PAS LITERALE MANAGER ?
+                temp.push_back(&litAff.top());
                 op->addArg(&litAff); // ici on récupère l'item de la pile ou la pile pour l'operateur pile -- ON AJOUTE PLUS DANS LITTERALEMANAGER?
                 litAff.pop();
             }
             for(unsigned int i =0; i <opSize; i++){
-                litAff.push(*temp.at(temp.size()-(i+1)));//On les remet temporairement  // ICI ON REMOVERAIT LE LIT MANA
+                litAff.push(*temp.at(temp.size()-(i+1)));
             }
             Litterale* res = op->executer();
-                if(conv1 == nullptr){ //POURQUOI NE PAS GERER DANS L'OPERATEUR DIRECTEMENT ??
-                //Seulement si execution sans déclenchement d'exception :
-                for(unsigned int i =0; i <opSize; i++){
-                    litMng.removeLitterale(litAff.top()); //si tout s'est bien passé on pop la pile deux fois + littmanager
-                    litAff.pop();
-                }
-                Litterale& e=litMng.addLitterale(res);
-                litAff.push(e);
-                litAff.setMessage(litAff.getMessage() + " *** "+ litMng.messageNouvelleCreation(e));
+            LitExpression* conv2 = dynamic_cast<LitExpression*>(res);
+
+            if(conv1 == nullptr && !(v=="STO" && res == nullptr)){ //POURQUOI NE PAS GERER DANS L'OPERATEUR DIRECTEMENT ??
+           //Seulement si execution sans déclenchement d'exception :
+               for(unsigned int i =0; i <opSize; i++){
+                   litMng.removeLitterale(litAff.top()); //si tout s'est bien passé on pop la pile deux fois + littmanager
+                   litAff.pop();
                }
+               if(conv2 != nullptr){
+                   QString v2 ='\''+conv2->toString()+'\'';
+                   commande(v2);
+                   delete conv2;
+               }
+               else if (v!="STO" && res != nullptr) {
+                   Litterale& e=litMng.addLitterale(res);
+                   litAff.push(e);
+                   litAff.setMessage(litAff.getMessage() + " *** "+ litMng.messageNouvelleCreation(e));
+               }
+          }
             delete op; //detruit les litterales qui ne sont plus à jour
+
 
          }else{
                 if(bip->state() == QMediaPlayer::PlayingState){
@@ -317,10 +401,27 @@ bool isVarProgramme(const QString s){
         litAff.setMessage(ex.getInfo() + " passage test");
 
         Litterale* res = litMng.addLitterale(c);
-        if(res != nullptr){
+        LitAtome* a = dynamic_cast<LitAtome*>(res);
+        //traitement des variables
+        if (a != nullptr){
+            if (isVariable(a)) {
+                StockVariable* sv = StockVariable::getInstance();
+                //on recupère la littérale stockée
+                Nombres* resVar = sv->at(a->toString());
+                litMng.removeLitterale(*res);
+                delete a;
+                litAff.push(*resVar);
+                litMng.addLitterale(resVar);
+                litAff.setMessage(litMng.messageNouvelleCreation(litAff.top()));
+            } else if (isVarProgramme(c)) {
+
+            }
+            else litAff.setMessage("Erreur : impossible de saisir un atome qui n'est pas un identificateur");
+        }
+        else if(res != nullptr){
             litAff.push(*res);
             litAff.setMessage(litMng.messageNouvelleCreation(litAff.top()));
-        }else if (isVariable(c)){
+        }else if (isVariable(a)){
             // recherche dans la bdd (map variable)
             //recup litterale
             //empiler res dans la pile
@@ -343,6 +444,4 @@ bool isVarProgramme(const QString s){
     }
     return "";
 }
-
-
 

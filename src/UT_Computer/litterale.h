@@ -57,8 +57,6 @@ public:
                const QString& getValueProg() const {return stringValue;}
         };
 
-        class LitNumerique;
-
     //2) Litterale expression // GERER LES PRIORIOTE !!!///
         class LitExpression :public Litterale{
             //on considerera qu'une expression n'est en réalité qu'une liste d'opérande
@@ -126,7 +124,6 @@ public:
                     QString toString() const;
                     Litterale* simplification();
                     float getValue()const;
-                    float getValueRat() const {return numerateur.getValue()/denominateur.getValue();} //todo
                     unsigned int getNum(){return numerateur.getValue();}
                     unsigned int getDen(){return denominateur.getValue();}
                };
@@ -142,18 +139,19 @@ public:
                     QString toString() const;
                     float getValue()const;
                     float toFloatPositif() const;
-
                 };
 
         //4.2) Complexe
-            class Complexe {
+            class Complexe : public Nombres{
                 LitNumerique* pRe;
                 LitNumerique* pIm;
             public:
-                Complexe(LitNumerique* re, LitNumerique* im): pRe(re), pIm(im){}
+                Complexe(LitNumerique* re, LitNumerique* im, const QString& na=""): Nombres(na), pRe(re), pIm(im){}
+                ~Complexe();
                 QString toString() const;
-                LitNumerique& getpRe() const;
-                LitNumerique& getpIm() const;
+                LitNumerique* getPRe() const { return pRe; }
+                LitNumerique* getPIm() const { return pIm; }
+                Litterale* simplification();
 
             };
 

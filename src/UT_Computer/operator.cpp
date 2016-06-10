@@ -1,12 +1,13 @@
 #include "operator.h"
-
+#include "computer.h"
 
     //II]Operateur
     Operateur::~Operateur(){
-     //ici on supprime les litteraux sauf le premier (car c'est devenu le resultat de l'operation et est en pile)
-        for(unsigned int i =1; i <taille; i++){
-            delete tab.operator [](i);
-        }
+     //ici on supprime les litteraux
+        if (name != "$")
+            for(unsigned int i =0; i <taille; i++){
+                delete tab.operator [](i);
+            }
     }
     void Operateur::addArg(Pile *pile){pile->setMessage("Operateur abstrait");}
 
@@ -31,27 +32,44 @@
         }
         Litterale* OpUnaire::executer(){
 
-            Nombres* arg1 = dynamic_cast<Nombres*>(tab.front());
+            Nombres* arg11 = dynamic_cast<Nombres*>(tab.front());
 
-            if(arg1 != nullptr){
-                Litterale* res = fonctionNum(arg1);
-                delete arg1;
+
+            if(arg11 != nullptr){
+                Litterale* res = fonctionNum(arg11);
+                Reelle* r = dynamic_cast<Reelle*>(res);
+                if (r != nullptr) {
+                    Litterale* res2 = r->simplification();
+                    return res2;
+                }
                 return res;
             }
-            else {
-                LitExpression* arg1 = dynamic_cast<LitExpression*>(tab.front());
-                if(arg1 != nullptr){
-                    Litterale* res = fonctionExpression(arg1);
-                    delete arg1;
-                    return res;
-                }
-                else throw "error : operateur non valide sur ce litterale";
+
+            LitExpression* arg12 = dynamic_cast<LitExpression*>(tab.front());
+
+            if(arg12 != nullptr){
+                Litterale* res = fonctionExpression(arg12);
+
+               return res;
             }
+
+            //A MODIFIER PLUS TARD
+            /*LitAtome* arg13 = dynamic_cast<LitAtome*>(tab.front());
+
+            if(arg13 != nullptr){
+                Litterale* res = fonctionExpression(arg13);
+                delete arg13;
+                return res;
+            }*/
+
+            throw "error : operateur non valide sur ce litterale";
         }
+
         Litterale* OpUnaire::fonctionNum(Nombres *arg1) {
             Entier* conv = dynamic_cast<Entier*>(arg1); if(conv != nullptr) return actionNum(*conv);
             Reelle* conv1 = dynamic_cast<Reelle*>(arg1); if(conv1 != nullptr) return actionNum(*conv1);
             Rationnelle* conv2 = dynamic_cast<Rationnelle*>(arg1); if(conv2 != nullptr) return actionNum(*conv2);
+            Complexe* conv3 = dynamic_cast<Complexe*>(arg1); if(conv3 != nullptr) return actionNum(*conv3);
         }
         Litterale* OpUnaire::fonctionExpression(LitExpression* arg1) {
             OpNeg* neg= dynamic_cast<OpNeg*>(this);
@@ -81,11 +99,16 @@
                 return arg1.returnType();
             }
 
+            Litterale* OpNeg::actionNum(Complexe& arg1){
+                throw "Impossible de changer le signe d'un complexe";
+            }
+
             //EVAL
             Litterale* OpEval::fonctionExpression(LitExpression* arg1){
                 QVector<Operande*>& vector = arg1->getVector();
-                /*QString res;
-                for(unsigned int i = 0 ; i<vector.size();i++){
+                QString res;
+               /* for(unsigned int i = 0 ; i<vector.size();i++){
+
                     res = res + vector.at(i)->toString();
                 }
                     return (new LitExpression(res));*/
@@ -96,12 +119,19 @@
                 Operande* operande = vec.front();
                 vec.pop_front();
                 Litterale* litterale = dynamic_cast<Litterale*>(operande);
-                if(litterale != nullptr) return litterale;
-
+                if(litterale != nullptr) {
+                    LitExpression* conv1 = dynamic_cast<LitExpression*>(litterale);
+                    if (conv1 != nullptr){
+                         OpEval op;
+                         op.addArg(conv1);
+                        return op.executer();
+                    }
+                    else return litterale;
+                }
                 Operateur* operateur = dynamic_cast<Operateur*>(operande);
                 if (operateur!= nullptr) {
                     for(unsigned int i =0 ; i< operateur->getTaille(); i++){
-                        operateur->addArg(Evaluation(vec));
+                       operateur->addArg(Evaluation(vec));
                     }
                     return operateur->executer();
                 }
@@ -113,6 +143,9 @@
                 return &arg1;
             }
             Litterale* OpEval::actionNum(Rationnelle &arg1){
+                return &arg1;
+            }
+            Litterale* OpEval::actionNum(Complexe &arg1){
                 return &arg1;
             }
 
@@ -129,6 +162,9 @@
             Litterale* OpExp::actionNum(Rationnelle& arg1){
                 float f = exp(arg1.getValue());
                 return (new Reelle(f));
+            }
+            Litterale* OpExp::actionNum(Complexe& arg1){
+                throw "Impossible d'obtenir l'exponentielle d'un complexe";
             }
             //LN
             Litterale* OpLn::actionNum(Entier &arg1) {
@@ -148,6 +184,9 @@
                 float f = arg1.getValue();
                 f = log(f);
                 return (new Reelle(f));
+            }
+            Litterale* OpLn::actionNum(Complexe& arg1){
+                throw "Impossible d'obtenir le logarithme d'un complexe";
             }
             //SIN
             Litterale* OpSin::actionNum(Entier &arg1){
@@ -183,6 +222,10 @@
                 if (arg1.getNeg()) res->setNeg(!res->getNeg());
                 return(res);
             }
+            Litterale* OpSin::actionNum(Complexe &arg1){
+                throw "Impossible d'obtenir le sinus d'un nombre complexe";
+                return nullptr;
+            }
 
             //1.2 OpLogique unaire
             OpLogiqueUnaire::~OpLogiqueUnaire(){}
@@ -196,6 +239,7 @@
             Litterale* OpLogiqueUnaire::actionNum(Entier& arg1){ throw ("Error ");} //A ameliorer ?? Creation d'une sous classe pour distinguer NON logique de Logique plutot que d'avoir tout en classe OpBinaire...Unaire
             Litterale* OpLogiqueUnaire::actionNum(Reelle& arg1){ throw ("Error ");}
             Litterale* OpLogiqueUnaire::actionNum(Rationnelle& arg1){ throw ("Error ");}
+            Litterale* OpLogiqueUnaire::actionNum(Complexe& arg1){ throw ("Error ");}
 
             //OpNot
             Litterale* OpNot::actionLogiNumerique(LitNumerique* arg1)  {
@@ -229,9 +273,14 @@
             Nombres* arg1 = dynamic_cast<Nombres*>(tab.operator [](1));
             Litterale* arg2 = dynamic_cast<Litterale*>(tab.operator [](0));
 
+
             if(arg1 != nullptr){
                 Litterale* res = fonctionNum(arg1,arg2);
-                delete arg2;
+                Reelle* r = dynamic_cast<Reelle*>(res);
+                if (r != nullptr) {
+                    Litterale* res2 = r->simplification();
+                    return res2;
+                }
                 return res;
             }
             else {

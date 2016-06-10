@@ -26,8 +26,8 @@ QMap<QString,OperateurFactory*> OperateurFactory::getFactoriesMap() {
   */factories["EXP"] = new OpExpFactory();
     factories["LN"] = new OpLnFactory();/*
     factories["NUM"] = new OpNumFactory();
-    factories["DEN"] = new OpDenFactory();
-    factories["$"] = new OpDolFactory();
+    factories["DEN"] = new OpDenFactory();*/
+    factories["$"] = new OpDolFactory();/*
     factories["RE"] = new OpNumFactory();
     factories["IM"] = new OpImFactory();
     factories["ARG"] = new OpArgFactory();
@@ -42,6 +42,7 @@ QMap<QString,OperateurFactory*> OperateurFactory::getFactoriesMap() {
     factories["OR"] = new OpOrFactory();
     factories["NOT"] = new OpNotFactory();
     factories["EVAL"] = new OpEvalFactory();
+    factories["STO"] = new OpStoFactory();
     factories["DUP"] = new OpDupFactory();
     factories["DROP"] = new OpDropFactory();
     factories["CLEAR"] = new OpClearFactory();

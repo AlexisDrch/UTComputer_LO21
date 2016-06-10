@@ -101,7 +101,7 @@ Operande::~Operande(){
                 }
             }
             float Rationnelle::getValue()const {
-                return getValueRat();
+                return numerateur.getValue()/denominateur.getValue();
             }
 
             QString Rationnelle::toString() const {
@@ -141,4 +141,45 @@ Operande::~Operande(){
                 if(mantisse == 0) return (new Entier(pEntiere));
                 else return (new Reelle(getValue()));
             }
+
+        //I.6) Complexe
+            Complexe::~Complexe() {
+                //delete pRe, pIm;
+            }
+
+        QString Complexe::toString() const {
+            return pRe->toString() + "$" + pIm->toString();
+        }
+
+        Litterale* Complexe::simplification() {
+            if (pIm->getValue() == 0) {
+                Entier* conv = dynamic_cast<Entier*>(pRe);
+                if (conv != nullptr)
+                    return conv;
+                Reelle* conv2 = dynamic_cast<Reelle*>(pRe);
+                if (conv2 != nullptr)
+                    return conv2;
+                Rationnelle* conv3 = dynamic_cast<Rationnelle*>(pRe);
+                if (conv3 != nullptr)
+                    return conv3;
+            }
+            Entier* conv = dynamic_cast<Entier*>(pRe);
+            if (conv != nullptr){
+                Entier* pr = new Entier(conv->getValue());
+                Complexe* res = new Complexe(pr,pIm);
+                return res;
+            }
+            Reelle* conv2 = dynamic_cast<Reelle*>(pRe);
+            if (conv2 != nullptr){
+                Reelle* pr = new Reelle(conv2->getValue());
+                Complexe* res = new Complexe(pr,pIm);
+                return res;
+            }
+            Rationnelle* conv3 = dynamic_cast<Rationnelle*>(pRe);
+            if (conv3 != nullptr){
+                Rationnelle* pr = new Rationnelle(conv3->getNum(),conv3->getDen());
+                Complexe* res = new Complexe(pr,pIm);
+                return res;
+            }
+        }
 

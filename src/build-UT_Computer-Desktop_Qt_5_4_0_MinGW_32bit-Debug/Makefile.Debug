@@ -11,13 +11,13 @@ MAKEFILE      = Makefile.Debug
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DUNICODE -DQT_WIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
+DEFINES       = -DUNICODE -DQT_WIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -pipe -fno-keep-inline-dllexport -g -Wall -Wextra $(DEFINES)
 CXXFLAGS      = -pipe -fno-keep-inline-dllexport -g -std=c++0x -frtti -Wall -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I..\UT_Computer -I"..\..\..\..\Qt\5.4\mingw491_32\include" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtWidgets" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtMultimedia" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtGui" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtNetwork" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtCore" -I"debug" -I"." -I"..\..\..\..\Qt\5.4\mingw491_32\mkspecs\win32-g++"
+INCPATH       = -I..\UT_Computer -I"..\..\..\..\Qt\5.4\mingw491_32\include" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtWidgets" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtMultimedia" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtGui" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtNetwork" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtSql" -I"..\..\..\..\Qt\5.4\mingw491_32\include\QtCore" -I"debug" -I"." -I"..\..\..\..\Qt\5.4\mingw491_32\mkspecs\win32-g++"
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        -lglu32 -lopengl32 -lgdi32 -luser32 -lmingw32 -LC:/Qt/5.4/mingw491_32/lib -lqtmaind -LC:\mingw491\mingw32\lib -LC:\Utils\icu32_53_1_mingw482\lib -LC:\utils\postgresql\pgsql\lib -LC:\utils\mysql\mysql\lib -LC:\opensll\lib -lshell32 -LC:\Qt\5.4\mingw491_32/lib -lQt5Widgetsd -lQt5Multimediad -lQt5Guid -lQt5Networkd -lQt5Cored 
+LIBS        =        -lglu32 -lopengl32 -lgdi32 -luser32 -lmingw32 -LC:/Qt/5.4/mingw491_32/lib -lqtmaind -LC:\mingw491\mingw32\lib -LC:\Utils\icu32_53_1_mingw482\lib -LC:\utils\postgresql\pgsql\lib -LC:\utils\mysql\mysql\lib -LC:\opensll\lib -lshell32 -LC:\Qt\5.4\mingw491_32/lib -lQt5Widgetsd -lQt5Multimediad -lQt5Guid -lQt5Networkd -lQt5Sqld -lQt5Cored 
 QMAKE         = C:\Qt\5.4\mingw491_32\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -52,7 +52,8 @@ SOURCES       = ..\UT_Computer\main.cpp \
 		..\UT_Computer\pile.cpp \
 		..\UT_Computer\operatorLogique.cpp \
 		..\UT_Computer\operatorAutre.cpp \
-		..\UT_Computer\operatorClassique.cpp debug\qrc_res.cpp \
+		..\UT_Computer\operatorClassique.cpp \
+		..\UT_Computer\storage.cpp debug\qrc_res.cpp \
 		debug\moc_qcomputer.cpp \
 		debug\moc_pile.cpp
 OBJECTS       = debug/main.o \
@@ -65,6 +66,7 @@ OBJECTS       = debug/main.o \
 		debug/operatorLogique.o \
 		debug/operatorAutre.o \
 		debug/operatorClassique.o \
+		debug/storage.o \
 		debug/qrc_res.o \
 		debug/moc_qcomputer.o \
 		debug/moc_pile.o
@@ -77,7 +79,8 @@ DIST          =  ..\UT_Computer\qcomputer.h \
 		..\UT_Computer\pile.h \
 		..\UT_Computer\operatorAutre.h \
 		..\UT_Computer\operatorClassique.h \
-		..\UT_Computer\operatorLogique.h ..\UT_Computer\main.cpp \
+		..\UT_Computer\operatorLogique.h \
+		..\UT_Computer\storage.h ..\UT_Computer\main.cpp \
 		..\UT_Computer\qcomputer.cpp \
 		..\UT_Computer\computer.cpp \
 		..\UT_Computer\operatorFactory.cpp \
@@ -86,7 +89,8 @@ DIST          =  ..\UT_Computer\qcomputer.h \
 		..\UT_Computer\pile.cpp \
 		..\UT_Computer\operatorLogique.cpp \
 		..\UT_Computer\operatorAutre.cpp \
-		..\UT_Computer\operatorClassique.cpp
+		..\UT_Computer\operatorClassique.cpp \
+		..\UT_Computer\storage.cpp
 QMAKE_TARGET  = UT_Computer
 DESTDIR        = debug\ #avoid trailing-slash linebreak
 TARGET         = UT_Computer.exe
@@ -122,10 +126,10 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) UT_Computer.zip $(SOURCES) $(DIST) ..\UT_Computer\UT_Computer.pro ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\spec_pre.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\qdevice.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\device_config.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\common\shell-win32.conf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\qconfig.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axbase.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axbase_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axcontainer.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axcontainer_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axserver.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axserver_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_bluetooth.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_bluetooth_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_bootstrap_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_clucene_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_core.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_declarative.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_declarative_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_enginio.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_enginio_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_help.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_location.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_location_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_multimedia.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_multimedia_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_multimediawidgets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_network.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_nfc.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_nfc_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_openglextensions.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_openglextensions_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_platformsupport_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_positioning.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_positioning_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_script.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_script_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_scripttools.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_scripttools_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_sensors.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_sensors_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_serialport.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_serialport_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webchannel.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webchannel_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webkit.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webkit_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webkitwidgets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_websockets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_websockets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webview.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webview_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_winextras.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_winextras_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_xmlpatterns.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\qt_functions.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\qt_config.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\qt_config.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\win32-g++\qmake.conf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\spec_post.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\exclusive_builds.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\default_pre.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\default_pre.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\resolve_config.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\default_post.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\build_pass.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\c++11.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\rtti.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\precompile_header.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\warn_on.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\qt.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\resources.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\moc.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\opengl.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\uic.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\windows.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\testcase_targets.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\exceptions.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\yacc.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\lex.prf ..\UT_Computer\UT_Computer.pro ..\UT_Computer\res.qrc C:/Qt/5.4/mingw491_32/lib/qtmaind.prl C:/Qt/5.4/mingw491_32/lib/Qt5Cored.prl C:/Qt/5.4/mingw491_32/lib/Qt5Widgetsd.prl C:/Qt/5.4/mingw491_32/lib/Qt5Multimediad.prl C:/Qt/5.4/mingw491_32/lib/Qt5Guid.prl C:/Qt/5.4/mingw491_32/lib/Qt5Networkd.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
+	$(ZIP) UT_Computer.zip $(SOURCES) $(DIST) ..\UT_Computer\UT_Computer.pro ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\spec_pre.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\qdevice.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\device_config.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\common\shell-win32.conf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\qconfig.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axbase.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axbase_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axcontainer.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axcontainer_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axserver.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_axserver_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_bluetooth.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_bluetooth_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_bootstrap_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_clucene_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_concurrent.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_concurrent_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_core.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_core_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_declarative.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_declarative_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_designer.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_designer_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_designercomponents_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_enginio.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_enginio_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_gui.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_gui_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_help.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_help_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_location.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_location_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_multimedia.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_multimedia_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_multimediawidgets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_network.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_network_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_nfc.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_nfc_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_opengl.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_opengl_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_openglextensions.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_openglextensions_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_platformsupport_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_positioning.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_positioning_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_printsupport.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_printsupport_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qml.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qml_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qmldevtools_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qmltest.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qmltest_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quick.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quick_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quickparticles_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quickwidgets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_quickwidgets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_script.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_script_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_scripttools.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_scripttools_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_sensors.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_sensors_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_serialport.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_serialport_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_sql.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_sql_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_svg.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_svg_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_testlib.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_testlib_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_uitools.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_uitools_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webchannel.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webchannel_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webkit.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webkit_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webkitwidgets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_websockets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_websockets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webview.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_webview_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_widgets.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_widgets_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_winextras.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_winextras_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_xml.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_xml_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_xmlpatterns.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\qt_functions.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\qt_config.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\qt_config.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\win32-g++\qmake.conf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\spec_post.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\exclusive_builds.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\default_pre.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\default_pre.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\resolve_config.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\exclusive_builds_post.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\default_post.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\build_pass.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\c++11.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\rtti.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\precompile_header.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\warn_on.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\qt.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\resources.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\moc.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\opengl.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\uic.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\win32\windows.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\testcase_targets.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\exceptions.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\yacc.prf ..\..\..\..\Qt\5.4\mingw491_32\mkspecs\features\lex.prf ..\UT_Computer\UT_Computer.pro ..\UT_Computer\res.qrc C:/Qt/5.4/mingw491_32/lib/qtmaind.prl C:/Qt/5.4/mingw491_32/lib/Qt5Cored.prl C:/Qt/5.4/mingw491_32/lib/Qt5Widgetsd.prl C:/Qt/5.4/mingw491_32/lib/Qt5Multimediad.prl C:/Qt/5.4/mingw491_32/lib/Qt5Guid.prl C:/Qt/5.4/mingw491_32/lib/Qt5Networkd.prl C:/Qt/5.4/mingw491_32/lib/Qt5Sqld.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) debug\main.o debug\qcomputer.o debug\computer.o debug\operatorFactory.o debug\operator.o debug\litterale.o debug\pile.o debug\operatorLogique.o debug\operatorAutre.o debug\operatorClassique.o debug\qrc_res.o debug\moc_qcomputer.o debug\moc_pile.o
+	-$(DEL_FILE) debug\main.o debug\qcomputer.o debug\computer.o debug\operatorFactory.o debug\operator.o debug\litterale.o debug\pile.o debug\operatorLogique.o debug\operatorAutre.o debug\operatorClassique.o debug\storage.o debug\qrc_res.o debug\moc_qcomputer.o debug\moc_pile.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -337,14 +341,27 @@ debug/moc_qcomputer.cpp: ../../../../Qt/5.4/mingw491_32/include/QtWidgets/QWidge
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qmetaobject.h \
 		../../../../Qt/5.4/mingw491_32/include/QtNetwork/qnetworkconfiguration.h \
 		../UT_Computer/operatorFactory.h \
+		../UT_Computer/operatorAutre.h \
 		../UT_Computer/operator.h \
 		../UT_Computer/pile.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QTextStream \
 		../UT_Computer/litterale.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
+		../UT_Computer/storage.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
+		../UT_Computer/operatorClassique.h \
+		../UT_Computer/operatorLogique.h \
 		../UT_Computer/qcomputer.h
-	C:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IC:/Users/Irvin/src/UT_Computer -IC:/Qt/5.4/mingw491_32/include -IC:/Qt/5.4/mingw491_32/include/QtWidgets -IC:/Qt/5.4/mingw491_32/include/QtMultimedia -IC:/Qt/5.4/mingw491_32/include/QtGui -IC:/Qt/5.4/mingw491_32/include/QtNetwork -IC:/Qt/5.4/mingw491_32/include/QtCore -I. ..\UT_Computer\qcomputer.h -o debug\moc_qcomputer.cpp
+	C:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IC:/Users/Irvin/src/UT_Computer -IC:/Qt/5.4/mingw491_32/include -IC:/Qt/5.4/mingw491_32/include/QtWidgets -IC:/Qt/5.4/mingw491_32/include/QtMultimedia -IC:/Qt/5.4/mingw491_32/include/QtGui -IC:/Qt/5.4/mingw491_32/include/QtNetwork -IC:/Qt/5.4/mingw491_32/include/QtSql -IC:/Qt/5.4/mingw491_32/include/QtCore -I. ..\UT_Computer\qcomputer.h -o debug\moc_qcomputer.cpp
 
 debug/moc_pile.cpp: ../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qstring.h \
@@ -418,7 +435,7 @@ debug/moc_pile.cpp: ../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
 		../UT_Computer/litterale.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
 		../UT_Computer/pile.h
-	C:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IC:/Users/Irvin/src/UT_Computer -IC:/Qt/5.4/mingw491_32/include -IC:/Qt/5.4/mingw491_32/include/QtWidgets -IC:/Qt/5.4/mingw491_32/include/QtMultimedia -IC:/Qt/5.4/mingw491_32/include/QtGui -IC:/Qt/5.4/mingw491_32/include/QtNetwork -IC:/Qt/5.4/mingw491_32/include/QtCore -I. ..\UT_Computer\pile.h -o debug\moc_pile.cpp
+	C:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IC:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IC:/Users/Irvin/src/UT_Computer -IC:/Qt/5.4/mingw491_32/include -IC:/Qt/5.4/mingw491_32/include/QtWidgets -IC:/Qt/5.4/mingw491_32/include/QtMultimedia -IC:/Qt/5.4/mingw491_32/include/QtGui -IC:/Qt/5.4/mingw491_32/include/QtNetwork -IC:/Qt/5.4/mingw491_32/include/QtSql -IC:/Qt/5.4/mingw491_32/include/QtCore -I. ..\UT_Computer\pile.h -o debug\moc_pile.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -625,12 +642,25 @@ debug/main.o: ../UT_Computer/main.cpp ../../../../Qt/5.4/mingw491_32/include/QtW
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qmetaobject.h \
 		../../../../Qt/5.4/mingw491_32/include/QtNetwork/qnetworkconfiguration.h \
 		../UT_Computer/operatorFactory.h \
+		../UT_Computer/operatorAutre.h \
 		../UT_Computer/operator.h \
 		../UT_Computer/pile.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QTextStream \
 		../UT_Computer/litterale.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap
+		../UT_Computer/storage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
+		../UT_Computer/operatorClassique.h \
+		../UT_Computer/operatorLogique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\main.o ..\UT_Computer\main.cpp
 
 debug/qcomputer.o: ../UT_Computer/qcomputer.cpp ../UT_Computer/qcomputer.h \
@@ -822,12 +852,25 @@ debug/qcomputer.o: ../UT_Computer/qcomputer.cpp ../UT_Computer/qcomputer.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qmetaobject.h \
 		../../../../Qt/5.4/mingw491_32/include/QtNetwork/qnetworkconfiguration.h \
 		../UT_Computer/operatorFactory.h \
+		../UT_Computer/operatorAutre.h \
 		../UT_Computer/operator.h \
 		../UT_Computer/pile.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QTextStream \
 		../UT_Computer/litterale.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap
+		../UT_Computer/storage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
+		../UT_Computer/operatorClassique.h \
+		../UT_Computer/operatorLogique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\qcomputer.o ..\UT_Computer\qcomputer.cpp
 
 debug/computer.o: ../UT_Computer/computer.cpp ../UT_Computer/computer.h \
@@ -916,16 +959,30 @@ debug/computer.o: ../UT_Computer/computer.cpp ../UT_Computer/computer.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qmetaobject.h \
 		../../../../Qt/5.4/mingw491_32/include/QtNetwork/qnetworkconfiguration.h \
 		../UT_Computer/operatorFactory.h \
+		../UT_Computer/operatorAutre.h \
 		../UT_Computer/operator.h \
 		../UT_Computer/pile.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QTextStream \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QObject \
 		../UT_Computer/litterale.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap
+		../UT_Computer/storage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
+		../UT_Computer/operatorClassique.h \
+		../UT_Computer/operatorLogique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\computer.o ..\UT_Computer\computer.cpp
 
 debug/operatorFactory.o: ../UT_Computer/operatorFactory.cpp ../UT_Computer/OperatorFactory.h \
+		../UT_Computer/operatorAutre.h \
 		../UT_Computer/operator.h \
 		../UT_Computer/pile.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
@@ -999,7 +1056,21 @@ debug/operatorFactory.o: ../UT_Computer/operatorFactory.cpp ../UT_Computer/Opera
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QObject \
 		../UT_Computer/litterale.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap
+		../UT_Computer/storage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h \
+		../UT_Computer/operatorClassique.h \
+		../UT_Computer/operatorLogique.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operatorFactory.o ..\UT_Computer\operatorFactory.cpp
 
 debug/operator.o: ../UT_Computer/operator.cpp ../UT_Computer/operator.h \
@@ -1074,7 +1145,20 @@ debug/operator.o: ../UT_Computer/operator.cpp ../UT_Computer/operator.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qshareddata.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QObject \
 		../UT_Computer/litterale.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector
+		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
+		../UT_Computer/storage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operator.o ..\UT_Computer\operator.cpp
 
 debug/litterale.o: ../UT_Computer/litterale.cpp ../UT_Computer/litterale.h \
@@ -1197,14 +1281,356 @@ debug/pile.o: ../UT_Computer/pile.cpp ../UT_Computer/pile.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\pile.o ..\UT_Computer\pile.cpp
 
-debug/operatorLogique.o: ../UT_Computer/operatorLogique.cpp 
+debug/operatorLogique.o: ../UT_Computer/operatorLogique.cpp ../UT_Computer/operatorLogique.h \
+		../UT_Computer/operator.h \
+		../UT_Computer/pile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstring.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qchar.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobal.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qconfig.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfeatures.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsystemdetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qprocessordetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcompilerdetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtypeinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtypetraits.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsysinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlogging.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qflags.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbasicatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qgenericatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_msvc.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv7.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv6.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv5.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_ia64.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_mips.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_x86.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_cxx11.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_gcc.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_unix.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobalstatic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmutex.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qnumeric.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbytearray.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qrefcount.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qnamespace.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qarraydata.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringbuilder.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QTextStream \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qiodevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qalgorithms.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qiterator.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbytearraylist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcoreevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qscopedpointer.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmetatype.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvarlengtharray.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontainerfwd.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qisenum.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject_impl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpair.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qhash.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringlist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdatastream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qregexp.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringmatcher.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qshareddata.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QObject \
+		../UT_Computer/litterale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
+		../UT_Computer/storage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operatorLogique.o ..\UT_Computer\operatorLogique.cpp
 
-debug/operatorAutre.o: ../UT_Computer/operatorAutre.cpp 
+debug/operatorAutre.o: ../UT_Computer/operatorAutre.cpp ../UT_Computer/operatorAutre.h \
+		../UT_Computer/operator.h \
+		../UT_Computer/pile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstring.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qchar.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobal.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qconfig.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfeatures.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsystemdetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qprocessordetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcompilerdetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtypeinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtypetraits.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsysinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlogging.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qflags.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbasicatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qgenericatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_msvc.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv7.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv6.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv5.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_ia64.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_mips.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_x86.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_cxx11.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_gcc.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_unix.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobalstatic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmutex.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qnumeric.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbytearray.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qrefcount.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qnamespace.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qarraydata.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringbuilder.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QTextStream \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qiodevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qalgorithms.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qiterator.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbytearraylist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcoreevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qscopedpointer.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmetatype.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvarlengtharray.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontainerfwd.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qisenum.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject_impl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpair.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qhash.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringlist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdatastream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qregexp.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringmatcher.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qshareddata.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QObject \
+		../UT_Computer/litterale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
+		../UT_Computer/storage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operatorAutre.o ..\UT_Computer\operatorAutre.cpp
 
-debug/operatorClassique.o: ../UT_Computer/operatorClassique.cpp 
+debug/operatorClassique.o: ../UT_Computer/operatorClassique.cpp ../UT_Computer/operatorClassique.h \
+		../UT_Computer/operator.h \
+		../UT_Computer/pile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstring.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qchar.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobal.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qconfig.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfeatures.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsystemdetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qprocessordetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcompilerdetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtypeinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtypetraits.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsysinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlogging.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qflags.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbasicatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qgenericatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_msvc.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv7.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv6.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv5.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_ia64.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_mips.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_x86.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_cxx11.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_gcc.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_unix.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobalstatic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmutex.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qnumeric.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbytearray.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qrefcount.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qnamespace.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qarraydata.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringbuilder.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QTextStream \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qiodevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qalgorithms.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qiterator.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbytearraylist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcoreevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qscopedpointer.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmetatype.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvarlengtharray.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontainerfwd.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qisenum.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject_impl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpair.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qhash.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringlist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdatastream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qregexp.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringmatcher.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qshareddata.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QObject \
+		../UT_Computer/litterale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
+		../UT_Computer/storage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\operatorClassique.o ..\UT_Computer\operatorClassique.cpp
+
+debug/storage.o: ../UT_Computer/storage.cpp ../UT_Computer/storage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QMap \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qiterator.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobal.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qconfig.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfeatures.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsystemdetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qprocessordetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcompilerdetection.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtypeinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtypetraits.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsysinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlogging.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qflags.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbasicatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_bootstrap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qgenericatomic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_msvc.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv7.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv6.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_armv5.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_ia64.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_mips.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_x86.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_cxx11.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_gcc.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qatomic_unix.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobalstatic.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmutex.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qnumeric.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qalgorithms.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qrefcount.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qarraydata.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbytearraylist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qbytearray.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qnamespace.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstring.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qchar.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringbuilder.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpair.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qhash.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qiodevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcoreevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qscopedpointer.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmetatype.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvarlengtharray.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontainerfwd.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qisenum.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject_impl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringlist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdatastream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qregexp.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringmatcher.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qshareddata.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlDatabase \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsql.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlQuery \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlquery.h \
+		../UT_Computer/litterale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/Qvector \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QVariant \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QDebug \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlError \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlerror.h \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/QSqlRecord \
+		../../../../Qt/5.4/mingw491_32/include/QtSql/qsqlrecord.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\storage.o ..\UT_Computer\storage.cpp
 
 debug/qrc_res.o: debug/qrc_res.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\qrc_res.o debug\qrc_res.cpp

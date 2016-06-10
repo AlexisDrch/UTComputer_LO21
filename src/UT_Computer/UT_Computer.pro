@@ -1,5 +1,6 @@
  QT += widgets \
-         multimedia
+         multimedia \
+        sql
 CONFIG += c++11
 
 SOURCES += \
@@ -12,7 +13,8 @@ SOURCES += \
     pile.cpp \
     operatorLogique.cpp \
     operatorAutre.cpp \
-    operatorClassique.cpp
+    operatorClassique.cpp \
+    storage.cpp
 
 
 
@@ -25,7 +27,8 @@ HEADERS += \
     pile.h \
     operatorAutre.h \
     operatorClassique.h \
-    operatorLogique.h
+    operatorLogique.h \
+    storage.h
 
 RESOURCES += \
     res.qrc

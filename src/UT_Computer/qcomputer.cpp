@@ -4,13 +4,14 @@
 QComputer::QComputer()
 {
     vuePrincipale = new QFrame;
-    vueVar = new QFrame;
+    vueVar = new QFrame;vueVar->setWindowTitle("Votre stock de variable");
     vueProg = new QFrame;
     vuePara = new QFrame;
     message= new QLineEdit;
     message->setDisabled(true);
     commande = new QLineEdit;
     mainLayout = new QVBoxLayout;
+    secondLayout = new QVBoxLayout;
     coucheHaut =  new QVBoxLayout;
     coucheCommande = new QHBoxLayout;
     coucheClavier = new QHBoxLayout;
@@ -20,8 +21,10 @@ QComputer::QComputer()
     setterNbAffiche->setMaximum(20);
     setterNbAffiche->setMinimum(4);
     vuePile = new QTableWidget(pile->getNbItemsToAffiche(),1,this);
+    tableVar = new QTableWidget(5,1,this); //getNbtoAffiche
     pad = new QFrame;
     LitteraleManager& lm = LitteraleManager::getInstance();
+    stockVar = StockVariable::getInstance(); //Vue secondaire
     controleur = new Controleur(lm, *pile) ;
 
 
@@ -42,6 +45,27 @@ QComputer::QComputer()
     vuePile->horizontalHeader()->setStretchLastSection(true);
     for (unsigned int i=0;i<pile->getNbItemsToAffiche();i++)
         vuePile->setItem(i,0,new QTableWidgetItem(""));
+
+//Vue secondaire
+    //tableau Variable Stocké
+
+    tableVar->setRowCount(stockVar->getNbItemsToAffiche());
+    QStringList nombres2;
+    for (unsigned int i= 1; i< stockVar->getNbItemsToAffiche()+1;i++){ // define avec le sV.getnNbToAFfiche
+        QString str2=QString::number(i);
+        str2+=" )";
+        nombres2<<str2;
+    }
+    tableVar->setVerticalHeaderLabels(nombres2);
+
+    tableVar->horizontalHeader()->setVisible(false);
+    tableVar->horizontalHeader()->setStretchLastSection(true);
+    for (unsigned int i=0;i<stockVar->getNbItemsToAffiche();i++){
+        tableVar->setItem(i,0,new QTableWidgetItem(""));
+    }
+    secondLayout->addWidget(tableVar);
+    vueVar->setLayout(secondLayout);
+
 
     // Création des menus
     QMenu *menuFichier = menuBar()->addMenu("&Fichier");
@@ -157,21 +181,33 @@ QComputer::QComputer()
    QObject::connect(setterNbAffiche, SIGNAL(valueChanged(int)),this, SLOT(changeNbAffiche(int)));
    QObject::connect(commande,SIGNAL(returnPressed()),this,SLOT(getNextCommande()));
    QObject::connect(buttonEnter,SIGNAL(clicked(bool)), this, SLOT(getNextCommande()));
+   QObject::connect(pile,SIGNAL(modificationEtat()),this,SLOT(refresh()));  
    QObject::connect(pile,SIGNAL(modificationEtat()),this,SLOT(refresh()));
+   refresh();
 }
 
 void QComputer::refresh(){
 
     message->setText(pile->getMessage());
-
+    //Pile principale
     for (unsigned int i=0; i<pile->getNbItemsToAffiche(); i++)
         vuePile->item(i,0)->setText("");
-
 
     unsigned int nb=0;
     for (Pile::iterator it = pile->begin(); it != pile->end() && nb < pile->getNbItemsToAffiche();++it){
         vuePile->item(pile->getNbItemsToAffiche()-nb-1,0)->setText((*it).toString());
         nb++;
+    }
+
+    //Stock variable
+    for (unsigned int i=0; i<stockVar->getNbItemsToAffiche(); i++)
+        tableVar->item(i,0)->setText("");
+
+    unsigned int nb1=0;
+    for (QMap<QString,Nombres*>::iterator it = stockVar->listeVar.begin(); it != stockVar->listeVar.end() && nb1 < stockVar->getNbItemsToAffiche();++it){
+        QString val = it.key() + " | " + ((*it))->toString();
+        tableVar->item(nb1,0)->setText(val);
+        nb1++;
     }
 
 }
@@ -229,10 +265,12 @@ void QComputer::hidePad(){
 }
 
 void QComputer::setVuePrinc(){
+    //vueVar->hide();
     vuePrincipale->show();
 }
 void QComputer::setVueVar(){
-    vuePrincipale->hide();
+    //vuePrincipale->hide();
+    vueVar->show();
 }
 void QComputer::setVueProg(){
     vuePrincipale->hide();

@@ -72,6 +72,12 @@ public:
     Operateur* getOperateur() { return new OpEval(); }
 };
 
+class OpStoFactory : public OperateurFactory {
+public:
+    OpStoFactory() : OperateurFactory() {}
+    Operateur* getOperateur() { return new OpSto(); }
+};
+
 class OpNegFactory : public OperateurFactory {
 public:
     OpNegFactory() : OperateurFactory() {}
@@ -231,12 +237,13 @@ public:
     Operateur* getOperateur() { return new OpMod(); }
 };
 
+*/
 class OpDolFactory : public OperateurFactory {
 public:
     OpDolFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpDol(); }
 };
-*/
+
 class OpEgFactory : public OperateurFactory {
 public:
     OpEgFactory() : OperateurFactory() {}

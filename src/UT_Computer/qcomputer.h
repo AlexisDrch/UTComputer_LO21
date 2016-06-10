@@ -25,7 +25,6 @@
 class QComputer : public QMainWindow {
     Q_OBJECT
     QFrame* vuePrincipale;
-    QFrame* vueVar ;
     QFrame* vueProg;
     QFrame* vuePara;
     QLineEdit* message;
@@ -38,6 +37,11 @@ class QComputer : public QMainWindow {
     Pile* pile;
     Controleur* controleur;
 
+    //Vue secondaire
+    StockVariable* stockVar;
+    QVBoxLayout* secondLayout;
+    QFrame* vueVar ;
+    QTableWidget* tableVar;
 
     //Clavier cliquable
     QFrame* pad;
