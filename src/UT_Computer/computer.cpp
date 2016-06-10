@@ -368,7 +368,7 @@ QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
                    litMng.removeLitterale(litAff.top()); //si tout s'est bien passé on pop la pile deux fois + littmanager
                    litAff.pop();
                }
-               if(conv2 != nullptr){
+               if(conv2 != nullptr){//Cas des expressions
                    QString v2 ='\''+conv2->toString()+'\'';
                    commande(v2);
                    delete conv2;

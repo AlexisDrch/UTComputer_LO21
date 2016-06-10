@@ -4,7 +4,6 @@
     //II]Operateur
     Operateur::~Operateur(){
      //ici on supprime les litteraux
-        if (name != "$")
             for(unsigned int i =0; i <taille; i++){
                 delete tab.operator [](i);
             }
@@ -300,6 +299,7 @@
 
             void OpPile::addArg(Pile *pile){
                 litAff=pile;
+                setTaille(0);
             }
             Litterale* OpPile::executer(){
                 try{
@@ -320,7 +320,8 @@
 
                 //DUP
                 void OpDup::executerPile(){
-                    litAff->push(litAff->top());
+                    Litterale* newe = LitteraleManager::getInstance().fabriqLitterale((litAff->top().toString()));
+                    litAff->push(*newe);
                 }
                 //DROP
                 void OpDrop::executerPile(){
@@ -328,7 +329,7 @@
                 }
                 //CLEAR
                 void OpClear::executerPile(){
-                    while(!(litAff->estVide())){
+                   while(!(litAff->estVide())){
                         delete &litAff->top();
                         litAff->pop();
                     }
