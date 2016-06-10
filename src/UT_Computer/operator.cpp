@@ -81,10 +81,6 @@
 
 
             //NEG
-            Litterale* OpNeg::fonctionNum(Nombres* arg1){
-                arg1->setNeg(!arg1->getNeg());
-                return arg1->returnType();
-            }
             Litterale* OpNeg::actionNum(Entier& arg1){
                 arg1.setNeg(!arg1.getNeg());
                 return arg1.returnType();
@@ -100,7 +96,8 @@
             }
 
             Litterale* OpNeg::actionNum(Complexe& arg1){
-                throw "Impossible de changer le signe d'un complexe";
+                return arg1.returnType();
+                throw ComputerException("Impossible de changer le signe d'un complexe");
             }
 
             //EVAL

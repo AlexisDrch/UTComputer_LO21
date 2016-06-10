@@ -19,6 +19,8 @@ public:
     static DbManager* getInstance();
     bool addVariable(const QString& name, const QString& value);
     bool addProgramme(const QString& name, const QString& value);
+    bool addPile(const QString& value);
+    bool removePile(const QString& value);
 };
 
 class StockVariable {

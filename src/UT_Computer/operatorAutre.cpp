@@ -48,3 +48,51 @@ Litterale* OpDol::fonctionNum(Nombres *arg1, Litterale *arg2) {
     Complexe* c = new Complexe(conv1,conv2);
     return c;
 }
+
+
+//DIV
+OpDivent::~OpDivent(){
+
+}
+
+Litterale* OpDivent::fonctionExpression(LitExpression *arg1, Litterale *arg2) {
+    throw ComputerException("Arguments invalides");
+}
+
+Litterale* OpDivent::fonctionNum(Nombres *arg1, Litterale *arg2){
+    Entier* n1 = dynamic_cast<Entier*>(arg1);
+    Entier* n2 = dynamic_cast<Entier*>(arg2);
+    if (n1 == nullptr || n2 == nullptr)
+        throw ComputerException("Arguments invalides");
+
+    int val = n1->getValue()/n2->getValue();
+    Entier* res = new Entier(val);
+    if (n1->getNeg() || n2->getNeg())
+        res->setNeg(true);
+
+    return res;
+}
+
+
+//MOD
+OpMod::~OpMod(){
+
+}
+
+Litterale* OpMod::fonctionExpression(LitExpression *arg1, Litterale *arg2) {
+    throw ComputerException("Arguments invalides");
+}
+
+Litterale* OpMod::fonctionNum(Nombres *arg1, Litterale *arg2){
+    Entier* n1 = dynamic_cast<Entier*>(arg1);
+    Entier* n2 = dynamic_cast<Entier*>(arg2);
+    if (n1 == nullptr || n2 == nullptr)
+        throw ComputerException("Arguments invalides");
+
+    int val = (int)n1->getValue()%(int)n2->getValue();
+    Entier* res = new Entier(val);
+    if (n1->getNeg() || n2->getNeg())
+        res->setNeg(true);
+
+    return res;
+}

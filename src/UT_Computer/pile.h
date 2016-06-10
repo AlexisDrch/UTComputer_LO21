@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QObject>
 #include "litterale.h"
+#include "storage.h"
 
 class Item {
     Litterale* lit;
@@ -27,7 +28,7 @@ class Pile : public QObject {
     void agrandissementCapacite();
     unsigned int nbAffiche;
 public:
-    Pile():items(nullptr),nb(0),nbMax(0),message(""),nbAffiche(5){}
+    Pile();
     ~Pile();
     void push(Litterale& e);
     void pop();

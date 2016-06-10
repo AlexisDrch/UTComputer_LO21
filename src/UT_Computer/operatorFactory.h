@@ -218,7 +218,7 @@ public:
     OpDivFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpDiv(); }
 };
-/*
+
 class OpDiventFactory : public OperateurFactory {
 public:
     OpDiventFactory() : OperateurFactory() {}
@@ -229,7 +229,7 @@ class OpPowFactory : public OperateurFactory {
 public:
     OpPowFactory() : OperateurFactory() {}
     Operateur* getOperateur() { return new OpPow(); }
-};
+};*/
 
 class OpModFactory : public OperateurFactory {
 public:
@@ -237,7 +237,6 @@ public:
     Operateur* getOperateur() { return new OpMod(); }
 };
 
-*/
 class OpDolFactory : public OperateurFactory {
 public:
     OpDolFactory() : OperateurFactory() {}

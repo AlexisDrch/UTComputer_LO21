@@ -67,6 +67,35 @@ bool isVarProgramme(const QString s){
     //check in map var programme
     return false;
 }
+	
+Litterale* LitteraleManager::isComplexe(const QString& v) {
+    if(v.contains("$") && !v.contains("'") && !v.contains("[")) {
+        bool neg = false;
+        QString part1 = v.mid(0,v.indexOf("$"));
+        if (part1.at(0) == '-') {
+            part1 = part1.mid(2,part1.size());
+            neg = true;
+        }
+        Litterale* l1 = fabriqLitterale(part1);
+        LitNumerique* ln1 = dynamic_cast<LitNumerique*>(l1); // aucun risque car le complexe stocké est valide
+        ln1->setNeg(neg);
+
+        neg = false;
+        QString part2 = v.mid(v.indexOf("$")+1,v.size());
+        if (part2.at(0) == '-') {
+            part2 = part2.mid(2,part2.size());
+            neg = true;
+        }
+        Litterale* l2 = fabriqLitterale(part2);
+        LitNumerique* ln2 = dynamic_cast<LitNumerique*>(l2); // aucun risque car le complexe stocké est valide
+        ln2->setNeg(neg);
+
+		if (ln1 != nullptr && ln2 != nullptr)
+			return new Complexe(ln1,ln2);
+		delete ln1, ln2;
+    }
+    return nullptr;
+}
 
 bool LitteraleManager::verifLitterale(QString& operande,QString& nouvelle, QVector<Operande*>& vectorExp){
     Litterale*res = fabriqLitterale(operande);
@@ -198,23 +227,13 @@ Litterale* LitteraleManager::fabriqLitterale(const QString& v) {
            return res;
        }
 
-       Litterale* l = isRationnelle(v); if ( l != nullptr){
-           return l;
-       }
+       QString::const_iterator it = v.end(); it--;
+       if ( ((*v.begin()) == '\'') && ((*it) == '\'') ) return(new LitExpression(v));
+       if ( ((*v.begin()) == '[') && ((*it) == ']') ) return(new LitProgramme(v));
+       Litterale* l = isRationnelle(v); if ( l != nullptr) return l; else delete l;
+       Litterale* c = isComplexe(v); if ( c != nullptr) return c; else delete c;
+    }
 
-       // construction d'un complexe directement
-       delete l;
-       QString part1 = v.mid(0,v.indexOf("$"));
-       Litterale* l1 = fabriqLitterale(part1);
-       LitNumerique* ln1 = dynamic_cast<LitNumerique*>(l1); // aucun risque car le complexe stocké est valide
-       QString part2 = v.mid(v.indexOf("$")+1,v.size());
-       Litterale* l2 = fabriqLitterale(part2);
-       LitNumerique* ln2 = dynamic_cast<LitNumerique*>(l2); // aucun risque car le complexe stocké est valide
-       if(ln1 != nullptr && ln2 != nullptr){
-        return new Complexe(ln1,ln2);
-       }
-       delete l1,l2;
-   }
 
    //Expression ou Programme
    QString::const_iterator it = v.end(); it--;
