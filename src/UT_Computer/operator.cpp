@@ -61,7 +61,7 @@
                 return res;
             }*/
 
-            throw "error : operateur non valide sur ce litterale";
+            throw ComputerException("error : operateur non valide sur ce litterale");
         }
 
         Litterale* OpUnaire::fonctionNum(Nombres *arg1) {
@@ -99,7 +99,7 @@
             }
 
             Litterale* OpNeg::actionNum(Complexe& arg1){
-                throw "Impossible de changer le signe d'un complexe";
+                throw ComputerException("Impossible de changer le signe d'un complexe");
             }
 
             //EVAL
@@ -163,7 +163,7 @@
                 return (new Reelle(f));
             }
             Litterale* OpExp::actionNum(Complexe& arg1){
-                throw "Impossible d'obtenir l'exponentielle d'un complexe";
+                throw ComputerException("Impossible d'obtenir l'exponentielle d'un complexe");
             }
             //LN
             Litterale* OpLn::actionNum(Entier &arg1) {
@@ -185,7 +185,7 @@
                 return (new Reelle(f));
             }
             Litterale* OpLn::actionNum(Complexe& arg1){
-                throw "Impossible d'obtenir le logarithme d'un complexe";
+                throw ComputerException("Impossible d'obtenir le logarithme d'un complexe");
             }
             //SIN
             Litterale* OpSin::actionNum(Entier &arg1){
@@ -222,7 +222,7 @@
                 return(res);
             }
             Litterale* OpSin::actionNum(Complexe &arg1){
-                throw "Impossible d'obtenir le sinus d'un nombre complexe";
+                throw ComputerException("Impossible d'obtenir le sinus d'un nombre complexe");
                 return nullptr;
             }
 
@@ -235,10 +235,10 @@
                 else throw ComputerException("Operation impossible sur ces littéraux");
             }
 
-            Litterale* OpLogiqueUnaire::actionNum(Entier& arg1){ throw ("Error ");} //A ameliorer ?? Creation d'une sous classe pour distinguer NON logique de Logique plutot que d'avoir tout en classe OpBinaire...Unaire
-            Litterale* OpLogiqueUnaire::actionNum(Reelle& arg1){ throw ("Error ");}
-            Litterale* OpLogiqueUnaire::actionNum(Rationnelle& arg1){ throw ("Error ");}
-            Litterale* OpLogiqueUnaire::actionNum(Complexe& arg1){ throw ("Error ");}
+            Litterale* OpLogiqueUnaire::actionNum(Entier& arg1){ throw ComputerException("Error ");}
+            Litterale* OpLogiqueUnaire::actionNum(Reelle& arg1){ throw ComputerException("Error ");}
+            Litterale* OpLogiqueUnaire::actionNum(Rationnelle& arg1){ throw ComputerException("Error ");}
+            Litterale* OpLogiqueUnaire::actionNum(Complexe& arg1){ throw ComputerException("Error ");}
 
             //OpNot
             Litterale* OpNot::actionLogiNumerique(LitNumerique* arg1)  {
@@ -288,7 +288,7 @@
                     Litterale* res = fonctionExpression(arg1,arg2);
                     return res;
                 }
-                throw "error : operateur non valide sur ce litterale";
+                throw ComputerException("error : operateur non valide sur ce litterale");
             }
         }
 
@@ -321,6 +321,7 @@
                 //DUP
                 void OpDup::executerPile(){
                     Litterale* newe = LitteraleManager::getInstance().fabriqLitterale((litAff->top().toString()));
+                    LitteraleManager::getInstance().addLitterale(newe);
                     litAff->push(*newe);
                 }
                 //DROP

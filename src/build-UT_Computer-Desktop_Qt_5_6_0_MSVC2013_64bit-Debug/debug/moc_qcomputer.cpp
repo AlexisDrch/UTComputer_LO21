@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QComputer_t {
     QByteArrayData data[12];
-    char stringdata0[121];
+    char stringdata0[126];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,18 +32,18 @@ static const qt_meta_stringdata_QComputer_t qt_meta_stringdata_QComputer = {
 QT_MOC_LITERAL(0, 0, 9), // "QComputer"
 QT_MOC_LITERAL(1, 10, 15), // "setCommandeText"
 QT_MOC_LITERAL(2, 26, 0), // ""
-QT_MOC_LITERAL(3, 27, 7), // "hidePad"
-QT_MOC_LITERAL(4, 35, 11), // "setVuePrinc"
-QT_MOC_LITERAL(5, 47, 9), // "setVueVar"
-QT_MOC_LITERAL(6, 57, 10), // "setVueProg"
-QT_MOC_LITERAL(7, 68, 10), // "setVuePara"
-QT_MOC_LITERAL(8, 79, 7), // "refresh"
-QT_MOC_LITERAL(9, 87, 15), // "getNextCommande"
-QT_MOC_LITERAL(10, 103, 15), // "changeNbAffiche"
-QT_MOC_LITERAL(11, 119, 1) // "i"
+QT_MOC_LITERAL(3, 27, 12), // "hideClavier1"
+QT_MOC_LITERAL(4, 40, 11), // "setVuePrinc"
+QT_MOC_LITERAL(5, 52, 9), // "setVueVar"
+QT_MOC_LITERAL(6, 62, 10), // "setVueProg"
+QT_MOC_LITERAL(7, 73, 10), // "setVuePara"
+QT_MOC_LITERAL(8, 84, 7), // "refresh"
+QT_MOC_LITERAL(9, 92, 15), // "getNextCommande"
+QT_MOC_LITERAL(10, 108, 15), // "changeNbAffiche"
+QT_MOC_LITERAL(11, 124, 1) // "i"
 
     },
-    "QComputer\0setCommandeText\0\0hidePad\0"
+    "QComputer\0setCommandeText\0\0hideClavier1\0"
     "setVuePrinc\0setVueVar\0setVueProg\0"
     "setVuePara\0refresh\0getNextCommande\0"
     "changeNbAffiche\0i"
@@ -95,7 +95,7 @@ void QComputer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->setCommandeText((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->hidePad(); break;
+        case 1: _t->hideClavier1(); break;
         case 2: _t->setVuePrinc(); break;
         case 3: _t->setVueVar(); break;
         case 4: _t->setVueProg(); break;

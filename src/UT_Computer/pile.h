@@ -27,7 +27,7 @@ class Pile : public QObject {
     void agrandissementCapacite();
     unsigned int nbAffiche;
 public:
-    Pile():items(nullptr),nb(0),nbMax(0),message(""),nbAffiche(5){}
+    Pile():items(nullptr),nb(0),nbMax(0),message(""),nbAffiche(4){}
     ~Pile();
     void push(Litterale& e);
     void pop();

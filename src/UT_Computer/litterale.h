@@ -57,7 +57,7 @@ public:
                const QString& getValueProg() const {return stringValue;}
         };
 
-    //2) Litterale expression // GERER LES PRIORIOTE !!!///
+    //2) Litterale expression
         class LitExpression :public Litterale{
             //on considerera qu'une expression n'est en réalité qu'une liste d'opérande
             QVector<Operande*> vector;

@@ -416,7 +416,12 @@ QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
             } else if (isVarProgramme(c)) {
 
             }
-            else litAff.setMessage("Erreur : impossible de saisir un atome qui n'est pas un identificateur");
+            else {
+
+                litAff.setMessage("Erreur : impossible de saisir un atome qui n'est pas un identificateur");
+                delete a;
+                return v;
+            }
         }
         else if(res != nullptr){
             litAff.push(*res);
