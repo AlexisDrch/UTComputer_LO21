@@ -356,6 +356,8 @@ QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
                 //Eval on renvoie simplemement
                 LitProgramme* conv3 = dynamic_cast<LitProgramme*>(temp.at(0));
                 if(conv3 != nullptr && op->getName()=="EVAL"){
+                     litAff.pop();
+                     litMng.removeLitterale(litAff.top());
                     return conv3->getValueProg();
                 }
                 op->addArg(&litAff); // ici on récupère l'item de la pile ou la pile pour l'operateur pile -- ON AJOUTE PLUS DANS LITTERALEMANAGER?

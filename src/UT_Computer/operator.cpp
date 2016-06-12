@@ -314,7 +314,14 @@
 
                 //DUP
                 void OpDup::executerPile(){
-                    Litterale* newe = LitteraleManager::getInstance().fabriqLitterale((litAff->top().toString()));
+                    Litterale* pre= &litAff->top();
+                    QString v;
+                    LitExpression* conv= dynamic_cast<LitExpression*>(pre);
+                    if (conv != nullptr) {
+                         v = '\''+litAff->top().toString()+'\'';
+                    }
+                    else v = litAff->top().toString();
+                    Litterale* newe = LitteraleManager::getInstance().fabriqLitterale((v));
                     LitteraleManager::getInstance().addLitterale(newe);
                     litAff->push(*newe);
                 }
