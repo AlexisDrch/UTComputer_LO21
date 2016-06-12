@@ -33,8 +33,7 @@ Operande::~Operande(){
 
         //I.2) Litterale expression
         LitExpression::LitExpression(const QString& str,  const QString& na):Litterale(na){
-            //remplir le vector de littérale
-            //Analyser les espaces dans l'expression str puis:
+
             stringValue = str;
         }
         /*

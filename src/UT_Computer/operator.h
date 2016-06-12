@@ -34,6 +34,7 @@ class OpDol;
             virtual ~OpUnaire();
             //Executer :squelette pour classe fille : template methode
             Litterale* executer();
+
             virtual Litterale* fonctionNum(Nombres* arg1) ; // definie action commune a tout LitNumerique puis appelle la bonne surcharge
             virtual Litterale* fonctionExpression(LitExpression* arg1);
             virtual Litterale* actionNum(Entier& arg1)  =0;

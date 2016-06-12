@@ -52,14 +52,7 @@
                return res;
             }
 
-            //A MODIFIER PLUS TARD
-            /*LitAtome* arg13 = dynamic_cast<LitAtome*>(tab.front());
 
-            if(arg13 != nullptr){
-                Litterale* res = fonctionExpression(arg13);
-                delete arg13;
-                return res;
-            }*/
 
             throw ComputerException("error : operateur non valide sur ce litterale");
         }
@@ -102,7 +95,8 @@
                 throw ComputerException("Impossible de changer le signe d'un complexe");
             }
 
-            //EVAL
+
+
             Litterale* OpEval::fonctionExpression(LitExpression* arg1){
                 QVector<Operande*>& vector = arg1->getVector();
                 QString res;

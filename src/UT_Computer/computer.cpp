@@ -353,6 +353,11 @@ QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
 
             for(unsigned int i =0; i <opSize; i++){
                 temp.push_back(&litAff.top());
+                //Eval on renvoie simplemement
+                LitProgramme* conv3 = dynamic_cast<LitProgramme*>(temp.at(0));
+                if(conv3 != nullptr && op->getName()=="EVAL"){
+                    return conv3->getValueProg();
+                }
                 op->addArg(&litAff); // ici on récupère l'item de la pile ou la pile pour l'operateur pile -- ON AJOUTE PLUS DANS LITTERALEMANAGER?
                 litAff.pop();
             }
@@ -426,10 +431,6 @@ QString LitteraleManager::messageNouvelleCreation(Litterale& lit){
         else if(res != nullptr){
             litAff.push(*res);
             litAff.setMessage(litMng.messageNouvelleCreation(litAff.top()));
-        }else if (isVariable(a)){
-            // recherche dans la bdd (map variable)
-            //recup litterale
-            //empiler res dans la pile
         }else if (isVarProgramme(c)){
             // recherche dans la bdd (map programme)
             // recup litterale programme

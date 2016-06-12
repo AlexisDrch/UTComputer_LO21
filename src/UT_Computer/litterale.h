@@ -54,7 +54,11 @@ public:
                unsigned int getTaille(){return taille;}
                QString getelem(){return tab.front();}
                QString toString() const;
-               const QString& getValueProg() const {return stringValue;}
+               const QString getValueProg() const {
+                   QString v = stringValue;
+                   v.remove(0,2); v.remove(v.size()-1,1);
+                   return v;
+               }
         };
 
     //2) Litterale expression
