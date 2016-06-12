@@ -73,10 +73,6 @@
 
 
             //NEG
-            Litterale* OpNeg::fonctionNum(Nombres* arg1){
-                arg1->setNeg(!arg1->getNeg());
-                return arg1->returnType();
-            }
             Litterale* OpNeg::actionNum(Entier& arg1){
                 arg1.setNeg(!arg1.getNeg());
                 return arg1.returnType();

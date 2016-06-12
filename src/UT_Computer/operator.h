@@ -137,7 +137,6 @@ class OpDol;
         class OpNeg : public OpUnaire {
         public:
             OpNeg(): OpUnaire("NEG"){}
-            Litterale* fonctionNum(Nombres *arg1) ;
             Litterale* actionNum(Entier &arg1) ;
             Litterale* actionNum(Reelle &arg1) ;
             Litterale* actionNum(Rationnelle &arg1) ;

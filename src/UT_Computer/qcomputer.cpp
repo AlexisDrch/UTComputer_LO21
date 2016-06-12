@@ -327,7 +327,8 @@ QComputer::QComputer()
    QObject::connect(buttonEnter,SIGNAL(clicked(bool)), this, SLOT(getNextCommande()));
    QObject::connect(pile,SIGNAL(modificationEtat()),this,SLOT(refresh()));  
    QObject::connect(pile,SIGNAL(modificationEtat()),this,SLOT(refresh()));
-   refresh();
+
+   refresh(); // permet d'initialiser l'affichage de la pile avec les valeurs stockées
 }
 
 void QComputer::refresh(){

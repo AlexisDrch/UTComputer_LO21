@@ -65,6 +65,7 @@ Operande::~Operande(){
             Entier* newe3 = dynamic_cast<Entier*>(this); if (newe3 != nullptr){return (new Entier(*newe3));}
             Reelle* newe4 = dynamic_cast<Reelle*>(this); if (newe4 != nullptr){return (new Reelle(*newe4));}
             Rationnelle* newe5 = dynamic_cast<Rationnelle*>(this);if (newe5 != nullptr){return (new Rationnelle(*newe5)) ;}
+            Complexe* newe6 = dynamic_cast<Complexe*>(this);if (newe6 != nullptr){return (new Complexe(*newe6)) ;}
         }
 
         //I.5) Litterale numerique

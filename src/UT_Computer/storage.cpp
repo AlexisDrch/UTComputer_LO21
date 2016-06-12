@@ -19,18 +19,26 @@ DbManager::DbManager(const QString &path) {
         if(query.exec()) {
                qDebug() << "ok1";
            } else {
-                qDebug() << "adVariable error:  "
+                qDebug() << "create table variable error:  "
                          << query.lastError();
            }
         query.prepare("CREATE TABLE programme(name varchar(50), value varchar(200))");
         if(query.exec()) {
                qDebug() << "success";
            } else {
-                qDebug() << "adVariable error:  "
+                qDebug() << "create table programme error:  "
+                         << query.lastError();
+           }
+
+        query.prepare("CREATE TABLE pile(id integer, value varchar(50))");
+        if(query.exec()) {
+               qDebug() << "success";
+           } else {
+                qDebug() << "create table pile error:  "
                          << query.lastError();
            }
     }
-        qDebug() << "non nul";
+        qDebug() << "base non nulle";
 
     qDebug() << db.tables();
 }
@@ -48,14 +56,46 @@ bool DbManager::addVariable(const QString& name, const QString& value){
     query.bindValue(":name", name);
     query.bindValue(":value", value);
     if(query.exec()) {
-           success = true;
-           qDebug() << success;
-       } else {
-            qDebug() << "adVariable error:  "
-                     << query.lastError();
-       }
+        success = true;
+        qDebug() << "addVariable" << success;
+    } else {
+        qDebug() << "addVariable error:  "
+                 << query.lastError();
+    }
 
-       return success;
+    return success;
+}
+
+bool DbManager::addPile(const QString& value){
+    bool success = false;
+    QSqlQuery query;
+    query.prepare("INSERT INTO pile (value) VALUES (:value)");
+    query.bindValue(":value", value);
+    if(query.exec()) {
+        success = true;
+        qDebug() << "addPile" << success;
+    } else {
+        qDebug() << "addPile error:  "
+                 << query.lastError();
+    }
+
+    return success;
+}
+
+bool DbManager::removePile(const QString &value){
+    bool success = false;
+    QSqlQuery query;
+    query.prepare("DELETE FROM pile WHERE value=:value AND rowid=(SELECT max(rowid) FROM pile WHERE value=:value)");
+    query.bindValue(":value", value);
+    if(query.exec()) {
+        success = true;
+        qDebug() << "removePile " << success;
+    } else {
+        qDebug() << "removePile error:  "
+                 << query.lastError();
+    }
+
+    return success;
 }
 bool DbManager::addProgramme(const QString& name, const QString& value){
     bool success = false;
@@ -75,8 +115,8 @@ bool DbManager::addProgramme(const QString& name, const QString& value){
 }
 
 
-StockVariable::StockVariable() : nb(0),nbVarToAffiche(10) {
-    DbManager* db = DbManager::getInstance();
+StockVariable::StockVariable() : nb(0) {
+    DbManager* db = DbManager::getInstance(); // permet d'être sûr qu'on est connecté à la bd
     QSqlQuery query;
     if(query.exec("SELECT * FROM variable")){
         while(query.next()){
@@ -86,21 +126,31 @@ StockVariable::StockVariable() : nb(0),nbVarToAffiche(10) {
             listeVar[query.value(0).toString()] = n;
         }
     }
-    int i;
-    i++;
 }
 
 Litterale* StockVariable::fabriqLitterale(const QString& v) {
     bool ok=false;
 
     if(v.contains("$")) {
+        bool neg = false;
         QString part1 = v.mid(0,v.indexOf("$"));
+        if (part1.at(0) == '-') {
+            part1 = part1.mid(2,part1.size());
+            neg = true;
+        }
         Litterale* l1 = fabriqLitterale(part1);
         LitNumerique* ln1 = dynamic_cast<LitNumerique*>(l1); // aucun risque car le complexe stocké est valide
+        ln1->setNeg(neg);
 
+        neg = false;
         QString part2 = v.mid(v.indexOf("$")+1,v.size());
+        if (part2.at(0) == '-') {
+            part2 = part2.mid(2,part2.size());
+            neg = true;
+        }
         Litterale* l2 = fabriqLitterale(part2);
         LitNumerique* ln2 = dynamic_cast<LitNumerique*>(l2); // aucun risque car le complexe stocké est valide
+        ln2->setNeg(neg);
 
         return new Complexe(ln1,ln2);
     }

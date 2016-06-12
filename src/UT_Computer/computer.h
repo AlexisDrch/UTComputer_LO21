@@ -35,10 +35,11 @@ public:
     void setVerif(bool v) {verif =v;}
     Litterale* addLitterale(const QString& str);
     Litterale& addLitterale(Litterale* res);
-    static Litterale* isRationnelle(const QString& c);
-    static bool verifLitterale(QString& op, QString& nouvelle, QVector<Operande*>& vectorExp);
-    static QString verifExpressionValide(QString c, QVector<Operande*>& vect); // to implement
-    static Litterale* fabriqLitterale(const QString& v);
+    Litterale* isRationnelle(const QString& c);
+    Litterale* isComplexe(const QString& v);
+    bool verifLitterale(QString& op, QString& nouvelle, QVector<Operande*>& vectorExp);
+    QString verifExpressionValide(QString c, QVector<Operande*>& vect); // to implement
+    Litterale* fabriqLitterale(const QString& v);
     void removeLitterale(Litterale& e);
     static LitteraleManager& getInstance();
     static void libererInstance();
